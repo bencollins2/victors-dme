@@ -158,3 +158,8 @@ class Facebook extends BaseFacebook
     return implode('_', $parts);
   }
 }
+
+
+$config = array();
+$config['appId'] = '1381727122059014';
+$config['secret'] = '5d0c729127c077fbac2fe3decec0357f';
