@@ -33,7 +33,7 @@
                 <h2>Welcome <?= $first_name?></h2>
                 <span>Victor of Engineering</span>
                 <p class="msg"><!-- We've hand picked some stories and videos that we think you'll like. Let us know what you think. We'll be updating the site frequently, so please bookmark it and come back again soon. --></p>
-                <p><a onClick="logoutFb()" href="#">(Log Out)</a></p>
+                <p><a href="process.php">(Log Out)</a></p>
             </div>
             <div class="filter">
                 <h2>Filter by category</h2>
