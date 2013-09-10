@@ -1,0 +1,139 @@
+body {
+    display: block;
+    height: 100%;
+    background: #212A55;
+}
+
+.sticky {
+    background: #212A55;
+}
+
+.sticky ul li.home {
+    background: url(../img/smallm.png) no-repeat top left;
+    padding: 2px 0 3px 40px;
+    height: 32px;
+}
+
+.sticky ul li.home a {
+    font-family: georgia,serif;
+    font-size: 20px;
+    font-variant: small-caps;
+}
+
+div.login {
+    display: block;
+    padding: 198px 0 0px;
+    width: 228px;
+    height: 92px;
+    margin: 270px auto 0;
+    background: url(../img/m.png) no-repeat center 30px;
+    text-align: center;
+    overflow: visible;
+    border-bottom: thin solid white;
+}
+
+.fbl {
+    display: block;
+    margin: 31px;
+}
+
+.vfm {
+    color: white;
+
+    font-family: Georgia, serif;
+    font-size: 33px;
+    line-height: 1.2em;
+    text-transform: uppercase;
+}
+
+.vfm span {
+    display: block;
+	
+    font-size: 42px;
+}
+
+#customlogin, #forgot, #register {
+    display: block;
+    color: white;
+    overflow: hidden;
+    width: 305px;
+    margin: 130px auto;
+    font-weight: 100;
+}
+
+#customlogin a, #forgot a, #register a {
+    color: rgb(200, 224, 255);
+}
+
+#forgot input[type="submit"] {
+    margin: 10px 0;
+}
+
+.or {
+    width: 228px;
+    color: white;
+    font-weight: 100;
+    font-size: 12px;
+    border-top: thin solid white;
+    margin: 70px auto 0;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.or a {
+    color: white;
+}
+
+.custom {
+    display: block;
+    position: relative;
+    height: 200px;
+    width: 228px;
+    margin: 10px auto;
+    color: white;
+    font-weight: 100;
+}
+
+.custom input[type="text"], .custom input[type="password"] {
+    width: 130px;
+}
+
+.custom a {
+    color: white;
+}
+
+
+.table {
+    width: 312px;
+    overflow: visible;
+}
+
+.table div {
+    margin: 14px 0;
+}
+
+.table div span:nth-child(1) {
+    margin-right: 13px;
+}
+
+.table div span:nth-child(2) {
+    display: inline-block;
+
+    float: right;
+}
+
+.table div span {}
+
+
+@media only screen and (max-height: 750px) {
+	div.login {
+		margin-top: 150px;
+	}
+}
+
+
+@media only screen and (max-height: 600px) {
+	div.login {
+		margin-top: 100px;
+	}
+}

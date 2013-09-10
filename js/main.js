@@ -1,0 +1,539 @@
+var msnry;
+
+function isFunction(functionToCheck) {
+	var getType = {};
+	return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}
+
+function checkHash() {
+	/////////////////////////////////////////////////////////////
+	//  Open the corresponding page if there is a hash in url  //
+	/////////////////////////////////////////////////////////////
+	if (window.location.hash) {
+		console.log("Has hash: ", window.location.hash + " .img-cover");
+		// $(window.location.hash + " .img-cover").click();
+		console.log("Item id: ", window.location.hash.substring(1));
+		loadFeature($(window.location.hash + " .img-cover")[0], window.location.hash.substring(1), "500px");
+	}
+	else {
+		console.log("Homepage");
+		$("#go-back").click();
+		leaveStory();
+	}
+}
+
+function fader(elm) {
+	//////////////////////////////////////////////
+	// Fade elements in sequence, recursively  //
+	//////////////////////////////////////////////
+	setTimeout(function(){
+		if (elm.next().length > 0) fader(elm.next());
+		else {
+			$("#switch").on("click", switcher);
+		};
+	},100);
+
+	elm.animate({"opacity":"1"}, 1000, function(){});
+}
+
+function loadFeature(that, item_id) {
+	////////////////////////////////
+	// Load an individual story  //
+	////////////////////////////////
+	var itemheight, $parent = $(that).parent(); 
+
+	$("#switch").hide();
+	if (msnry !== undefined) msnry.destroy();
+	window.location.hash = item_id;
+	$parent.addClass("current");
+	var title = $(that).children(".meta#title").html(), body = $(that).children(".meta#body").html(), customStyle = $(that).children(".meta#customStyle").html(), author = $(that).children(".meta#byline").html(), $itemcontent = $("#" + item_id + " .item-content");
+	current = item_id;
+	if ($("body").hasClass("explore")) $("body").removeClass("explore").addClass("exploreOne");
+	if ($("body").hasClass("slices")) $("body").removeClass("slices").addClass("slicesOne");
+
+	$(".left, .info").hide();
+	$("body").css({"left":"0","width":"100%", "overflow-x" : "hidden", "overflow-y" : "auto"});
+	$(".items").css({"left":"0","width":"100%","overflow":"hidden", "height":"auto"});
+
+	// Temp
+	item_id_img = $("#" + current + " a.img-src").attr("href");
+
+	// Clear all content in all items
+	$("#" + item_id + " .img-cover").hide();
+
+	///////////////////////////////////
+	// Body of the opened window //
+	///////////////////////////////////
+
+	console.log("Be quiet, the adults are testing: ", $(that).parent()[0]);
+	
+	if (typeof($parent[0].dataset.video) == "string") {
+		var vid = $parent[0].dataset.video;
+		if ($(that).find("#title")[0].dataset.position == "top") {
+			$itemcontent.html('<div class="content-image-div"><h2>'+title+'</h2><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><div class="left-stuff"></div><div class="body">'+body+'</div>');
+		}
+		else {
+			$itemcontent.html('<div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><div class="left-stuff"></div><h2>'+title+'</h2><div class="body"><iframe width="560" height="315" src="http://www.youtube.com/embed/'+vid+'" frameborder="0" allowfullscreen></iframe>'+body+'</div>');
+		}
+
+	}
+	else if ($parent.hasClass("map")) {
+		$itemcontent.html('<div class="content-image-div iframe"><iframe class="content-iframe" http://www.engin.umich.edu/college/admissions/visit/nc-live-map/"></iframe></div><!--div class="content-info"><h2>'+title+'</h2><div class="body">'+body+'</div-->');
+	}
+
+	else if ($parent.hasClass("mail")) {
+		////////////////
+		// Mail img  //
+		//////////////
+
+		if (mailimg == null) {
+			mailimg = "mail.jpg";
+		}
+		var request = $.ajax({
+			type: "GET",
+			url: "dostuff.php",
+			data: { type: "getmessages", id: userid, name: username }
+		});
+		request.done(function(msg) {
+			console.log(msg);
+			$itemcontent.html('<div class="content-image-div"><img class="content-image" src="img/big/' + mailimg + '" alt="item image" /></div><div class="content-info"><h2 class="fadewithme">Read your messages</h2><div class="body">' + msg.html + '</div></div>');
+			
+			$.each(msg.id, function(k,v){
+				$('#slides'+v).slidesjs({
+					width: 940,
+					height: 528,
+					navigation: false
+				});	
+			});
+
+			$(".sendmessage input[type='submit']").on("click", function(e){
+				e.preventDefault();
+				$this = $(this), $parent = $this.parent(), ta = $($parent.find("textarea")[0]).val(), to = $this.data("to");
+				///////////////////////
+				// Send the message  //
+				///////////////////////
+
+				var request = $.ajax({
+					type: "POST",
+					url: "dostuff.php",
+					data: { id: userid, type: "putmessage", msg: ta, to: to, name: username }
+				});
+				request.done(function(msg) {
+					console.log(msg);
+					$("div.message:last").before(msg.msg);
+					$($parent.find("textarea")[0]).val("");
+				});
+				request.fail(function(jqXHR, textStatus) {
+					console.log( " Failed: " + textStatus );
+				});
+
+				/////////////////////////
+				// / Send the message  //
+				/////////////////////////
+
+			});
+
+		});
+		request.fail(function(jqXHR, textStatus) {
+			console.log( " Failed: " + textStatus );
+		});	
+	}
+
+	/////////////////////////////////////////////////////
+	// For now, this is the only thing that matters.  //
+	/////////////////////////////////////////////////////
+	else {
+		$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><ul class="left-stuff"><li><a class="fb"><img src="./img/social/fb.png" alt="share on facebook" /></a></li><li><a class="twitter"><img src="./img/social/twitter.png" alt="share on twitter" /></a></li><li><a class="gp"><img src="./img/social/gp.png" alt="share on Google +" /></a></li><li><a class="pinterest"><img src="./img/social/pinterest.png" alt="share on pinterest" /></a></li><li><a class="reddit"><img src="./img/social/reddit.png" alt="share on reddit" /></a></li></ul><h2 class="fadewithme">'+title+'</h2><h3>Subtitle</h3><span class="byline">'+author+'</span><div class="body">'+body+'</div></div>');
+	}
+
+	/////////////////////////////////////
+	// Scroll body back to the top //
+	/////////////////////////////////////
+	$(".explore, body").scrollTop(0);
+	$(".items").scrollLeft(0);
+
+
+	///////////////////////////////
+	// Get height of img div //
+	///////////////////////////////
+	$(".content-image").load(function(){
+		itemheight = $(".content-image-div").height();
+		bodymargin = $(".content-image-div").height()+"px";
+		$(".content-info").css({"margin-top":bodymargin});
+	});
+
+	var margintop = $(".content-info .body").height()/-3;
+	margintop = String(margintop) + "px";
+	var itemwidth = $(window).width() - ($(window).width()/3);
+	var marginleft = String(itemwidth/-2)+"px";
+	//$(".content-info").css({"margin-top" : margintop,"margin-left":marginleft,"width":itemwidth});
+	$("#go-back").show();
+
+	// Expand the selected item to full screen, and make all other cover images 0 so they will disappear
+	$(".explore-item, .one-item").each(function(index, element) {
+		if ($(this).attr("id") != item_id) {
+			$(this).css({"width" : "0px"});
+			var thatitem = $(this);
+			setTimeout(function(){
+				thatitem.css({"height" : "0px"});
+			}, 500);
+		} else {
+			$(this).css({"width" : width+"px", "overflow" : "visible", "height": "auto"});
+			$(window).scroll(function(e) {
+
+				if (!($("body").hasClass("explore"))) {
+					var opac = (itemheight - $("body").scrollTop())/itemheight;
+					if (opac >= 0.01 && opac <= 1) {
+						$("#" + current + " .fadewithme").css({"opacity" : opac});
+					}
+					else if (opac < .01) {
+						$("#" + current + " .fadewithme").css({"opacity" : "0"});
+					}
+				}
+			});
+		}
+	});
+}
+
+function switcher() {
+	////////////////////////////////////////////////////
+	// Switch from explore to slices and vice versa  //
+	////////////////////////////////////////////////////
+	$("#switch").off("click");
+	if ($(this).find("span")[0].innerHTML == "Explore") {
+		hideSlices();
+		$(this).find("span")[0].innerHTML = "Home";
+		$("#switch .square p").css({"height":"35px", "width":"7px"});
+		$(".filter").fadeIn(500);
+		$(".lefttext, .leftlogo").hide();
+	}
+	else {
+		hideExplore();
+		$(this).find("span")[0].innerHTML = "Explore";
+		$("#switch .square p").css({"height":"", "width":""});
+		$(".filter").hide();
+		$(".lefttext, .leftlogo").fadeIn(500);
+	}
+}
+
+function doMasonry() {
+	////////////////////////
+	// jQuery masonry //
+	////////////////////////
+
+	var container = document.querySelector('ul.slides');
+	msnry = new Masonry( container, {
+	  // options
+	  columnWidth: 260,
+	  itemSelector: 'li.explore-item'
+	});
+
+	msnry.layout();
+	$(window).resize();
+}
+
+function loadSlices() {
+	console.log("Load slices");
+
+	/////////////////////////////
+	// Load the slices. Duh.  //
+	///////////////////////////
+	console.log("URL: ", 'explore.php?slices=1&cats='+usercats+"&inds="+userinds);
+	$.getJSON('explore.php?slices=1&cats='+usercats+"&inds="+userinds, function(data) {
+		$.each(data, function(key, val) {
+			if (data[key] != false) {
+				var html = val["html"];
+				$newLi = $("<li />", {'class': 'one-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><div class="img-cover"><img class="cover" src="img/'+val["img_tall"]+'" alt="mail cover" /><div class="meta" id="customStyle">'+val["customStyle"]+'</div><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="byline">'+val["byline"]+'</div><div class="meta" id="body">'+html+'</div></div><a href="'+val["img_large"]+'" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
+			}
+			if (key == 2) {
+				////////////////////
+				// Message area  //
+				//////////////////
+
+				$newLi = $("<li />", {'class': 'one-item hidestart mail', 'id': 'item-mail', 'html':'<div class="info"><h2>'+firstmsg+'</h2><div class="description">View your messages</div></div><div class="img-cover"><img class="cover" src="img/mail_cover.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">Message</div></div><a href="'+val["img_large"]+'" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
+			}
+			if (key == 5) {
+				$newLi = $("<li />", {'class': 'one-item hidestart map', 'id': 'item-map', 'html':'<div class="info"><h2>Campus Map</h2><div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div></div><div class="img-cover"><img class="cover" src="img/map_cover.jpg" alt="map cover" /></div><div class="meta" id="title">New Messages</div><div class="meta" id="body">stuff</div></div><a href="mail.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
+				fader($(".hidestart:first"));
+
+				///////////////////////////////////
+				// When you open the big image //
+				///////////////////////////////////
+
+				$(".img-cover").each(function(index, element) {
+					var item_id = $(this).parent().attr("id"), itemheight;
+					////////////////////////////////////////////////////////////////////////////////////////
+					// Click event: when click on an image, load the image and append it into the HTML //
+					////////////////////////////////////////////////////////////////////////////////////////
+					$(this).click(function(e) {
+						console.log("This looks like ", this);
+						loadFeature(this, item_id);
+					});
+				});
+				$(".info").each(function(index, element) {
+					var item_id = $(this).parent().attr("id"), itemheight, that = $(this).parent().find(".img-cover")[0];
+					////////////////////////////////////////////////////////////////////////////////////////
+					// Click event: when click on an image, load the image and append it into the HTML //
+					////////////////////////////////////////////////////////////////////////////////////////
+					$(this).click(function(e) {
+						console.log("This looks like ", this);
+						loadFeature(that, item_id);
+					});
+				});
+				checkHash();
+			}
+			$(window).resize();
+		});
+		if (sidebar != "") {
+			$("div.lefttext p.msg").html(sidebar);
+		}
+		else $("div.lefttext p.msg").html("We've hand picked some stories and videos that we think you'll like. Let us know what you think. We'll be updating the site frequently, so please bookmark it and come back again soon.");
+	});
+}
+
+function hideSlices() {
+	$(".img-cover").off("click");
+	$("ul.slides li").remove();
+
+	setTimeout(function(){
+			loadExplore();
+		}, 400);
+	
+	$("body").removeClass("slices").addClass("explore");
+	$(window).resize();
+}
+
+function refresh(cats) {
+	$("#switch").off("click");
+	$(".img-cover").off("click");
+	$("ul.slides li").remove();
+	loadExplore(cats);
+}
+
+function loadExplore(cats) {
+
+	var url;
+
+	if (cats) {
+		url = 'explore.php?cats='+cats;
+	}
+	else url = 'explore.php';
+
+	console.log("URL: ", url);
+	$("body").addClass("explore").removeClass("slices");	
+	$.getJSON(url, function(data) {
+		var len = data.length; 
+		console.log("LENGTH: ", data.length);
+		$.each(data, function(key, val) {
+			if (data[key] != false) {
+				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="img-cover"><img src="img/tiles/'+val["img_sm"]+'" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
+			}
+
+			if (key == len - 1) {
+				doMasonry();
+				fader($(".hidestart:first"));
+				// console.log("Testing ", msnry);
+				
+				///////////////////////////////////
+				// When you open the big image //
+				///////////////////////////////////
+
+				$(".img-cover").each(function(index, element) {
+					var item_id = $(this).parent().attr("id"), itemheight;
+
+					////////////////////////////////////////////////////////////////////////////////////////
+					// Click event: when click on an image, load the image and append it into the HTML //
+					////////////////////////////////////////////////////////////////////////////////////////
+					$(this).click(function(){
+						loadFeature(this, item_id);
+					});
+				});
+			}
+			
+			// $(window).resize();
+		});
+	});
+}
+
+function hideExplore() {
+	msnry.destroy();
+	$(".explore-cover").off("click");
+	$("ul.slides li").animate({"opacity":"0"}, 0, function(){		
+		$(this).hide().remove();
+		if (!$("ul.slides").children().length > 0) {
+			loadSlices();
+		};
+	});
+
+	$("body").removeClass("explore").addClass("slices");
+	$(window).resize();
+}
+
+
+function leaveStory() {
+	/////////////////////////////////////////////////////////////////
+	// Close the current story and go back to slices or explore.  //
+	/////////////////////////////////////////////////////////////////
+
+	$("#switch").show();
+		if ($("body").hasClass("slicesOne")) {
+
+			var leftwidth = $(".left").width()+ "px";
+			$("li").removeClass("current");
+			window.location.hash = "";
+			$(".items").scrollTop(0);
+			$("body").addClass("slices").removeClass("slicesOne");
+			$(".content-info, .content-image").hide();
+			$(".left, .info").show();
+			$(".items").css({"left":leftwidth,"overflow-x" : "scroll", "overflow-y" : "hidden"});
+			$("body").css({"overflow-y":"hidden"});
+			$(".one-item").each(function(index, element) {
+				$(this).css({"width":"","height" : "100%", "overflow" : "hidden"});
+			});
+
+			$(".one-item").remove();
+			loadSlices();
+		}
+
+		else if ($("body").hasClass("exploreOne")) {
+			var leftwidth = $(".left").width()+ "px";
+			$("li").removeClass("current");
+			window.location.hash = "";
+			$(".items").scrollTop(0);
+			$("body").addClass("explore").removeClass("exploreOne");
+			$(".content-info, .content-image").hide();
+			$(".left, .info").show();
+			$(".items").css({"left":"", "width":itemsWidth+"px", "overflow":"", "height":itemsHeight+"px"});
+			$("body").css({"overflow-y":"hidden"});
+			$(".explore-item").each(function(index, element) {
+				$(this).css({"width":"240px", "overflow" : "hidden", "height": ""});
+			});
+			doMasonry();
+			setTimeout(function(){
+				$("#" + current + " .img-cover").fadeIn(500, function(){
+					$(".item-content").html("");
+					$("#go-back").hide();
+					// $(window).resize();
+				});
+			}, 500);
+		}
+}
+
+function resizeWindow() {
+	console.log("resizing");
+	height = $(window).height(), width = $(window).width();
+	var leftwidth = $(".left").width(), itemsWidth = width - leftwidth, itemsHeight = height-51;
+	$("body").css({"height" : height+"px"});
+	if (height > 800) {
+		$(".one-item .img-cover img.cover").css({"width" : "auto"});
+		$(".one-item .img-cover img.cover").css({"height" : itemsHeight + "px"});
+	}
+	else {
+		$(".one-item .img-cover img.cover").css({"width" : "auto"});
+	}
+	//Resize large image
+	$(".left").css("height",itemsHeight);
+	$(".exploreOne li.current, .slicesOne li.current").css({"width":width+"px"});
+	$(".slices .items").css({"width":itemsWidth, "height":itemsHeight+"px"});
+	$(".explore .items").css({"width":itemsWidth + "px", "height":itemsHeight});
+
+	if ($("body").hasClass("slices")) {
+
+	}
+	else {
+		$(".exploreOne #" + current + ", .slicesOne #" + current).css({"width":width + "px"});
+	}
+	// $(".items").css({"height" : height + "px"});
+	bodymargin = $(".content-image-div").height()+"px";
+	$(".content-info").css({"margin-top":bodymargin});
+	$(".slices .items").css({"left":leftwidth+"px"});
+	$(".explore .items").css({"left":""});
+
+
+	var ifwidth = $(".content-info div.body iframe").width(), ifheight = ifwidth * (2/3);
+
+	$(".content-info div.body iframe").css({"height":ifheight+"px"});
+}
+
+$(window).hashchange(function(){
+	checkHash();
+});
+
+var current, bodymargin, imagemargin;
+$(document).ready(function(e) {
+	loadSlices();
+
+	var width = $(window).width(), height = $(window).height();
+	var leftwidth = $(".left").width(), itemsWidth = width - leftwidth, itemsHeight = height-51;
+	// $(".mobile-left").hide();
+	// $(".one-item img").css({"height" : height + "px"});
+
+	/////////////////////
+	// Window resize //
+	/////////////////////
+
+	$(window).resize(function(e) {
+		resizeWindow();
+	});
+
+	/////////////////////////////////////////////////
+	//			When you close the big image       //
+	/////////////////////////////////////////////////
+	$("#go-back").on("click", leaveStory);
+
+
+	/////////////////////////////
+	// When you click explore //
+	/////////////////////////////
+
+	$(window).resize();
+	$(window).hashchange();
+	////////////////////
+	//  Hover states  //
+	////////////////////
+	$(".one-item .info").mouseenter(function(e){
+		$(this).parent().find(".img-cover").addClass("opaque");
+	});
+	$(".one-item .info").mouseleave(function(e){
+		$(this).parent().find(".img-cover").removeClass("opaque");
+	});
+
+	/////////////////
+	// Drop-downs //
+	/////////////////
+	$(".dropdown").each(function(){
+		$(this).find("h3").on("click", function(){
+			console.log($(this).parent());
+			if ($(this).parent().hasClass("expanded")) {
+				$(this).parent().removeClass("expanded");
+				$(this).parent().find(".seemore").slideUp(500);
+			}
+			else {
+				$(this).parent().addClass("expanded");
+				$(this).parent().find(".seemore").slideDown(500);
+			}
+		});
+
+	});
+
+	$("form input").on("click", function(){
+		var checked = {};
+		// console.log($(this).parent().parent().parent());
+		$(this).parent().parent().parent().find("input").each(function(){
+			// console.log(checked);
+		});
+		$(this).parent().parent().parent().find("input:checked").each(function(){
+			var index = $(this).attr("value");
+			checked[index] = "1";
+
+		});
+		var cats = "";
+		$.each(checked, function(k,v){
+			if (v === "1") {
+				cats += k + ",";
+			}
+		});
+		cats = cats.substring(0, cats.length - 1);
+		refresh(cats);
+	});
+});

@@ -1,0 +1,74 @@
+/* CSS Document */
+
+div#slides-bottom {
+  display: none;
+  margin-bottom: 20px;
+}
+
+div#slides-bottom .slidesjs-navigation {
+  margin-top: 10px;
+  text-decoration: none;
+}
+
+div#slides-bottom .slidesjs-previous {
+  margin-right: 5px;
+  float: left;
+}
+
+div#slides-bottom .slidesjs-next {
+  margin-right: 5px;
+  float: left;
+}
+
+.slidesjs-pagination {
+  margin: 10px 0 0;
+  float: right;
+  list-style: none;
+}
+
+.slidesjs-pagination li {
+  float: left;
+  margin: 0 1px;
+}
+
+.slidesjs-pagination li a {
+  display: block;
+  width: 13px;
+  height: 0;
+  padding-top: 13px;
+  background-image: url(../img/pagination.png);
+  background-position: 0 0;
+  float: left;
+  overflow: hidden;
+}
+
+.slidesjs-pagination li a.active,
+.slidesjs-pagination li a:hover.active {
+  background-position: 0 -13px
+}
+
+.slidesjs-pagination li a:hover {
+  background-position: 0 -26px
+}
+
+div#slides-bottom a:link,
+div#slides-bottom a:visited {
+  color: #333
+}
+
+div#slides-bottom a:hover,
+div#slides-bottom a:active {
+  color: #9e2020
+}
+
+.navbar {
+  overflow: hidden
+}
+
+div#slides-bottom {
+  display: none
+}
+
+.container {
+  margin: 0 auto
+}

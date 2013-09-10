@@ -1,0 +1,150 @@
+.sticky {
+	background: none repeat scroll 0 0 #222222;
+    /*box-shadow: 0 2px 4px #333333;
+    -webkit-box-shadow: 0 2px 4px #333333;*/
+    display: block;
+    height: 51px;
+	position: fixed !important;
+    top: 0px;
+	left: 0;	
+    width: 100%;
+	overflow: visible;
+	padding: 0;
+	z-index: 1000;
+}
+
+.ie7 .sticky {
+}
+
+a#circle {
+	display: block;
+	position: absolute;
+	right: -60px;
+	height: 48px;
+	width: 48px;
+	top: -10px;	
+}
+
+#holder {
+    height: 260px;
+}
+
+#top-header-nav a {
+	text-decoration: none;
+	display: inline-block;
+	border: thin solid black;
+	padding: 1px 6px;
+	background: black;
+}
+
+.sticky ul {
+	display: block;
+	margin: 0px auto;
+	overflow: visible;
+	height: 45px;
+	background: url(../img/dmebadge.jpg) scroll no-repeat top right;
+}
+
+.sticky ul li {
+	list-style: none;
+	padding: 0;
+	display: inline-block;
+	float: right;
+	margin: 4px 8px 0 0;
+	color: white;
+}
+
+.sticky ul li.simplify a {
+	text-align: right;
+	right: 0;
+	position: absolute;
+	width: 270px;	
+}
+
+li.dmegallery {
+	right: 57px;
+	display: block;
+	position: absolute;
+	top: 9px;
+}
+
+.sticky ul li a {
+	color: white;
+	text-decoration: none;
+	font-size: 13px;
+	font-weight: 100;
+}
+
+.sticky ul li.home {
+	position: absolute;
+	/*width: 43px;*/
+	overflow: hidden;
+	left: 7px; top: 8px;
+	margin: 0;
+}
+
+.sticky ul li.counts {
+	float: none;	
+}
+
+footer {
+	display: block;
+	margin: 0px 0 0 0;
+	width: 100%;
+	height: 350px;
+	position: relative;
+	clear: both;
+	color: #aaa;
+	/*background: url(../img/foot.jpg) #333 bottom center repeat-x;	*/
+	background: #333;
+	box-shadow: 0 0 10px black;
+	-webkit-box-shadow: 0 0 10px black;
+}
+
+div#footercontainer {
+    display: block;
+    
+	height: 350px;
+    margin: 0 auto;
+    padding: 0 0 0 15px;
+    position: relative;
+    max-width: 960px;
+	font-size: 14px;
+}
+
+footer a, footer a:visited {
+	color: white;	
+	text-decoration: none;
+}
+
+#breadcrumbs {
+	display: block;
+    margin-top: 0;
+    
+	padding: 40px 0 0;
+    position: relative;	
+}
+
+footer #credits {
+	display: block;	
+	margin: 0;
+}
+
+#credits ul {
+	display: block;	
+	padding: 0;
+	font-size: .85em;
+	font-weight: 100;
+	margin: 1em 0;
+}
+
+#credits ul li {
+    list-style: none;
+		
+    margin: 0;
+    padding: 0;
+}
+
+#credits ul#photocredits {
+	display: block;
+}	
