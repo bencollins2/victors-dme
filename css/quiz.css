@@ -1,0 +1,212 @@
+body {
+    display: block;
+    height: 100%;
+    background: #212A55;
+}
+
+.sticky {
+    background: #212A55;
+}
+
+.sticky ul li.home {
+    background: url(../img/smallm.png) no-repeat top left;
+    padding: 2px 0 3px 40px;
+    height: 32px;
+}
+
+.sticky ul li.home a {
+    font-family: georgia,serif;
+    font-size: 20px;
+    font-variant: small-caps;
+}
+
+h2 {
+    font-family: "league-gothic", sans-serif;
+    color: white;
+    margin: 0;
+    font-size: 55px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.quiz {
+    position: relative;
+    display: block;
+    clear: none;
+    width: 578px;
+    margin: 60px auto;
+    overflow: auto;
+    padding-bottom: 45px;
+}
+
+.quiz ul {}
+
+.quiz ul li {
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 217px;
+    overflow: hidden;
+    margin: 10px 0;
+    clear: left;
+}
+
+.quiz ul li.active {
+    border: 2px solid #FECE31;
+}
+
+.quiz ul li:hover img {
+    opacity: 1;
+}
+
+.quiz ul li.active img {
+    opacity: 1;
+}
+
+.quiz ul li div.overlay {
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+    width: 320px;
+    background: rgba(0,0,0,.6);
+}
+
+.quiz ul li div.imgdiv {
+    width: 320px;
+    border: 2px solid white;
+    position: relative;
+    display: block;
+    float: left;
+    overflow: hidden;
+}
+
+.quiz ul li div.checkboxes {
+    float: left;
+    position: relative;
+    margin: 0 10px;
+    color: white;
+    font-weight: 100;
+    font-size: 15px;
+}
+
+.quiz ul li div.checkboxes .item {
+    position: relative;
+    height: 29px;
+    width: 230px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.quiz ul li div.checkboxes .item:hover {
+    color: #FECE31;
+}
+
+.quiz ul li div.checkboxes .item img {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+.quiz ul li div.checkboxes .item span {
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 31px;
+    margin: 7px 0 0;
+    clear: none;
+}
+
+.quiz ul li div h3 {}
+
+.quiz ul li .imgdiv img {
+    transition: all .5s ease-out;
+    opacity: 1;
+    width: 100%;
+    height: auto;
+}
+
+div.next {
+    display: block;
+
+    position: absolute;
+    bottom: 0;
+    width: 110px;
+    height: 41px;
+    overflow: auto;
+}
+
+a.next {
+    color: white;
+    display: block;
+    position: absolute;
+    float: left;
+    font-family: "league-gothic", sans-serif;
+    font-size: 30px;
+    bottom: 0;
+    left: 0;
+    text-decoration: none;
+    padding: 0;
+}
+
+img.wheel {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+    div.quiz {
+        width: 534px;
+    }
+
+    .quiz ul li {
+        height: 190px;
+    }
+
+    .quiz ul li div.overlay {
+    width: 280px;
+}
+
+    .quiz ul li div.imgdiv {
+        width: 280px;
+        height: 185px;
+    }
+}
+
+
+@media only screen and (max-width: 770px) {
+    div.quiz {
+        width: 454px;
+    }
+
+    .quiz ul li {
+        height: 157px;
+    }
+
+    .quiz ul li div.overlay {
+        width: 200px;
+    
+        bottom: 12px;
+    }
+
+    .quiz ul li div.imgdiv {
+        width: 200px;
+        height: 133px;
+    
+        margin-top: 10px;
+}
+    .quiz ul li div h3 {
+        font-size: 20px;
+    }
+
+    .quiz ul li div.checkboxes {
+        font-size: 12px;
+    }
+
+    .quiz ul li div.checkboxes .item span {
+    top: 5px;
+}
+}
