@@ -79,6 +79,7 @@ h2 {
     display: block;
     float: left;
     overflow: hidden;
+	cursor:pointer;
 }
 
 .quiz ul li div.checkboxes {
