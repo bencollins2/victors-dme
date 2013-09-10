@@ -87,6 +87,7 @@
         if ($user == 0 && $session->logged_in) {
             $user = $session->userinfo[0];
             $type = "custom";
+            $logout = "href=\"process.php\"";
             echo "<!--".$user."-->";
         }
 
@@ -109,6 +110,7 @@
                 // echo '<pre>'.htmlspecialchars(print_r($e, true)).'</pre>';
                 // $user = null;
             }
+            $logout = "onClick=\"logoutFb()\" href=\"#\"";
         }
 
         // From this point out, we need $user to definitively reflect our user,
