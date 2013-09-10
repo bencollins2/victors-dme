@@ -59,9 +59,6 @@
     // Facebook stuff  //
     /////////////////////
     require("facebook.php");
-    $config = array();
-    $config['appId'] = '345879355542024';
-    $config['secret'] = '584301cc6805d51704746e45d0459d19';
 
     $facebook = new Facebook($config);
     // See if there is a user from a cookie
