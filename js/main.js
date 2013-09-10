@@ -536,4 +536,26 @@ $(document).ready(function(e) {
 		cats = cats.substring(0, cats.length - 1);
 		refresh(cats);
 	});
+	
+	
+	$("a.selectall").on("click", function(){
+		console.log($(this).parent());
+		$(this).parent().find("input").each(function(){
+			$(this).prop('checked', true);;
+		});
+		var checked ={};
+		$(this).parent().parent().parent().find("input:checked").each(function(){
+			var index = $(this).attr("value");
+			checked[index] = "1";
+
+		});
+		var cats = "";
+		$.each(checked, function(k,v){
+			if (v === "1") {
+				cats += k + ",";
+			}
+		});
+		cats = cats.substring(0, cats.length - 1);
+		refresh(cats);
+	});
 });

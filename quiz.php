@@ -153,6 +153,23 @@
                     else $img.attr("src", "img/box.png");
                     console.log($this.data("shortname"));
 				});
+				$(".imgdiv").on("click",function(){
+					console.log("aa");
+					if($(this).attr("all") != "all"){
+						$(this).attr("all", "all");
+						$(this).parent().find(".item").each(function(){
+							$(this).addClass("active");
+							$($(this).find("img")[0]).attr("src", "img/checked.png");
+						});
+					}else{
+						$(this).attr("all", "none");
+						$(this).parent().find(".item").each(function(){
+							$(this).removeClass("active");
+							$($(this).find("img")[0]).attr("src", "img/box.png");
+						});
+					}
+					
+				});
 				$("a.next").on("click", function(e){
 					e.preventDefault();
 					// console.log($(".wheel")[0])
