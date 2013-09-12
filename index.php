@@ -202,7 +202,7 @@
     // Stuff to pull most recent message...  //
     ///////////////////////////////////////////
 
-    $q = "SELECT * FROM `messages` WHERE SUBSTR(`to`, 2) LIKE 2206222 ORDER BY `timestamp` DESC LIMIT 0,1";
+    $q = "SELECT * FROM `messages` WHERE SUBSTR(`to`, 2) LIKE $user ORDER BY `timestamp` DESC LIMIT 0,1";
     $r = mysql_query($q) OR DIE("Sorry, couldn't select recent message.");
     $l = mysql_fetch_array($r);
     $firstmsg = strip_tags($l["message"]);
