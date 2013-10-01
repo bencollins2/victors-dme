@@ -60,7 +60,7 @@ window.fbAsyncInit = function() {
       }
       function logoutFb() {
         FB.logout(function(){
-          window.location.assign("index.php");
+          window.location.assign("index.php?login=1");
         });
       }
 

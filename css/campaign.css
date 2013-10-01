@@ -116,6 +116,7 @@ body.slicesOne, body.exploreOne {
     bottom: 10px;
     left: 50%;
     margin: 0 0 0 -95px;
+    display:none;
 }
 
 .left .readytogive img {
@@ -537,7 +538,7 @@ li.current {
 
 .content-image-div.iframe {
     height: 100%;
-    z-index: 1;
+    z-index: 1 !important;
     max-height: none;
     pointer-events: all;
 }
@@ -711,40 +712,51 @@ a#circle {
 
 .messages {}
 
-.messages h3 {
+body #item-mail .messages .message h3 {
     font-family: helvetica,sans-serif;
     text-transform: none;
     font-size: 14px;
-    float: left;
-    display: inline-block;
+    display: block;
     line-height: 27px;
     font-weight: 600;
+    margin: 0 0 0 70px;
 }
 
 .messages span.timestamp {
-    float: right;
     font-size: 12px;
+    position: absolute;
+    right: 10px;
+    top: 17px;
+    color: #888888;
+    font-weight: 100;
 }
 
-.message .avatar {
+.message .avatar img {
     width: 60px;
     min-width: 0;
     float: left;
     margin: 6px 10px 10px 0;
 }
 
+body .messages .message p.avatar {
+    width: 60px;
+
+    float: left;
+    margin: 0 10px 0 0;
+}
+
 .body .messages .message p {
     width: 91%;
-    margin: 2px 0 15px 0;
+    margin: 2px 0 15px 70px;
     max-width: none;
     display: block;
-    float: left;
 }
 
 .message {
     background: #eee;
     overflow: auto;
     padding: 13px;
+    position: relative;
 }
 
 .message:nth-child(even) {
@@ -768,8 +780,8 @@ a#circle {
 }
 
 .sendmessage {
-    margin: 0 0 0 70px;
-    width: 85%;
+    margin: 0 0 0 0px;
+    width: 100%;
 }
 
 .sendmessage textarea {
@@ -778,7 +790,9 @@ a#circle {
     margin: 10px 0;
 }
 
-.sendmessage input[type="submit"] {}
+.sendmessage input[type="submit"] {
+    margin-top: 19px;
+}
 
 @media only screen and (max-height: 800px) {
     .img-cover {

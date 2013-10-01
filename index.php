@@ -191,6 +191,13 @@
         $body = "forgotpass.php";
     }
 
+    if ($_GET["newpass"] == "1") {
+        $normalize = "css/normalize.css";
+        $main = "css/main.css";
+        $campstyle = "css/login.css";
+        $body = "newpass.php";
+    }
+
     if ($_GET["register"] == "1") {
         $normalize = "css/normalize.css";
         $main = "css/main.css";
@@ -205,8 +212,8 @@
     $q = "SELECT * FROM `messages` WHERE SUBSTR(`to`, 2) LIKE $user ORDER BY `timestamp` DESC LIMIT 0,1";
     $r = mysql_query($q) OR DIE("Sorry, couldn't select recent message.");
     $l = mysql_fetch_array($r);
-    $firstmsg = strip_tags($l["message"]);
-    $firstmsg = implode(' ', array_slice(explode(' ', $firstmsg), 0, 5));
+    $firstmsg = strip_tags(preg_replace('/\n/i', '', $l["message"]));
+    $firstmsg = implode(' ', array_slice(explode(' ', $firstmsg), 0, 10));
     $firstmsg .= "...";
 
     echo "<!--$body-->";

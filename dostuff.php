@@ -1,6 +1,10 @@
 <?php
 	require("../db_campaign.php");
 
+	if (!extension_loaded('json')) {
+            dl('json.so');  
+    }
+
 	$type = $_REQUEST["type"];
 	$userid = (int)$_REQUEST["id"];
 	$username = mysql_real_escape_string($_REQUEST["name"]);
@@ -50,12 +54,14 @@
 
 	if ($type == "putmessage") {
 		header('Content-type: application/json');
-		$msg = mysql_real_escape_string($_REQUEST["msg"]);
+		$msg = nl2br($_REQUEST["msg"]);
+		$msg = preg_replace('/\n/i', '', $msg);
+		$msg = mysql_real_escape_string($msg);
 		$to = (int)$_REQUEST["to"];
 
 		if ($msg != "" && $to != "") {
-			$msg = "<p>" . implode( "</p>\n\n<p>", preg_split( '/\n(?:\s*\n)+/', $msg ) ) . "</p>";
-			$query = "INSERT INTO `messages` (`id`, `to`, `from`, `message`, `timestamp`, `img1`, `img2`, `img3`, `img4`, `img5`, `img6`, `img7`, `img8`, `img9`, `img10`, `img1_para`, `img2_para`, `img3_para`, `img4_para`, `img5_para`, `img6_para`, `img7_para`, `img8_para`, `img9_para`, `img10_para`, `published`, `viewed`) VALUES (NULL, 'u$userid', 'a$to', '$msg', CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '1')";
+			// $msg = "<p>" . implode( "</p>\n\n<p>", preg_split( '/\n(?:\s*\n)+/', $msg ) ) . "</p>";
+			$query = "INSERT INTO `messages` (`id`, `from`, `to`, `message`, `timestamp`, `img1`, `img2`, `img3`, `img4`, `img5`, `img6`, `img7`, `img8`, `img9`, `img10`, `img1_para`, `img2_para`, `img3_para`, `img4_para`, `img5_para`, `img6_para`, `img7_para`, `img8_para`, `img9_para`, `img10_para`, `published`, `viewed`) VALUES (NULL, 'u$userid', 'a$to', '$msg', CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '1')";
 			$result = mysql_query($query) or die("Sorry: " . $query);
 			$json["message"] = "Message added.";
 			$insertid = mysql_insert_id();
@@ -83,7 +89,7 @@
 			    $name = $line3["first"] . " " . $line3["last"];
 			    $message = "Hello $name. \n\n$un has sent you a new message on the Michigan Engineering Campaign platform. Please log in to view it.\n\nThanks!";
 				$subject = "New message for Michigan Engineering Campaign";
-				$from = "bencollins2@gmail.com";
+				$from = "engcom@gmail.com";
 				$headers = "From:" . $from;
 				mail($email,$subject,$message,$headers);
 			}
@@ -94,12 +100,17 @@
 
 	if ($type == "getmessages") {
 		header('Content-type: application/json');
-		$query = "SELECT m.id AS 'mid', SUBSTR(m.from, 2) AS 'from', SUBSTR(m.to, 2) AS 'to', m.message, m.timestamp, u.id, CONCAT(a.first, ' ', a.last) AS fromName, CONCAT(u.first, ' ', u.last) AS toName, m.img1, m.img2, m.img3, m.img4, m.img5, m.img6, m.img7, m.img8, m.img9, m.img10, u.avatar_sm FROM `messages` AS m INNER JOIN `users` AS u ON SUBSTR(m.to, 2) = u.id INNER JOIN `adminusers` AS a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(m.to, 2) LIKE '$userid' UNION SELECT m.id, SUBSTR(m.from, 2) AS 'from', SUBSTR(m.to, 2), m.message, m.timestamp, u.id, CONCAT(u.first, ' ', u.last), CONCAT(a.first, ' ', a.last), m.img1, m.img2, m.img3, m.img4, m.img5, m.img6, m.img7, m.img8, m.img9, m.img10, a.avatar_sm FROM `messages` AS m INNER JOIN `users` AS u ON SUBSTR(m.from, 2) = u.id INNER JOIN `adminusers` AS a ON SUBSTR(m.to, 2) = a.id WHERE SUBSTR(m.from, 2) LIKE '$userid' ORDER BY `timestamp` ASC";
+		$query = "SELECT m.id AS 'mid', SUBSTR(m.from, 2) AS 'from', SUBSTR(m.to, 2) AS 'to', m.message, m.timestamp, u.id, CONCAT(a.first, ' ', a.last) AS fromName, CONCAT(u.first, ' ', u.last) AS toName, m.img1, m.img2, m.img3, m.img4, m.img5, m.img6, m.img7, m.img8, m.img9, m.img10, a.avatar_sm FROM `messages` AS m INNER JOIN `users` AS u ON SUBSTR(m.to, 2) = u.id INNER JOIN `adminusers` AS a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(m.to, 2) LIKE '$userid' UNION SELECT m.id, SUBSTR(m.from, 2) AS 'from', SUBSTR(m.to, 2), m.message, m.timestamp, u.id, CONCAT(u.first, ' ', u.last), CONCAT(a.first, ' ', a.last), m.img1, m.img2, m.img3, m.img4, m.img5, m.img6, m.img7, m.img8, m.img9, m.img10, u.avatar_sm FROM `messages` AS m INNER JOIN `users` AS u ON SUBSTR(m.from, 2) = u.id INNER JOIN `adminusers` AS a ON SUBSTR(m.to, 2) = a.id WHERE SUBSTR(m.from, 2) LIKE '$userid' ORDER BY `timestamp` ASC";
 		$result = mysql_query($query);
 		$html = "<div class=\"messages\">";
+		if (mysql_num_rows($result) == 0) {
+            $html .= "<div class=\"message\">No messages yet.</div>";
+        }
+
 		while ($line = mysql_fetch_array($result)){
 			$id = $line["mid"];
 			$hasimages = false;
+			$numimages = 0;
 			$imagetext = "";
 			$images = array(
 				1 => $line["img1"], 
@@ -122,16 +133,23 @@
 			foreach($images as $k => $v) {
 				if ($v != null) {
 					$hasimages = true;
+					$numimages ++;
 					$imgurls[] = $v;
 				}
 			}
 
-			if ($hasimages) {
+			if ($numimages == 1) {
+				$v = substr($imgurls[0], 0, -4);
+				$imagetext = "<div class=\"singleimg\"><img src=\"imagehelper.php?i=$v\" alt=\"Photo 1\"></div>";
+			}
+			else if ($hasimages) {
 				$imgids[] = $id;
 				$imagetext = "<div id=\"slides$id\" class=\"slides\">";
 				foreach($imgurls as $k => $v) {
+					$v = substr($v, 0, -4);
 					$kk = $k+1;
-					$imagetext .= "<img src=\"http://localhost:8888/htdocs/DME/campaign/img/uploads/$v\" alt=\"Photo $kk\">";
+					// $imagetext .= "<img src=\"http://localhost:8888/htdocs/campaign/img/uploads/$v\" alt=\"Photo $kk\">";
+					$imagetext .= "<img src=\"imagehelper.php?i=$v\" alt=\"Photo $kk\">";
 				}
 				$imagetext .= "<a href=\"#\" class=\"slidesjs-previous slidesjs-navigation\"><i class=\"icon-chevron-left icon-large\"></i></a>
 			<a href=\"#\" class=\"slidesjs-next slidesjs-navigation\"><i class=\"icon-chevron-right icon-large\"></i></a></div>";
@@ -140,7 +158,7 @@
 
 			$ts = date("F j, Y", strtotime($line["timestamp"]));
 			$html .= "<div class=\"message\">";
-			if ($line["avatar_sm"] != "") $html .= "<img class=\"avatar\" src=\"./img/avatars/".$line["avatar_sm"]."\" />";
+			if ($line["avatar_sm"] != "") $html .= "<p class='avatar'><img class=\"avatar\" src=\"./img/avatars/".$line["avatar_sm"]."\" /></p>";
 			$html .= "		<h3 class=\"from\">".$line["fromName"]."</h3>
 						<span class=\"timestamp\">$ts</span>
 						".$line["message"]."

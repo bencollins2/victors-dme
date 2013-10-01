@@ -31,7 +31,7 @@
             <!-- <img class="leftlogo" src="img/leftlogo.png" alt="logo" /> -->
             <div class="lefttext">
                 <h2>Welcome <?= $first_name?></h2>
-                <span>Victor of Engineering</span>
+                <span>Victor of engineering</span>
                 <p class="msg"><!-- We've hand picked some stories and videos that we think you'll like. Let us know what you think. We'll be updating the site frequently, so please bookmark it and come back again soon. --></p>
                 <p><a <?= $logout?>>(Log Out)</a></p>
             </div>
@@ -151,6 +151,7 @@
         <script src="js/hashchange.js"></script>
         <script src="js/masonry.js"></script>
         <script src="js/plugins.js"></script>
+        <script src="js/tinymce/tinymce.min.js"></script>
         <script src="js/main.js"></script>
         <script src="js/fb.js"></script>
 

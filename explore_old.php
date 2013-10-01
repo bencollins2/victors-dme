@@ -51,15 +51,6 @@
 				$result = mysql_query($query2) or die("Fail: " . $query2);
 				$temp = recordToArray($result);
 				array_pop($temp);
-				$tempid = $temp[0]['id'];
-
-				foreach($arr as $kk => $vv) {
-					if ($vv['id'] == $tempid) {
-						unset($arr[$kk]);
-					}
-				}
-
-
 				array_splice($arr, $k, 0, $temp);
 			}
 
@@ -70,32 +61,6 @@
 
 	
 	// $arr = recordToArray($result);
-
-	//////////////////////////////////////////////////
-	// Let's make sure there are enough stories..  //
-	//////////////////////////////////////////////////
-
-	$count = count($arr);
-
-	if ($count < 6) {
-		$limit = 7 - $count;
-		$query3 = "SELECT * FROM `features` ORDER BY `id` DESC LIMIT 0,$limit;";
-		$result3 = mysql_query($query3);
-		$temp = recordToArray($result3);
-		array_pop($temp);
-		foreach($temp as $k => $v) {
-			$inarr = false;
-			foreach($arr as $kk => $vv) {
-				if ($vv['id'] == $v['id']) {
-					$inarr = true;
-				}
-			}
-			if (!$inarr) {
-				array_push($arr, $v);
-			}
-		}
-	}
-
 
 
 	//////////////////////
