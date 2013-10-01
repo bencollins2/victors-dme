@@ -525,6 +525,9 @@ li.current {
 .selectall {
     display: block;
     text-decoration: none;
+    font-style: italic;
+    font-weight: 900;
+    font-size: 11px;
 }
 
 .byline {
