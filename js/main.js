@@ -40,6 +40,7 @@ function loadFeature(that, item_id) {
 	////////////////////////////////
 	// Load an individual story  //
 	////////////////////////////////
+
 	var itemheight, $parent = $(that).parent(); 
 
 	$("#switch").hide();
@@ -163,7 +164,7 @@ function loadFeature(that, item_id) {
 	// For now, this is the only thing that matters.  //
 	/////////////////////////////////////////////////////
 	else {
-		$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><ul class="left-stuff"><li><a class="fb"><img src="./img/social/fb.png" alt="share on facebook" /></a></li><li><a class="twitter"><img src="./img/social/twitter.png" alt="share on twitter" /></a></li><li><a class="gp"><img src="./img/social/gp.png" alt="share on Google +" /></a></li><li><a class="pinterest"><img src="./img/social/pinterest.png" alt="share on pinterest" /></a></li><li><a class="reddit"><img src="./img/social/reddit.png" alt="share on reddit" /></a></li></ul><h2 class="fadewithme">'+title+'</h2><h3>Subtitle</h3><span class="byline">'+author+'</span><div class="body">'+body+'</div></div>');
+		$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><ul class="left-stuff"><li><a id="fav"></li><li><a class="fb"><img src="./img/social/fb.png" alt="share on facebook" /></a></li><li><a class="twitter"><img src="./img/social/twitter.png" alt="share on twitter" /></a></li><li><a class="gp"><img src="./img/social/gp.png" alt="share on Google +" /></a></li><li><a class="pinterest"><img src="./img/social/pinterest.png" alt="share on pinterest" /></a></li><li><a class="reddit"><img src="./img/social/reddit.png" alt="share on reddit" /></a></li></ul><h2 class="fadewithme">'+title+'</h2><h3>Subtitle</h3><span class="byline">'+author+'</span><div class="body">'+body+'</div></div>');
 	}
 
 	/////////////////////////////////////
@@ -172,6 +173,48 @@ function loadFeature(that, item_id) {
 	$(".explore, body").scrollTop(0);
 	$(".items").scrollLeft(0);
 
+	///////////////////////////////
+	// Check the favorite status of current feature //
+	///////////////////////////////
+	
+	is_faved = false;
+	
+	for (var i=0; i<fav_array.length; i++){
+		if (item_id.slice(5) == fav_array[i]){
+			is_faved = true;
+			break;
+		}
+	}
+	
+	if(is_faved == false){
+		$('a#fav').html('Fav');
+	}else{
+		$('a#fav').html('Unfav');
+	}
+	
+	$('a#fav').click(function(){
+		if(is_faved ==false){
+			is_faved=true;
+			$('a#fav').html('Unfav');
+			fav_array.push(item_id.slice(5));
+			console.log(fav_array);
+		}else{
+			is_faved=false;
+			$('a#fav').html('Fav');
+			fav_array.splice(fav_array.indexOf(item_id.slice(5)),1);
+			console.log(fav_array);
+		}
+		// send the new favorites to database
+		console.log(fav_array.join());
+		$.ajax({
+			type: "POST",
+			url: "dostuff.php",
+			data: { id: userid, type: "newfav", favs: fav_array.join()}
+		}).done(function( msg ) {
+			console.log("Message: ", msg);
+		});
+	});
+	
 
 	///////////////////////////////
 	// Get height of img div //
@@ -260,6 +303,7 @@ function loadSlices() {
 	///////////////////////////
 	console.log("URL: ", 'explore.php?slices=1&cats='+usercats+"&inds="+userinds);
 	$.getJSON('explore.php?slices=1&cats='+usercats+"&inds="+userinds, function(data) {
+		console.log(data);
 		$.each(data, function(key, val) {
 			if (data[key] != false) {
 				var html = val["html"];

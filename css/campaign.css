@@ -290,7 +290,7 @@ li.current {
 .left-stuff {
     position: relative;
     width: 50px;
-    height: 247px;
+/*    height: 247px;*/
     float: left;
     margin: 1px 0px 0 0;
 }
@@ -308,6 +308,10 @@ li.current {
     width: auto;
     height: auto;
     z-index: 1;
+}
+
+.left-stuff li #fav{
+	cursor:pointer;
 }
 
 .left-stuff:after {
