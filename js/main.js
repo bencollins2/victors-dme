@@ -330,6 +330,7 @@ function refresh(cats) {
 	$(".img-cover").off("click");
 	$("ul.slides li").remove();
 	loadExplore(cats);
+	console.log(cats);
 }
 
 function loadExplore(cats) {
@@ -541,14 +542,16 @@ $(document).ready(function(e) {
 
 	$("form input").on("click", function(){
 		var checked = {};
-		// console.log($(this).parent().parent().parent());
-		$(this).parent().parent().parent().find("input").each(function(){
-			// console.log(checked);
-		});
+		
+		if($(this).parent().find('input:checked').length == $(this).parent().find('input').length){
+			console.log("yes");
+			$(this).parent().find('a.selectall').attr('status','false');
+			$(this).parent().find('a.selectall').html('Deselect all');
+		}
+		
 		$(this).parent().parent().parent().find("input:checked").each(function(){
 			var index = $(this).attr("value");
 			checked[index] = "1";
-
 		});
 		var cats = "";
 		$.each(checked, function(k,v){
@@ -561,10 +564,20 @@ $(document).ready(function(e) {
 	});
 	
 	$("a.selectall").on("click", function(){
-		console.log($(this).parent());
-		$(this).parent().find("input").each(function(){
-			$(this).prop('checked', true);;
-		});
+		if($(this).attr('status') == 'true'){
+			$(this).parent().find("input").each(function(){
+				$(this).prop('checked', true);
+			});
+			$(this).attr('status','false');
+			$(this).html('Deselect all');
+		}else{
+			$(this).parent().find("input").each(function(){
+				$(this).prop('checked', false);
+			});
+			$(this).attr('status','true');
+			$(this).html('Select all');
+		}
+		
 		var checked ={};
 		$(this).parent().parent().parent().find("input:checked").each(function(){
 			var index = $(this).attr("value");
@@ -580,4 +593,5 @@ $(document).ready(function(e) {
 		cats = cats.substring(0, cats.length - 1);
 		refresh(cats);
 	});
+	
 });
