@@ -136,7 +136,7 @@
             $inds = $line["individuals"];
             $sidebar = $line["sidebar"];
             $mailimg = $line["mailimg"];
-
+			$favorites = $line["favorites"];
             
 
         }
