@@ -56,7 +56,7 @@
 					e.preventDefault();
 					FB.login(function(response) {
 						window.location.assign("index.php");
-					}, {scope: 'email,user_likes,read_mailbox'});;
+					}, {scope: 'email'});;
 				});
 
                 if (<?= $open?> == 1) {

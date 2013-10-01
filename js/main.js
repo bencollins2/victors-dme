@@ -78,7 +78,7 @@ function loadFeature(that, item_id) {
 
 	}
 	else if ($parent.hasClass("map")) {
-		$itemcontent.html('<div class="content-image-div iframe"><iframe class="content-iframe" http://www.engin.umich.edu/college/admissions/visit/nc-live-map/"></iframe></div><!--div class="content-info"><h2>'+title+'</h2><div class="body">'+body+'</div-->');
+		$itemcontent.html('<div class="content-image-div iframe"><iframe class="content-iframe" src="http://www.engin.umich.edu/college/admissions/visit/nc-live-map/"></iframe></div><!--div class="content-info"><h2>'+title+'</h2><div class="body">'+body+'</div-->');
 	}
 
 	else if ($parent.hasClass("mail")) {
@@ -95,20 +95,39 @@ function loadFeature(that, item_id) {
 			data: { type: "getmessages", id: userid, name: username }
 		});
 		request.done(function(msg) {
-			console.log(msg);
+			console.log("MSG: ", msg);
 			$itemcontent.html('<div class="content-image-div"><img class="content-image" src="img/big/' + mailimg + '" alt="item image" /></div><div class="content-info"><h2 class="fadewithme">Read your messages</h2><div class="body">' + msg.html + '</div></div>');
 			
-			$.each(msg.id, function(k,v){
-				$('#slides'+v).slidesjs({
-					width: 940,
-					height: 528,
-					navigation: false
-				});	
-			});
+			tinymce.init({
+			    selector: "textarea",
+			    plugins: [
+			    "lists link print anchor template",
+			    "searchreplace visualblocks code fullscreen",
+			    "insertdatetime media table contextmenu paste"
+			  ],
+			  toolbar: "undo redo | bold italic | bullist numlist | link",
+			  menubar: false,
+			  statusbar: false
+			 });
+
+			console.log("ID: ", msg.id);
+
+			if (msg.id != null) {
+				$.each(msg.id, function(k,v){
+					$('#slides'+v).slidesjs({
+						width: 940,
+						navigation: false,
+						start:1
+					});	
+				});			
+			}
+
+
 
 			$(".sendmessage input[type='submit']").on("click", function(e){
 				e.preventDefault();
-				$this = $(this), $parent = $this.parent(), ta = $($parent.find("textarea")[0]).val(), to = $this.data("to");
+				console.log("Clicked the button");
+				$this = $(this), $parent = $this.parent(), msg = tinymce.activeEditor.getContent(), ta = $($parent.find("textarea")[0]).val(), to = $this.data("to");
 				///////////////////////
 				// Send the message  //
 				///////////////////////
@@ -116,12 +135,13 @@ function loadFeature(that, item_id) {
 				var request = $.ajax({
 					type: "POST",
 					url: "dostuff.php",
-					data: { id: userid, type: "putmessage", msg: ta, to: to, name: username }
+					data: { id: userid, type: "putmessage", msg: msg, to: to, name: username }
 				});
 				request.done(function(msg) {
 					console.log(msg);
-					$("div.message:last").before(msg.msg);
+					$("div.message:last").before(msg.msg.replace("\n", ""));
 					$($parent.find("textarea")[0]).val("");
+					tinymce.activeEditor.setContent('');	
 				});
 				request.fail(function(jqXHR, textStatus) {
 					console.log( " Failed: " + textStatus );
@@ -243,14 +263,16 @@ function loadSlices() {
 		$.each(data, function(key, val) {
 			if (data[key] != false) {
 				var html = val["html"];
-				$newLi = $("<li />", {'class': 'one-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><div class="img-cover"><img class="cover" src="img/'+val["img_tall"]+'" alt="mail cover" /><div class="meta" id="customStyle">'+val["customStyle"]+'</div><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="byline">'+val["byline"]+'</div><div class="meta" id="body">'+html+'</div></div><a href="'+val["img_large"]+'" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
+				$newLi = $("<li />", {'class': 'one-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><div class="img-cover"><img class="cover" src="img/'+val["img_large"]+'_cover.jpg" alt="mail cover" /><div class="meta" id="customStyle">'+val["customStyle"]+'</div><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="byline">'+val["byline"]+'</div><div class="meta" id="body">'+html+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
 			}
 			if (key == 2) {
 				////////////////////
 				// Message area  //
 				//////////////////
 
-				$newLi = $("<li />", {'class': 'one-item hidestart mail', 'id': 'item-mail', 'html':'<div class="info"><h2>'+firstmsg+'</h2><div class="description">View your messages</div></div><div class="img-cover"><img class="cover" src="img/mail_cover.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">Message</div></div><a href="'+val["img_large"]+'" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
+				var mimg = mailimg.substring(0, mailimg.length - 4) + "_cover.jpg";
+
+				$newLi = $("<li />", {'class': 'one-item hidestart mail', 'id': 'item-mail', 'html':'<div class="info"><h2>'+firstmsg+'</h2><div class="description">View your messages</div></div><div class="img-cover"><img class="cover" src="img/'+mimg+'" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">Message</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
 			}
 			if (key == 5) {
 				$newLi = $("<li />", {'class': 'one-item hidestart map', 'id': 'item-map', 'html':'<div class="info"><h2>Campus Map</h2><div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div></div><div class="img-cover"><img class="cover" src="img/map_cover.jpg" alt="map cover" /></div><div class="meta" id="title">New Messages</div><div class="meta" id="body">stuff</div></div><a href="mail.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
@@ -325,8 +347,9 @@ function loadExplore(cats) {
 		var len = data.length; 
 		console.log("LENGTH: ", data.length);
 		$.each(data, function(key, val) {
+			console.log("Data: ", data);
 			if (data[key] != false) {
-				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="img-cover"><img src="img/tiles/'+val["img_sm"]+'" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
+				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
 			}
 
 			if (key == len - 1) {
@@ -536,7 +559,6 @@ $(document).ready(function(e) {
 		cats = cats.substring(0, cats.length - 1);
 		refresh(cats);
 	});
-	
 	
 	$("a.selectall").on("click", function(){
 		console.log($(this).parent());
