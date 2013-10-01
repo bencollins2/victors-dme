@@ -43,7 +43,7 @@
                     <div class="dropdown">
                         <h3>Transportation Innovations</h3>
                         <div class="seemore">
-                            <a href="#" class="selectall">Select all</a>
+                            <a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="vautonomous"> Autonomous Vehicles<br />
                             <input type="checkbox" value="invehicle"> In-Vehicle Technology<br />
                             <input type="checkbox" value="vefficciency"> Vehicle Efficiency<br />
@@ -55,7 +55,7 @@
                     <div class="dropdown">
                         <h3>Economics & Entrepreneurship</h3>
                         <div class="seemore">
-							<a href="#" class="selectall">Select all</a>
+							<a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="startups"> Startups<br />
                             <input type="checkbox" value="highrisk"> High-Risk Research<br />
                             <input type="checkbox" value="entreco"> Entrepreneurial Ecosystem<br />
@@ -66,7 +66,7 @@
                     <div class="dropdown">
                         <h3>Wolverine Experience</h3>
                         <div class="seemore">
-							<a href="#" class="selectall">Select all</a>
+							<a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="handson"> Hands-On Engineering<br />
                             <input type="checkbox" value="leadersbest"> Academic Leaders & Best<br />
                             <input type="checkbox" value="world"> Wolverines Around the World<br />
@@ -79,7 +79,7 @@
                     <div class="dropdown">
                         <h3>Global Resources</h3>
                         <div class="seemore">
-							<a href="#" class="selectall">Select all</a>
+							<a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="water"> Water<br />
                             <input type="checkbox" value="sustain"> Sustainabiolity<br />
                             <input type="checkbox" value="eefficiency"> Energy Efficiency<br />
@@ -91,7 +91,7 @@
                     <div class="dropdown">
                         <h3>Revolutionary Materials</h3>
                         <div class="seemore">
-							<a href="#" class="selectall">Select all</a>
+							<a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="nanotech"> Nanotechnology<br />
                             <input type="checkbox" value="structures"> Structures<br />
                             <input type="checkbox" value="healthsafety"> Health & Safety<br />
@@ -103,7 +103,7 @@
                     <div class="dropdown">
                         <h3>Healthcare</h3>
                         <div class="seemore">
-							<a href="#" class="selectall">Select all</a>
+							<a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="disease"> Disease Research<br />
                             <input type="checkbox" value="diagnostics"> Diagnostics<br />
                             <input type="checkbox" value="meddev"> Medical Devices<br />
@@ -115,7 +115,7 @@
                     <div class="dropdown">
                         <h3>Securing our Future</h3>
                         <div class="seemore">
-							<a href="#" class="selectall">Select all</a>
+							<a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="weapons"> Weapons Detection<br />
                             <input type="checkbox" value="cybersec"> CyberSecurity<br />
                             <input type="checkbox" value="nuclear"> Nuclear Non-Proliferation<br />
