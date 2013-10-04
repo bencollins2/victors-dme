@@ -42,8 +42,9 @@ function loadFeature(that, item_id) {
 	////////////////////////////////
 
 	var itemheight, $parent = $(that).parent(); 
+	
+	console.log("Be quiet, the children are testing: ", $(that).parent());
 
-	$("#switch").hide();
 	if (msnry !== undefined) msnry.destroy();
 	window.location.hash = item_id;
 	$parent.addClass("current");
@@ -230,7 +231,6 @@ function loadFeature(that, item_id) {
 	var itemwidth = $(window).width() - ($(window).width()/3);
 	var marginleft = String(itemwidth/-2)+"px";
 	//$(".content-info").css({"margin-top" : margintop,"margin-left":marginleft,"width":itemwidth});
-	$("#go-back").show();
 
 	// Expand the selected item to full screen, and make all other cover images 0 so they will disappear
 	$(".explore-item, .one-item").each(function(index, element) {
@@ -257,27 +257,6 @@ function loadFeature(that, item_id) {
 		}
 	});
 }
-
-// function switcher() {
-// 	////////////////////////////////////////////////////
-// 	// Switch from explore to slices and vice versa  //
-// 	////////////////////////////////////////////////////
-// 	$("#switch").off("click");
-// 	if ($(this).find("span")[0].innerHTML == "Explore") {
-// 		hideSlices();
-// 		$(this).find("span")[0].innerHTML = "Home";
-// 		$("#switch .square p").css({"height":"35px", "width":"7px"});
-// 		$(".filter").fadeIn(500);
-// 		$(".lefttext, .leftlogo").hide();
-// 	}
-// 	else {
-// 		hideExplore();
-// 		$(this).find("span")[0].innerHTML = "Explore";
-// 		$("#switch .square p").css({"height":"", "width":""});
-// 		$(".filter").hide();
-// 		$(".lefttext, .leftlogo").fadeIn(500);
-// 	}
-// }
 
 function doMasonry() {
 	////////////////////////
