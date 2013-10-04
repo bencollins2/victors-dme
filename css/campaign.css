@@ -8,6 +8,11 @@ body.explore {
     background: black;
     overflow: hidden;
 }
+body.favorites{
+    height: auto;
+    background: black;
+    overflow: hidden;
+}
 
 body.slicesOne, body.exploreOne {
     background: white;
@@ -132,26 +137,44 @@ body.slicesOne, body.exploreOne {
     text-decoration: underline;
 }
 
-#switch, #go-back {
+.navi_item {
     position: absolute;
-
-    right: 0;
     top: 0;
     width: 110px;
     cursor: pointer;
+	color:white;
+	transition: color 1s ease;
+}
+.navi_item p{
+	transition: background 1s ease;
+}
+.navi_item:hover{
+	color:#FEC33A;
+}
+.navi_item:hover p{
+	background:#FEC33A;
 }
 
-#switch span, #go-back span {
+#nav_exp{
+	right: 120px;
+}
+#nav_home{
+	right:240px;
+}
+#nav_fav{
+	right:10px;
+}
+
+.navi_item span {
     display: block;
     position: absolute;
     right: 49px;
     margin: 12px 0 0 0px;
-    color: white;
     font-weight: 100;
     font-size: 15px;
 }
 
-#switch .square, #go-back .square {
+.navi_item .square {
     position: relative;
 
     float: right;
@@ -161,7 +184,7 @@ body.slicesOne, body.exploreOne {
     margin: 4px;
 }
 
-#switch .square p {
+.p_short {
     display: block;
     position: relative;
     float: left;
@@ -172,7 +195,7 @@ body.slicesOne, body.exploreOne {
     transition: width 1s ease;
 }
 
-#go-back .square p {
+.p_long {
     display: block;
     position: relative;
     float: left;
@@ -182,6 +205,7 @@ body.slicesOne, body.exploreOne {
     background: white;
     transition: width 1s ease;
 }
+
 
 .itemcontainer .hidestart {
     opacity: 0;
@@ -445,7 +469,7 @@ li.current {
     top: 0;
 }
 
-.img-cover:hover, #go-back:hover {
+.img-cover:hover {
 	cursor: pointer;
 }
 
@@ -463,14 +487,14 @@ li.current {
 	/* font-size: 13px; */
 	/* border-bottom: thin solid; */
 }
-
+/*
 .slices #go-back {
     display: none;
 }
 
 .explore #go-back {
     display: none;
-}
+}*/
 
 .img-src {
 	display: none;

@@ -258,26 +258,26 @@ function loadFeature(that, item_id) {
 	});
 }
 
-function switcher() {
-	////////////////////////////////////////////////////
-	// Switch from explore to slices and vice versa  //
-	////////////////////////////////////////////////////
-	$("#switch").off("click");
-	if ($(this).find("span")[0].innerHTML == "Explore") {
-		hideSlices();
-		$(this).find("span")[0].innerHTML = "Home";
-		$("#switch .square p").css({"height":"35px", "width":"7px"});
-		$(".filter").fadeIn(500);
-		$(".lefttext, .leftlogo").hide();
-	}
-	else {
-		hideExplore();
-		$(this).find("span")[0].innerHTML = "Explore";
-		$("#switch .square p").css({"height":"", "width":""});
-		$(".filter").hide();
-		$(".lefttext, .leftlogo").fadeIn(500);
-	}
-}
+// function switcher() {
+// 	////////////////////////////////////////////////////
+// 	// Switch from explore to slices and vice versa  //
+// 	////////////////////////////////////////////////////
+// 	$("#switch").off("click");
+// 	if ($(this).find("span")[0].innerHTML == "Explore") {
+// 		hideSlices();
+// 		$(this).find("span")[0].innerHTML = "Home";
+// 		$("#switch .square p").css({"height":"35px", "width":"7px"});
+// 		$(".filter").fadeIn(500);
+// 		$(".lefttext, .leftlogo").hide();
+// 	}
+// 	else {
+// 		hideExplore();
+// 		$(this).find("span")[0].innerHTML = "Explore";
+// 		$("#switch .square p").css({"height":"", "width":""});
+// 		$(".filter").hide();
+// 		$(".lefttext, .leftlogo").fadeIn(500);
+// 	}
+// }
 
 function doMasonry() {
 	////////////////////////
@@ -423,7 +423,7 @@ function loadExplore(cats) {
 }
 
 function hideExplore() {
-	msnry.destroy();
+	if (msnry !== undefined) msnry.destroy();
 	$(".explore-cover").off("click");
 	$("ul.slides li").animate({"opacity":"0"}, 0, function(){		
 		$(this).hide().remove();
@@ -441,7 +441,6 @@ function leaveStory() {
 	/////////////////////////////////////////////////////////////////
 	// Close the current story and go back to slices or explore.  //
 	/////////////////////////////////////////////////////////////////
-
 	$("#switch").show();
 		if ($("body").hasClass("slicesOne")) {
 
@@ -527,6 +526,27 @@ $(window).hashchange(function(){
 });
 
 var current, bodymargin, imagemargin;
+
+function switch_view(){
+	switch ($(this).attr('id')) {
+	case 'nav_home':
+		if ($('body').hasClass('slicesOne')||$('body').hasClass('exploreOne')) {
+			leaveStory();
+		}else {
+			hideExplore();
+		}
+		break;
+	case 'nav_exp':
+		if ($('body').hasClass('slicesOne')||$('body').hasClass('exploreOne')) {
+			leaveStory();
+		}else {
+			hideSlices();
+		}
+	default:
+		break;
+	}
+}
+
 $(document).ready(function(e) {
 	loadSlices();
 
@@ -546,8 +566,8 @@ $(document).ready(function(e) {
 	/////////////////////////////////////////////////
 	//			When you close the big image       //
 	/////////////////////////////////////////////////
-	$("#go-back").on("click", leaveStory);
-
+	$("#nav_home").on("click", switch_view);
+	$("#nav_exp").on("click", switch_view);
 
 	/////////////////////////////
 	// When you click explore //
