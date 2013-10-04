@@ -534,6 +534,8 @@ function switch_view(){
 			leaveStory();
 		}else {
 			hideExplore();
+			$(".filter").hide();
+			$(".lefttext, .leftlogo").fadeIn(500);
 		}
 		break;
 	case 'nav_exp':
@@ -541,6 +543,8 @@ function switch_view(){
 			leaveStory();
 		}else {
 			hideSlices();
+			$(".filter").fadeIn(500);
+			$(".lefttext, .leftlogo").hide();
 		}
 	default:
 		break;
