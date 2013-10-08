@@ -404,6 +404,10 @@ li.current {
     border-top: 2px solid #FDC53F;
 }
 
+.exploreOne .explore-item{
+	border:none;
+}
+
 .explore-item:hover {
     opacity: 1;
 }
@@ -541,7 +545,7 @@ li.current {
     pointer-events: none;
     -webkit-transition: -webkit-filter 1s ease;
     -webkit-filter: blur(0px);
-    background: url(http://www.engin.umich.edu/portal_css/Engineering%20Theme%202012/++resource++umich_images/topContentBg.jpg) #c0d4eb 50% 0px;
+   /* background: url(http://www.engin.umich.edu/portal_css/Engineering%20Theme%202012/++resource++umich_images/topContentBg.jpg) #c0d4eb 50% 0px;*/
 }
 
 .content-image-div h2 {}
