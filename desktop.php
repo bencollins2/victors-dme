@@ -143,7 +143,7 @@
         </div>
 
         <script type="text/javascript">
-            var usercats = "<?= $cats?>", userinds = "<?= $inds?>", sidebar = "<?= $sidebar ?>", mailimg = <? if (!$mailimg) echo "\"mail.jpg\""; else echo "\"" . $mailimg . "\"";?>, firstmsg = "<?= $firstmsg?>", userid = "<?= $user?>", username="<?= $name?>";
+            var usercats = "<?= $cats?>", userinds = "<?= $inds?>", sidebar = "<?= $sidebar ?>", mailimg = <? if (!$mailimg) echo "\"mail.jpg\""; else echo "\"" . $mailimg . "\"";?>, firstmsg = "<?= $firstmsg?>", firstmsgfrom = "<?= $firstmsgfrom?>", userid = "<?= $user?>", username="<?= $name?>";
         </script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
