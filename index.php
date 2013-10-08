@@ -209,9 +209,10 @@
     // Stuff to pull most recent message...  //
     ///////////////////////////////////////////
 
-    $q = "SELECT * FROM `messages` WHERE SUBSTR(`to`, 2) LIKE $user ORDER BY `timestamp` DESC LIMIT 0,1";
+    $q = 'SELECT m.message, CONCAT(a.first, " ", a.last) as name, m.timestamp as ts FROM messages as m INNER JOIN adminusers as a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(`to`, 2) LIKE '.$user.' ORDER BY ts DESC LIMIT 0,1';
     $r = mysql_query($q) OR DIE("Sorry, couldn't select recent message.");
     $l = mysql_fetch_array($r);
+    $firstmsgfrom = $l["name"];
     $firstmsg = strip_tags(preg_replace('/\n/i', '', $l["message"]));
     $firstmsg = implode(' ', array_slice(explode(' ', $firstmsg), 0, 10));
     $firstmsg .= "...";
