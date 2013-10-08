@@ -13,7 +13,7 @@ function checkHash() {
 		console.log("Has hash: ", window.location.hash + " .img-cover");
 		// $(window.location.hash + " .img-cover").click();
 		console.log("Item id: ", window.location.hash.substring(1));
-		loadFeature($(window.location.hash + " .img-cover")[0], window.location.hash.substring(1), "500px");
+		// loadFeature($(window.location.hash + " .img-cover")[0], window.location.hash.substring(1), "500px");
 	}
 	else {
 		console.log("Homepage");
@@ -325,7 +325,6 @@ function loadSlices() {
 						loadFeature(that, item_id);
 					});
 				});
-				checkHash();
 			}
 			$(window).resize();
 		});
@@ -344,7 +343,7 @@ function hideSlices() {
 			loadExplore();
 		}, 400);
 	
-	$("body").removeClass("slices").addClass("explore");
+	$("body").removeClass().addClass("explore");
 	$(window).resize();
 }
 
@@ -396,7 +395,7 @@ function loadExplore(cats) {
 				});
 			}
 			
-			// $(window).resize();
+			resizeWindow();
 		});
 	});
 }
@@ -411,7 +410,7 @@ function hideExplore() {
 		};
 	});
 
-	$("body").removeClass("explore").addClass("slices");
+	$("body").removeClass().addClass("slices");
 	$(window).resize();
 }
 
@@ -421,13 +420,12 @@ function leaveStory() {
 	// Close the current story and go back to slices or explore.  //
 	/////////////////////////////////////////////////////////////////
 	$("#switch").show();
-		if ($("body").hasClass("slicesOne")) {
+		if ($("body").hasClass("slices")) {
 
 			var leftwidth = $(".left").width()+ "px";
 			$("li").removeClass("current");
 			window.location.hash = "";
 			$(".items").scrollTop(0);
-			$("body").addClass("slices").removeClass("slicesOne");
 			$(".content-info, .content-image").hide();
 			$(".left, .info").show();
 			$(".items").css({"left":leftwidth,"overflow-x" : "scroll", "overflow-y" : "hidden"});
@@ -440,12 +438,11 @@ function leaveStory() {
 			loadSlices();
 		}
 
-		else if ($("body").hasClass("exploreOne")) {
+		else if ($("body").hasClass("explore")) {
 			var leftwidth = $(".left").width()+ "px";
 			$("li").removeClass("current");
 			window.location.hash = "";
 			$(".items").scrollTop(0);
-			$("body").addClass("explore").removeClass("exploreOne");
 			$(".content-info, .content-image").hide();
 			$(".left, .info").show();
 			$(".items").css({"left":"", "width":itemsWidth+"px", "overflow":"", "height":itemsHeight+"px"});
@@ -507,24 +504,20 @@ $(window).hashchange(function(){
 var current, bodymargin, imagemargin;
 
 function switch_view(){
+	window.location.hash="";
 	switch ($(this).attr('id')) {
 	case 'nav_home':
-		if ($('body').hasClass('slicesOne')||$('body').hasClass('exploreOne')) {
-			leaveStory();
-		}else {
-			hideExplore();
-			$(".filter").hide();
-			$(".lefttext, .leftlogo").fadeIn(500);
-		}
+		$(".filter").hide();
+		$(".left").show();
+		$(".lefttext, .leftlogo").fadeIn(500);
+		hideExplore();
 		break;
 	case 'nav_exp':
-		if ($('body').hasClass('slicesOne')||$('body').hasClass('exploreOne')) {
-			leaveStory();
-		}else {
-			hideSlices();
-			$(".filter").fadeIn(500);
-			$(".lefttext, .leftlogo").hide();
-		}
+		$(".left").show();
+		$(".filter").fadeIn(500);
+		$(".lefttext, .leftlogo").hide();
+		hideSlices();
+		break;
 	default:
 		break;
 	}
