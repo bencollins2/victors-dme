@@ -17,8 +17,8 @@ function checkHash() {
 	}
 	else {
 		console.log("Homepage");
-		$("#go-back").click();
-		leaveStory();
+		// $("#go-back").click();
+		// leaveStory();
 	}
 }
 
@@ -276,7 +276,8 @@ function doMasonry() {
 
 function loadSlices() {
 	console.log("Load slices");
-
+	$("ul.slides li").remove();
+	
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
@@ -327,12 +328,23 @@ function loadSlices() {
 				});
 			}
 			$(window).resize();
+			$(".items").css({"overflow-x" : "scroll", "overflow-y" : "hidden"});
 		});
 		if (sidebar != "") {
 			$("div.lefttext p.msg").html(sidebar);
 		}
 		else $("div.lefttext p.msg").html("We've hand picked some stories and videos that we think you'll like. Let us know what you think. We'll be updating the site frequently, so please bookmark it and come back again soon.");
 	});
+}
+
+function loadFavorites(){
+	console.log(fav_array);
+	
+	var url;
+	if (fav_array.length > 0){
+		favs = fav_array.join();
+		url = 'explore.php?favs=' + favs;
+	}
 }
 
 function hideSlices() {
@@ -357,7 +369,7 @@ function refresh(cats) {
 function loadExplore(cats) {
 
 	var url;
-
+	
 	if (cats) {
 		url = 'explore.php?cats='+cats;
 	}
