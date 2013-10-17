@@ -42,7 +42,7 @@ a#circle {
 	margin: 0px auto;
 	overflow: visible;
 	height: 45px;
-	background: url(../img/dmebadge.jpg) scroll no-repeat top right;
+	/*background: url(../img/dmebadge.jpg) scroll no-repeat top right;*/
 }
 
 .sticky ul li {

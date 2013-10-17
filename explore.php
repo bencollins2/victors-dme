@@ -18,12 +18,6 @@
 		$urlstr = htmlentities($_GET['cats'], ENT_QUOTES);
 		$cats = explode(",", $urlstr);
 		foreach($cats as $v) {
-			/////////////////////////
-			// Is it a global?  //
-			/////////////////////////
-			// if ($v == "") {
-			// }
-
 			$where .= "\"%$v%\" OR `tags` LIKE ";
 		}
 		$where = substr($where, 0, -16);
@@ -58,18 +52,10 @@
 						unset($arr[$kk]);
 					}
 				}
-
-
 				array_splice($arr, $k, 0, $temp);
 			}
-
-			// array_unshift($arr, $temp);
-			// print_r($temp[0]);
 		}
 	}
-
-	
-	// $arr = recordToArray($result);
 
 	//////////////////////////////////////////////////
 	// Let's make sure there are enough stories..  //
@@ -110,22 +96,27 @@
 			// Do nothing
 		}
 		else {
-			$json = $arr[$k]['story_images'];
-			$ar = json_decode($json);
+			$img_json = $arr[$k]['story_images'];
+			$img_arr = json_decode($img_json);
+
+			// Remove parent <p> tags, split result by paragraph
 			$split0 = preg_split("/^<p>/", $arr[$k]['html']);
 			$split1 = preg_split("/<\/p>\Z/", $split0[1]);
 			$split = preg_split("/(<\/p>*.<p>)|(<br*\s\/>)/", $split1[0]);
 
+			// Loop each paragraph in the array
 			foreach($split as $kk => $vv) {
 				$newHTML .= "<p>";
-				foreach ($ar as $kkk => $vvv) {
+				// Loop images
+				foreach ($img_arr as $kkk => $vvv) {
+					// If we're currently in the paragraph for this image..
 					if ($vvv->para == $kk) {
 						$style = " style='";
 						foreach ($vvv->style as $kkkk => $vvvv) {
 							$style .= $kkkk . ": ". $vvvv . "; ";
 						}
 						$style .= "'";
-						$newHTML .= "<img".$style." src = '".$vvv->url."' alt='alt' />";
+						$newHTML .= "<img".$style." src = '".$vvv->src."' alt='alt' />";
 					}
 				}
 				$newHTML .= $vv . "</p>\n\n";

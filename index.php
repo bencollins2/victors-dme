@@ -208,7 +208,6 @@
     ///////////////////////////////////////////
     // Stuff to pull most recent message...  //
     ///////////////////////////////////////////
-
     $q = 'SELECT m.message, CONCAT(a.first, " ", a.last) as name, m.timestamp as ts FROM messages as m INNER JOIN adminusers as a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(`to`, 2) LIKE '.$user.' ORDER BY ts DESC LIMIT 0,1';
     $r = mysql_query($q) OR DIE("Sorry, couldn't select recent message.");
     $l = mysql_fetch_array($r);
@@ -253,6 +252,10 @@
 		<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
         <script type="text/javascript" src="//use.typekit.net/zsu8wmg.js"></script>
         <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+        <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+        <script type="text/javascript">stLight.options({publisher: "ur-56eaa73e-f333-782-e2af-e4f274ea562f"});</script>
+
     </head>
 
     <? include($body); ?>
