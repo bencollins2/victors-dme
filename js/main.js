@@ -1,4 +1,4 @@
-var msnry;
+var msnry, numLoads = 0;
 
 function isFunction(functionToCheck) {
 	var getType = {};
@@ -23,9 +23,9 @@ function checkHash() {
 }
 
 function fader(elm) {
-	//////////////////////////////////////////////
+	/////////////////////////////////////////////
 	// Fade elements in sequence, recursively  //
-	//////////////////////////////////////////////
+	/////////////////////////////////////////////
 	setTimeout(function(){
 		if (elm.next().length > 0) fader(elm.next());
 		else {
@@ -37,14 +37,15 @@ function fader(elm) {
 }
 
 function loadFeature(that, item_id) {
-	////////////////////////////////
+	///////////////////////////////
 	// Load an individual story  //
-	////////////////////////////////
+	///////////////////////////////
 	var itemheight, $parent = $(that).parent(); 
+
+	numLoads++;
 
 	$("#switch").hide();
 	if (msnry !== undefined) msnry.destroy();
-	window.location.hash = item_id;
 	$parent.addClass("current");
 	var title = $(that).children(".meta#title").html(), body = $(that).children(".meta#body").html(), customStyle = $(that).children(".meta#customStyle").html(), author = $(that).children(".meta#byline").html(), $itemcontent = $("#" + item_id + " .item-content");
 	current = item_id;
@@ -61,9 +62,9 @@ function loadFeature(that, item_id) {
 	// Clear all content in all items
 	$("#" + item_id + " .img-cover").hide();
 
-	///////////////////////////////////
+	///////////////////////////////
 	// Body of the opened window //
-	///////////////////////////////////
+	///////////////////////////////
 
 	console.log("Be quiet, the adults are testing: ", $(that).parent()[0]);
 	
@@ -82,10 +83,11 @@ function loadFeature(that, item_id) {
 	}
 
 	else if ($parent.hasClass("mail")) {
+
 		////////////////
 		// Mail img  //
 		//////////////
-
+		console.log("Parent has class mail");
 		if (mailimg == null) {
 			mailimg = "mail.jpg";
 		}
@@ -97,6 +99,12 @@ function loadFeature(that, item_id) {
 		request.done(function(msg) {
 			console.log("MSG: ", msg);
 			$itemcontent.html('<div class="content-image-div"><img class="content-image" src="img/big/' + mailimg + '" alt="item image" /></div><div class="content-info"><h2 class="fadewithme">Read your messages</h2><div class="body">' + msg.html + '</div></div>');
+			
+			console.log("About to init tinyMCE");
+			//////////////////
+			// Init tinyMCE //
+			//////////////////
+			
 			
 			tinymce.init({
 			    selector: "textarea",
@@ -122,8 +130,6 @@ function loadFeature(that, item_id) {
 				});			
 			}
 
-
-
 			$(".sendmessage input[type='submit']").on("click", function(e){
 				e.preventDefault();
 				console.log("Clicked the button");
@@ -147,10 +153,9 @@ function loadFeature(that, item_id) {
 					console.log( " Failed: " + textStatus );
 				});
 
-				/////////////////////////
-				// / Send the message  //
-				/////////////////////////
-
+				////////////////////////
+				// / Send the message //
+				////////////////////////
 			});
 
 		});
@@ -159,23 +164,79 @@ function loadFeature(that, item_id) {
 		});	
 	}
 
-	/////////////////////////////////////////////////////
+	////////////////////////////////////////////////////
 	// For now, this is the only thing that matters.  //
-	/////////////////////////////////////////////////////
+	////////////////////////////////////////////////////
 	else {
-		$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><ul class="left-stuff"><li><a class="fb"><img src="./img/social/fb.png" alt="share on facebook" /></a></li><li><a class="twitter"><img src="./img/social/twitter.png" alt="share on twitter" /></a></li><li><a class="gp"><img src="./img/social/gp.png" alt="share on Google +" /></a></li><li><a class="pinterest"><img src="./img/social/pinterest.png" alt="share on pinterest" /></a></li><li><a class="reddit"><img src="./img/social/reddit.png" alt="share on reddit" /></a></li></ul><h2 class="fadewithme">'+title+'</h2><h3>Subtitle</h3><span class="byline">'+author+'</span><div class="body">'+body+'</div></div>');
+		$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><div class="left-stuff">\
+			<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+			<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+			</div><h2 class="fadewithme">'+title+'</h2><h3>Subtitle</h3><span class="byline">'+author+'</span><div class="body">'+body+'</div></div>');
 	}
 
-	/////////////////////////////////////
+	stWidget.addEntry({
+		"service":"facebook",
+		"element":document.getElementById('fb'),
+		"url":"http://facebook.com",
+		"title":"facebook",
+		"type":"large",
+		"text":"Share on facebook",
+		"summary":"Share on facebook"   
+	});
+
+	stWidget.addEntry({
+		"service":"twitter",
+		"element":document.getElementById('tw'),
+		"url":"http://twitter.com",
+		"title":"twitter",
+		"type":"large",
+		"text":"Share on twitter",
+		"summary":"Share on twitter"   
+	});
+
+	stWidget.addEntry({
+		"service":"googleplus",
+		"element":document.getElementById('gp'),
+		"url":"http://googleplus.com",
+		"title":"googleplus",
+		"type":"large",
+		"text":"Share on googleplus",
+		"summary":"Share on googleplus"   
+	});
+
+	stWidget.addEntry({
+		"service":"pinterest",
+		"element":document.getElementById('pn'),
+		"url":"http://pinterest.com",
+		"title":"pinterest",
+		"type":"large",
+		"text":"Share on pinterest",
+		"summary":"Share on pinterest"   
+	});
+
+	stWidget.addEntry({
+		"service":"reddit",
+		"element":document.getElementById('rd'),
+		"url":"http://reddit.com",
+		"title":"reddit",
+		"type":"large",
+		"text":"Share on reddit",
+		"summary":"Share on reddit"   
+	});
+
+	/////////////////////////////////
 	// Scroll body back to the top //
-	/////////////////////////////////////
+	/////////////////////////////////
 	$(".explore, body").scrollTop(0);
 	$(".items").scrollLeft(0);
 
 
-	///////////////////////////////
+	///////////////////////////
 	// Get height of img div //
-	///////////////////////////////
+	///////////////////////////
 	$(".content-image").load(function(){
 		itemheight = $(".content-image-div").height();
 		bodymargin = $(".content-image-div").height()+"px";
@@ -216,9 +277,10 @@ function loadFeature(that, item_id) {
 }
 
 function switcher() {
-	////////////////////////////////////////////////////
+	///////////////////////////////////////////////////
 	// Switch from explore to slices and vice versa  //
-	////////////////////////////////////////////////////
+	///////////////////////////////////////////////////
+
 	$("#switch").off("click");
 	if ($(this).find("span")[0].innerHTML == "Explore") {
 		hideSlices();
@@ -247,7 +309,6 @@ function doMasonry() {
 	  columnWidth: 260,
 	  itemSelector: 'li.explore-item'
 	});
-
 	msnry.layout();
 	$(window).resize();
 }
@@ -258,6 +319,7 @@ function loadSlices() {
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
+	//
 	console.log("URL: ", 'explore.php?slices=1&cats='+usercats+"&inds="+userinds);
 	$.getJSON('explore.php?slices=1&cats='+usercats+"&inds="+userinds, function(data) {
 		$.each(data, function(key, val) {
@@ -271,7 +333,6 @@ function loadSlices() {
 				//////////////////
 
 				var mimg = mailimg.substring(0, mailimg.length - 4) + "_cover.jpg";
-
 				$newLi = $("<li />", {'class': 'one-item hidestart mail', 'id': 'item-mail', 'html':'<div class="info"><h2>From: '+firstmsgfrom+'</h2><div class="description">'+firstmsg+'</div></div><div class="img-cover"><img class="cover" src="img/'+mimg+'" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">Message</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
 			}
 			if (key == 5) {
@@ -281,19 +342,22 @@ function loadSlices() {
 				///////////////////////////////////
 				// When you open the big image //
 				///////////////////////////////////
-
 				$(".img-cover").each(function(index, element) {
 					var item_id = $(this).parent().attr("id"), itemheight;
+
 					////////////////////////////////////////////////////////////////////////////////////////
 					// Click event: when click on an image, load the image and append it into the HTML //
 					////////////////////////////////////////////////////////////////////////////////////////
 					$(this).click(function(e) {
 						console.log("This looks like ", this);
-						loadFeature(this, item_id);
+						// loadFeature(this, item_id);
+						window.location.hash = item_id;
+
 					});
 				});
 				$(".info").each(function(index, element) {
 					var item_id = $(this).parent().attr("id"), itemheight, that = $(this).parent().find(".img-cover")[0];
+
 					////////////////////////////////////////////////////////////////////////////////////////
 					// Click event: when click on an image, load the image and append it into the HTML //
 					////////////////////////////////////////////////////////////////////////////////////////
@@ -479,10 +543,6 @@ function resizeWindow() {
 	$(".content-info div.body iframe").css({"height":ifheight+"px"});
 }
 
-$(window).hashchange(function(){
-	checkHash();
-});
-
 var current, bodymargin, imagemargin;
 $(document).ready(function(e) {
 	loadSlices();
@@ -495,7 +555,6 @@ $(document).ready(function(e) {
 	/////////////////////
 	// Window resize //
 	/////////////////////
-
 	$(window).resize(function(e) {
 		resizeWindow();
 	});
@@ -593,5 +652,10 @@ $(document).ready(function(e) {
 		cats = cats.substring(0, cats.length - 1);
 		refresh(cats);
 	});
-	
+});
+
+$(window).load(function(){
+	$(window).hashchange(function(){
+		checkHash();
+	});
 });

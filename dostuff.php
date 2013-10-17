@@ -140,11 +140,11 @@
 
 			if ($numimages == 1) {
 				$v = substr($imgurls[0], 0, -4);
-				$imagetext = "<div class=\"singleimg\"><img src=\"imagehelper.php?i=$v\" alt=\"Photo 1\"></div>";
+				$imagetext = "<div class=\"singleimg msgimg\"><img src=\"imagehelper.php?i=$v\" alt=\"Photo 1\"></div>";
 			}
 			else if ($hasimages) {
 				$imgids[] = $id;
-				$imagetext = "<div id=\"slides$id\" class=\"slides\">";
+				$imagetext = "<div id=\"slides$id\" class=\"slides msgimg\">";
 				foreach($imgurls as $k => $v) {
 					$v = substr($v, 0, -4);
 					$kk = $k+1;

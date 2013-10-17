@@ -290,12 +290,12 @@ li.current {
 .left-stuff {
     position: relative;
     width: 50px;
-    height: 247px;
+    height: 244px;
     float: left;
-    margin: 1px 0px 0 0;
+    margin: 1px 0px 0 -1px;
 }
 
-.left-stuff li {
+/*.left-stuff li {
     list-style: none;
 
     width: auto;
@@ -308,7 +308,7 @@ li.current {
     width: auto;
     height: auto;
     z-index: 1;
-}
+}*/
 
 .left-stuff:after {
     content: ' ';
@@ -320,6 +320,55 @@ li.current {
     left: 0px;
     bottom: -31px;
     box-sizing: border-box;
+}
+
+.st {
+    display: block;
+    line-height: 0;
+}
+
+.stButton {
+    height: 50px;
+    margin-left: 1px !important;
+}
+
+.stLarge {
+    width: 50px !important;
+    height: 50px !important;
+    display: block;
+    margin: 0;
+}
+
+.facebook span.stLarge {
+    background: url("../img/social/fb.png") no-repeat scroll left top transparent !important;
+}
+
+.twitter span.stLarge {
+    background: url("../img/social/twitter.png") no-repeat scroll left top transparent !important;
+}
+
+.googleplus span.stLarge {
+    background: url("../img/social/gp.png") no-repeat scroll left top transparent !important;
+}
+
+.pinterest span.stLarge {
+    background: url("../img/social/pinterest.png") no-repeat scroll left top transparent !important;
+    margin-top: -2px;
+}
+
+.reddit span.stLarge {
+    background: url("../img/social/reddit.png") no-repeat scroll left top transparent !important;
+    margin-top: -3px;
+}
+
+.st_custom {
+    /*padding:0px 16px 0 0;*/
+    /*width: 33px;*/
+    /*height: 49px;*/
+    /*display: block;*/
+}
+
+.st_facebook_large {
 }
 
 .one-item:hover .info {
@@ -649,7 +698,7 @@ a#circle {
 	margin: 0 auto;
 	overflow: visible;
 	height: 50px;
-	background: url(../img/dmebadge.jpg) scroll no-repeat right 3px;
+	/*background: url(../img/dmebadge.jpg) scroll no-repeat right 3px;*/
 }
 
 .sticky ul li {
@@ -734,7 +783,7 @@ body #item-mail .messages .message h3 {
     font-weight: 100;
 }
 
-.message .avatar img {
+.message img.avatar {
     width: 60px;
     min-width: 0;
     float: left;
@@ -768,7 +817,7 @@ body .messages .message p.avatar {
 
 .slides {
     clear: left;
-    margin: 70px 0 0 70px;
+    margin: 0px 0 0 10px;
 }
 
 .slidesjs-pagination {
