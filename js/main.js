@@ -277,8 +277,12 @@ function doMasonry() {
 
 function loadSlices() {
 	console.log("Load slices");
-	$("ul.slides li").remove();
 	
+	$("body").addClass("slices");
+	$(".items").css({"overflow-x" : "scroll", "overflow-y" : "hidden"});
+	$(".left").fadeIn(500);
+	$(".lefttext").fadeIn(500);
+	$(window).resize();
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
@@ -329,7 +333,6 @@ function loadSlices() {
 				});
 			}
 			$(window).resize();
-			$(".items").css({"overflow-x" : "scroll", "overflow-y" : "hidden"});
 		});
 		if (sidebar != "") {
 			$("div.lefttext p.msg").html(sidebar);
@@ -339,15 +342,17 @@ function loadSlices() {
 }
 
 function loadFavorites(){
-	console.log(fav_array);
 	
+	$("body").addClass("favorite");
+	$(".items").css({"overflow-x" : "hidden", "overflow-y" : "scroll"});
+	$(".left").fadeIn(500);
+	$(".favtext").fadeIn(500);
+	$(window).resize();
 	var url;
 	if (fav_array.length > 0){
 		favs = fav_array.join();
 		url = 'explore.php?favs=' + favs;
 		console.log(url);
-		$("body").removeClass().addClass("favorite");
-		$("ul.slides li").remove();
 		setTimeout(function(){
 			$.getJSON(url, function(data){
 				var len = data.length;
@@ -414,7 +419,13 @@ function refresh(cats) {
 }
 
 function loadExplore(cats) {
-
+	
+	$("body").addClass("explore");
+	$(".items").css({"overflow-x" : "hidden", "overflow-y" : "scroll"});	
+	$(".left").fadeIn(500);
+	$(".filter").fadeIn(500);
+	$(window).resize();
+	
 	var url;
 	
 	if (cats) {
@@ -423,7 +434,6 @@ function loadExplore(cats) {
 	else url = 'explore.php';
 
 	console.log("URL: ", url);
-	$("body").addClass("explore").removeClass("slices");	
 	$.getJSON(url, function(data) {
 		var len = data.length; 
 		console.log("LENGTH: ", data.length);
@@ -537,6 +547,7 @@ function resizeWindow() {
 	$(".exploreOne li.current, .slicesOne li.current").css({"width":width+"px"});
 	$(".slices .items").css({"width":itemsWidth, "height":itemsHeight+"px"});
 	$(".explore .items").css({"width":itemsWidth + "px", "height":itemsHeight});
+	$(".favorite .items").css({"width":itemsWidth + "px", "height":itemsHeight});
 
 	if ($("body").hasClass("slices")) {
 
@@ -549,6 +560,7 @@ function resizeWindow() {
 	$(".content-info").css({"margin-top":bodymargin});
 	$(".slices .items").css({"left":leftwidth+"px"});
 	$(".explore .items").css({"left":""});
+	$(".favorite .items").css({"left":""});
 
 
 	var ifwidth = $(".content-info div.body iframe").width(), ifheight = ifwidth * (2/3);
@@ -562,31 +574,72 @@ $(window).hashchange(function(){
 
 var current, bodymargin, imagemargin;
 
+// function switch_view(){
+// 	window.location.hash="";
+// 	switch ($(this).attr('id')) {
+// 	case 'nav_home':
+// 		$(".filter").hide();
+// 		$(".left").show();
+// 		$(".lefttext, .leftlogo").fadeIn(500);
+// 		hideExplore();
+// 		break;
+// 	case 'nav_exp':
+// 		$(".left").show();
+// 		$(".filter").fadeIn(500);
+// 		$(".lefttext, .leftlogo").hide();
+// 		hideSlices();
+// 		break;
+// 	case 'nav_fav':
+// 		$(".filter").hide();
+// 		$(".left").show();
+// 		$(".lefttext, .leftlogo").fadeIn(500);
+// 		hidetest();
+// 		break;
+// 	default:
+// 		break;
+// 	}
+// }
+
 function switch_view(){
 	window.location.hash="";
 	switch ($(this).attr('id')) {
 	case 'nav_home':
-		$(".filter").hide();
-		$(".left").show();
-		$(".lefttext, .leftlogo").fadeIn(500);
-		hideExplore();
+		cleanStyle(loadSlices);
 		break;
 	case 'nav_exp':
-		$(".left").show();
-		$(".filter").fadeIn(500);
-		$(".lefttext, .leftlogo").hide();
-		hideSlices();
+		cleanStyle(loadExplore);
 		break;
 	case 'nav_fav':
-		$(".filter").hide();
-		$(".left").show();
-		$(".lefttext, .leftlogo").fadeIn(500);
-		hidetest();
+		cleanStyle(loadFavorites);
 		break;
 	default:
 		break;
 	}
 }
+
+
+function cleanStyle(callback){
+	
+	// first hide everything in the left side
+	$('.left').hide();
+	$('.lefttext').hide();
+	$('.filter').hide();
+	$('.favtext').hide();
+	
+	// second remove all the contents, events, and msnry
+	$("ul.slides li").remove();
+	// if (msnry !== undefined) msnry.destroy();
+	
+	//remove the body class
+	$('body').removeClass();
+	
+	//start to load
+	setTimeout(function(){
+		callback();
+	},0);
+	
+}
+
 
 $(document).ready(function(e) {
 	loadSlices();
@@ -596,6 +649,10 @@ $(document).ready(function(e) {
 	// $(".mobile-left").hide();
 	// $(".one-item img").css({"height" : height + "px"});
 
+	$("#nav_home").on("click", switch_view);
+	$("#nav_exp").on("click", switch_view);
+	$("#nav_fav").on("click", switch_view);
+
 	/////////////////////
 	// Window resize //
 	/////////////////////
@@ -604,22 +661,12 @@ $(document).ready(function(e) {
 		resizeWindow();
 	});
 
-	/////////////////////////////////////////////////
-	//			When you close the big image       //
-	/////////////////////////////////////////////////
-	$("#nav_home").on("click", switch_view);
-	$("#nav_exp").on("click", switch_view);
-	$("#nav_fav").on("click", switch_view);
-
-	/////////////////////////////
-	// When you click explore //
-	/////////////////////////////
-
 	$(window).resize();
 	$(window).hashchange();
 	////////////////////
 	//  Hover states  //
 	////////////////////
+	
 	$(".one-item .info").mouseenter(function(e){
 		$(this).parent().find(".img-cover").addClass("opaque");
 	});
