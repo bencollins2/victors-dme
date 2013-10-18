@@ -81,7 +81,27 @@
 			}
 		}
 	}
+	
+	
+	
+	
+	//////////////////////////////////////////////////
+	// Fetch favorites features  //
+	//////////////////////////////////////////////////
+	
+	
+	if ($_GET['favs'] != "") {
 
+		$urlstr = htmlentities($_GET['favs'], ENT_QUOTES);
+		// $favs = explode(",", $urlstr);
+	// 	$test = $favs[0];
+		
+		$query = "SELECT * FROM `features` WHERE `id` in ($urlstr)";
+		// echo $query;
+		$result = mysql_query($query) or die("Fail: " . $query);
+		$arr = recordToArray($result);
+
+	}
 
 
 	//////////////////////

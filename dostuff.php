@@ -9,6 +9,7 @@
 	$userid = (int)$_REQUEST["id"];
 	$username = mysql_real_escape_string($_REQUEST["name"]);
 	$cats = mysql_real_escape_string($_REQUEST["cats"]);
+	$favs = mysql_real_escape_string($_REQUEST["favs"]);
 
 	///////////////////////////////
 	// Checking if user exists  //
@@ -50,6 +51,12 @@
 			echo "added cats";
 			// echo $query;
 		}
+	}
+	
+	if($type == "newfav"){
+		$query = "UPDATE users SET `favorites` = '$favs' WHERE `id` LIKE '$userid'";
+		$result = mysql_query($query) or die("Sorry:" . $query);
+		echo "added favs";
 	}
 
 	if ($type == "putmessage") {

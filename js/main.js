@@ -29,7 +29,7 @@ function fader(elm) {
 	setTimeout(function(){
 		if (elm.next().length > 0) fader(elm.next());
 		else {
-			$("#switch").on("click", switcher);
+			// $("#switch").on("click", switcher);
 		};
 	},100);
 
@@ -41,16 +41,18 @@ function loadFeature(that, item_id) {
 	// Load an individual story  //
 	///////////////////////////////
 	var itemheight, $parent = $(that).parent(); 
-
+	console.log("Be quiet, the children are testing: ", $(that).parent());
 	numLoads++;
-
 	$("#switch").hide();
+
 	if (msnry !== undefined) msnry.destroy();
+	window.location.hash = item_id;
 	$parent.addClass("current");
 	var title = $(that).children(".meta#title").html(), body = $(that).children(".meta#body").html(), customStyle = $(that).children(".meta#customStyle").html(), author = $(that).children(".meta#byline").html(), $itemcontent = $("#" + item_id + " .item-content");
 	current = item_id;
-	if ($("body").hasClass("explore")) $("body").removeClass("explore").addClass("exploreOne");
-	if ($("body").hasClass("slices")) $("body").removeClass("slices").addClass("slicesOne");
+	if ($("body").hasClass("explore")) $("body").removeClass().addClass("exploreOne");
+	if ($("body").hasClass("slices")) $("body").removeClass().addClass("slicesOne");
+	if ($("body").hasClass("favorite")) $("body").removeClass().addClass("favOne");
 
 	$(".left, .info").hide();
 	$("body").css({"left":"0","width":"100%", "overflow-x" : "hidden", "overflow-y" : "auto"});
@@ -233,6 +235,48 @@ function loadFeature(that, item_id) {
 	$(".explore, body").scrollTop(0);
 	$(".items").scrollLeft(0);
 
+	///////////////////////////////
+	// Check the favorite status of current feature //
+	///////////////////////////////
+	
+	is_faved = false;
+	
+	for (var i=0; i<fav_array.length; i++){
+		if (item_id.slice(5) == fav_array[i]){
+			is_faved = true;
+			break;
+		}
+	}
+	
+	if(is_faved == false){
+		$('a#fav').html('Fav');
+	}else{
+		$('a#fav').html('Unfav');
+	}
+	
+	$('a#fav').click(function(){
+		if(is_faved ==false){
+			is_faved=true;
+			$('a#fav').html('Unfav');
+			fav_array.push(item_id.slice(5));
+			console.log(fav_array);
+		}else{
+			is_faved=false;
+			$('a#fav').html('Fav');
+			fav_array.splice(fav_array.indexOf(item_id.slice(5)),1);
+			console.log(fav_array);
+		}
+		// send the new favorites to database
+		console.log(fav_array.join());
+		$.ajax({
+			type: "POST",
+			url: "dostuff.php",
+			data: { id: userid, type: "newfav", favs: fav_array.join()}
+		}).done(function( msg ) {
+			console.log("Message: ", msg);
+		});
+	});
+	
 
 	///////////////////////////
 	// Get height of img div //
@@ -248,7 +292,6 @@ function loadFeature(that, item_id) {
 	var itemwidth = $(window).width() - ($(window).width()/3);
 	var marginleft = String(itemwidth/-2)+"px";
 	//$(".content-info").css({"margin-top" : margintop,"margin-left":marginleft,"width":itemwidth});
-	$("#go-back").show();
 
 	// Expand the selected item to full screen, and make all other cover images 0 so they will disappear
 	$(".explore-item, .one-item").each(function(index, element) {
@@ -275,6 +318,7 @@ function loadFeature(that, item_id) {
 		}
 	});
 }
+
 
 function switcher() {
 	///////////////////////////////////////////////////
@@ -315,13 +359,15 @@ function doMasonry() {
 
 function loadSlices() {
 	console.log("Load slices");
-
+	$("ul.slides li").remove();
+	
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
 	//
 	console.log("URL: ", 'explore.php?slices=1&cats='+usercats+"&inds="+userinds);
 	$.getJSON('explore.php?slices=1&cats='+usercats+"&inds="+userinds, function(data) {
+		console.log(data);
 		$.each(data, function(key, val) {
 			if (data[key] != false) {
 				var html = val["html"];
@@ -366,15 +412,71 @@ function loadSlices() {
 						loadFeature(that, item_id);
 					});
 				});
-				checkHash();
 			}
 			$(window).resize();
+			$(".items").css({"overflow-x" : "scroll", "overflow-y" : "hidden"});
 		});
 		if (sidebar != "") {
 			$("div.lefttext p.msg").html(sidebar);
 		}
 		else $("div.lefttext p.msg").html("We've hand picked some stories and videos that we think you'll like. Let us know what you think. We'll be updating the site frequently, so please bookmark it and come back again soon.");
 	});
+}
+
+function loadFavorites(){
+	console.log(fav_array);
+	
+	var url;
+	if (fav_array.length > 0){
+		favs = fav_array.join();
+		url = 'explore.php?favs=' + favs;
+		console.log(url);
+		$("body").removeClass().addClass("favorite");
+		$("ul.slides li").remove();
+		setTimeout(function(){
+			$.getJSON(url, function(data){
+				var len = data.length;
+				$.each(data, function(key, val) {
+					console.log("Data: ", data);
+					if (data[key] != false) {
+						$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
+					}
+
+					if (key == len - 1) {
+						doMasonry();
+						fader($(".hidestart:first"));
+						// console.log("Testing ", msnry);
+				
+						///////////////////////////////////
+						// When you open the big image //
+						///////////////////////////////////
+
+						$(".img-cover").each(function(index, element) {
+							var item_id = $(this).parent().attr("id"), itemheight;
+
+							////////////////////////////////////////////////////////////////////////////////////////
+							// Click event: when click on an image, load the image and append it into the HTML //
+							////////////////////////////////////////////////////////////////////////////////////////
+							$(this).click(function(){
+								loadFeature(this, item_id);
+							});
+						});
+					}
+			
+					resizeWindow();
+				});
+			});
+		}, 500);
+
+	}else{
+		alert("You haven't fav anything");
+		$("#nav_home").click();
+	}
+}
+
+function hidetest(){
+	if (msnry !== undefined) msnry.destroy();
+	loadFavorites();
 }
 
 function hideSlices() {
@@ -385,7 +487,7 @@ function hideSlices() {
 			loadExplore();
 		}, 400);
 	
-	$("body").removeClass("slices").addClass("explore");
+	$("body").removeClass().addClass("explore");
 	$(window).resize();
 }
 
@@ -400,7 +502,7 @@ function refresh(cats) {
 function loadExplore(cats) {
 
 	var url;
-
+	
 	if (cats) {
 		url = 'explore.php?cats='+cats;
 	}
@@ -438,13 +540,13 @@ function loadExplore(cats) {
 				});
 			}
 			
-			// $(window).resize();
+			resizeWindow();
 		});
 	});
 }
 
 function hideExplore() {
-	msnry.destroy();
+	if (msnry !== undefined) msnry.destroy();
 	$(".explore-cover").off("click");
 	$("ul.slides li").animate({"opacity":"0"}, 0, function(){		
 		$(this).hide().remove();
@@ -453,7 +555,7 @@ function hideExplore() {
 		};
 	});
 
-	$("body").removeClass("explore").addClass("slices");
+	$("body").removeClass().addClass("slices");
 	$(window).resize();
 }
 
@@ -462,15 +564,13 @@ function leaveStory() {
 	/////////////////////////////////////////////////////////////////
 	// Close the current story and go back to slices or explore.  //
 	/////////////////////////////////////////////////////////////////
-
 	$("#switch").show();
-		if ($("body").hasClass("slicesOne")) {
+		if ($("body").hasClass("slices")) {
 
 			var leftwidth = $(".left").width()+ "px";
 			$("li").removeClass("current");
 			window.location.hash = "";
 			$(".items").scrollTop(0);
-			$("body").addClass("slices").removeClass("slicesOne");
 			$(".content-info, .content-image").hide();
 			$(".left, .info").show();
 			$(".items").css({"left":leftwidth,"overflow-x" : "scroll", "overflow-y" : "hidden"});
@@ -483,12 +583,11 @@ function leaveStory() {
 			loadSlices();
 		}
 
-		else if ($("body").hasClass("exploreOne")) {
+		else if ($("body").hasClass("explore")) {
 			var leftwidth = $(".left").width()+ "px";
 			$("li").removeClass("current");
 			window.location.hash = "";
 			$(".items").scrollTop(0);
-			$("body").addClass("explore").removeClass("exploreOne");
 			$(".content-info, .content-image").hide();
 			$(".left, .info").show();
 			$(".items").css({"left":"", "width":itemsWidth+"px", "overflow":"", "height":itemsHeight+"px"});
@@ -503,7 +602,7 @@ function leaveStory() {
 					$("#go-back").hide();
 					// $(window).resize();
 				});
-			}, 500);
+			}, 400);
 		}
 }
 
@@ -544,6 +643,33 @@ function resizeWindow() {
 }
 
 var current, bodymargin, imagemargin;
+
+function switch_view(){
+	window.location.hash="";
+	switch ($(this).attr('id')) {
+	case 'nav_home':
+		$(".filter").hide();
+		$(".left").show();
+		$(".lefttext, .leftlogo").fadeIn(500);
+		hideExplore();
+		break;
+	case 'nav_exp':
+		$(".left").show();
+		$(".filter").fadeIn(500);
+		$(".lefttext, .leftlogo").hide();
+		hideSlices();
+		break;
+	case 'nav_fav':
+		$(".filter").hide();
+		$(".left").show();
+		$(".lefttext, .leftlogo").fadeIn(500);
+		hidetest();
+		break;
+	default:
+		break;
+	}
+}
+
 $(document).ready(function(e) {
 	loadSlices();
 
@@ -562,8 +688,9 @@ $(document).ready(function(e) {
 	/////////////////////////////////////////////////
 	//			When you close the big image       //
 	/////////////////////////////////////////////////
-	$("#go-back").on("click", leaveStory);
-
+	$("#nav_home").on("click", switch_view);
+	$("#nav_exp").on("click", switch_view);
+	$("#nav_fav").on("click", switch_view);
 
 	/////////////////////////////
 	// When you click explore //
