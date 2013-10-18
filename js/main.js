@@ -29,7 +29,7 @@ function fader(elm) {
 	setTimeout(function(){
 		if (elm.next().length > 0) fader(elm.next());
 		else {
-			$("#switch").on("click", switcher);
+			// $("#switch").on("click", switcher);
 		};
 	},100);
 
@@ -50,8 +50,9 @@ function loadFeature(that, item_id) {
 	$parent.addClass("current");
 	var title = $(that).children(".meta#title").html(), body = $(that).children(".meta#body").html(), customStyle = $(that).children(".meta#customStyle").html(), author = $(that).children(".meta#byline").html(), $itemcontent = $("#" + item_id + " .item-content");
 	current = item_id;
-	if ($("body").hasClass("explore")) $("body").removeClass("explore").addClass("exploreOne");
-	if ($("body").hasClass("slices")) $("body").removeClass("slices").addClass("slicesOne");
+	if ($("body").hasClass("explore")) $("body").removeClass().addClass("exploreOne");
+	if ($("body").hasClass("slices")) $("body").removeClass().addClass("slicesOne");
+	if ($("body").hasClass("favorite")) $("body").removeClass().addClass("favOne");
 
 	$(".left, .info").hide();
 	$("body").css({"left":"0","width":"100%", "overflow-x" : "hidden", "overflow-y" : "auto"});
@@ -344,7 +345,53 @@ function loadFavorites(){
 	if (fav_array.length > 0){
 		favs = fav_array.join();
 		url = 'explore.php?favs=' + favs;
+		console.log(url);
+		$("body").removeClass().addClass("favorite");
+		$("ul.slides li").remove();
+		setTimeout(function(){
+			$.getJSON(url, function(data){
+				var len = data.length;
+				$.each(data, function(key, val) {
+					console.log("Data: ", data);
+					if (data[key] != false) {
+						$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
+					}
+
+					if (key == len - 1) {
+						doMasonry();
+						fader($(".hidestart:first"));
+						// console.log("Testing ", msnry);
+				
+						///////////////////////////////////
+						// When you open the big image //
+						///////////////////////////////////
+
+						$(".img-cover").each(function(index, element) {
+							var item_id = $(this).parent().attr("id"), itemheight;
+
+							////////////////////////////////////////////////////////////////////////////////////////
+							// Click event: when click on an image, load the image and append it into the HTML //
+							////////////////////////////////////////////////////////////////////////////////////////
+							$(this).click(function(){
+								loadFeature(this, item_id);
+							});
+						});
+					}
+			
+					resizeWindow();
+				});
+			});
+		}, 500);
+
+	}else{
+		alert("You haven't fav anything");
+		$("#nav_home").click();
 	}
+}
+
+function hidetest(){
+	if (msnry !== undefined) msnry.destroy();
+	loadFavorites();
 }
 
 function hideSlices() {
@@ -469,7 +516,7 @@ function leaveStory() {
 					$("#go-back").hide();
 					// $(window).resize();
 				});
-			}, 500);
+			}, 400);
 		}
 }
 
@@ -530,6 +577,12 @@ function switch_view(){
 		$(".lefttext, .leftlogo").hide();
 		hideSlices();
 		break;
+	case 'nav_fav':
+		$(".filter").hide();
+		$(".left").show();
+		$(".lefttext, .leftlogo").fadeIn(500);
+		hidetest();
+		break;
 	default:
 		break;
 	}
@@ -556,6 +609,7 @@ $(document).ready(function(e) {
 	/////////////////////////////////////////////////
 	$("#nav_home").on("click", switch_view);
 	$("#nav_exp").on("click", switch_view);
+	$("#nav_fav").on("click", switch_view);
 
 	/////////////////////////////
 	// When you click explore //

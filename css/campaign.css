@@ -404,7 +404,16 @@ li.current {
     border-top: 2px solid #FDC53F;
 }
 
+.favorite .explore-item{
+	overflow:auto;
+}
+
+
 .exploreOne .explore-item{
+	border:none;
+}
+
+.favOne .explore-item{
 	border:none;
 }
 
@@ -424,6 +433,11 @@ li.current {
     transition: border .3s ease, top .5s ease, width .5s ease, box-shadow .3s ease;
     z-index: 200;
     cursor: pointer;
+}
+
+.favorite .explore-item .info{
+	height:auto;
+	overflow:auto;
 }
 
 .explore-item:hover .info {
