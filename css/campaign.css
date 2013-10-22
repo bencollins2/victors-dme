@@ -168,7 +168,7 @@ body.slicesOne, body.exploreOne {
 .navi_item:hover p{
 	background:#FEC33A;
 }
-#msg_nav{
+#nav_msg{
     position: absolute;
     top: 0;
 	right:0;
@@ -176,7 +176,7 @@ body.slicesOne, body.exploreOne {
     cursor: pointer;
 	color:white;
 }
-#msg_nav .msgicon{
+#nav_msg .msgicon{
 	height:30px;
 	width:60px;
 	margin:8px 0;
@@ -184,8 +184,12 @@ body.slicesOne, body.exploreOne {
 	background:url("../img/msgicon.png") center center no-repeat;
 	transition: background 1s ease;
 }
-#msg_nav:hover .msgicon{
+#nav_msg:hover .msgicon{
 	background:url("../img/msgicon_hover.png") center center no-repeat;
+}
+
+.explore #nav_msg, .favorite #nav_msg{
+	display:none;
 }
 
 #nav_exp{
