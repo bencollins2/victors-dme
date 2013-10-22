@@ -699,13 +699,17 @@ $(document).ready(function(e) {
 	$("#nav_home").on("click", switch_view);
 	$("#nav_exp").on("click", switch_view);
 	$("#nav_fav").on("click", switch_view);
+	
+	$("#nav_msg").click(function(){
+		$("#item-mail .img-cover").click();
+	});
 
 	/////////////////////////////
 	// When you click explore //
 	/////////////////////////////
 
 	$(window).resize();
-	$(window).hashchange();
+	// $(window).hashchange();
 	////////////////////
 	//  Hover states  //
 	////////////////////
