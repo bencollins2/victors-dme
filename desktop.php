@@ -53,6 +53,12 @@
                 <p class="msg"><!-- We've hand picked some stories and videos that we think you'll like. Let us know what you think. We'll be updating the site frequently, so please bookmark it and come back again soon. --></p>
                 <p><a <?= $logout?>>(Log Out)</a></p>
             </div>
+			<div class="favtext">
+                <h2>Welcome <?= $first_name?></h2>
+                <span>Victor of engineering</span>
+                <p class="msg">Hey, here presents your favorite features.</p>
+                <p><a <?= $logout?>>(Log Out)</a></p>
+			</div>
             <div class="filter">
                 <h2>Filter by category</h2>
                 <span>Select multiple categories below</span>
