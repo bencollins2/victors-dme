@@ -517,7 +517,16 @@ function loadExplore(cats) {
 		$.each(data, function(key, val) {
 			console.log("Data: ", data);
 			if (data[key] != false) {
-				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
+				
+				var fav_img = "img/storyFav.png";
+				for (var i=0; i<fav_array.length; i++){
+					if (val["id"] == fav_array[i]){
+						fav_img = "img/storyFaved.png"
+						break;
+					}
+				}
+				
+				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<img class="fav-star" src="'+fav_img+'"><div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
 			}
 
 			if (key == len - 1) {
@@ -702,6 +711,9 @@ $(document).ready(function(e) {
 	
 	$("#nav_msg").click(function(){
 		$("#item-mail .img-cover").click();
+	});
+	
+	$(".fav-star").click(function(){
 	});
 
 	/////////////////////////////
