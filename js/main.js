@@ -176,7 +176,7 @@ function loadFeature(that, item_id) {
 			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-			</div><h2 class="fadewithme">'+title+'</h2><h3>Subtitle</h3><span class="byline">'+author+'</span><div class="body">'+body+'</div></div>');
+			</div><h2 class="fadewithme">'+title+'</h2><h3>Subtitle</h3><span class="byline">'+author+'</span><div class="body"><a id="fav">'+body+'</div></div>');
 	}
 
 	stWidget.addEntry({
