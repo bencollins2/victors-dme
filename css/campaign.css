@@ -545,23 +545,23 @@ li.current {
 }
 
 #go-back {
-	/* color: #efefef; */
-	/* position: absolute; */
-	/* top: 13px; */
-	/* right: 12px; */
-	/* z-index: 1000; */
-	/* font-weight: 100; */
-	/* font-size: 13px; */
-	/* border-bottom: thin solid; */
+	 color: #efefef; 
+	 position: absolute; 
+	 top: 13px; 
+	 right: 12px; 
+	 z-index: 1000; 
+	 font-weight: 100; 
+	 font-size: 13px; 
+	 border-bottom: thin solid; 
 }
-/*
+
 .slices #go-back {
     display: none;
 }
 
 .explore #go-back {
     display: none;
-}*/
+}
 
 .img-src {
 	display: none;
