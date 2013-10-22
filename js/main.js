@@ -705,7 +705,7 @@ $(document).ready(function(e) {
 	/////////////////////////////
 
 	$(window).resize();
-	$(window).hashchange();
+	// $(window).hashchange();
 	////////////////////
 	//  Hover states  //
 	////////////////////
