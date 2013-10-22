@@ -6,6 +6,15 @@
             <ul>
                 <li class="home"><a href="http://engin.umich.edu"><img src="img/mighigan_engineering_25.png" alt="Michigan Engineering" /></a></li>
             </ul>
+          <!--   <div id="go-back" class="navi_item">
+                <span>Home</span>
+                <div class="square">
+                    <p class="one p_long"></p>
+                    <p class="two p_long"></p>
+                    <p class="three p_long"></p>
+                    <p class="four p_long"></p>
+                </div>
+            </div> -->
             <div id="nav_home" class="navi_item">
                 <span>Home</span>
                 <div class="square">

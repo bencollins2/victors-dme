@@ -17,8 +17,8 @@ function checkHash() {
 	}
 	else {
 		console.log("Homepage");
-		$("#go-back").click();
-		leaveStory();
+		// $("#go-back").click();
+		// leaveStory();
 	}
 }
 
@@ -412,9 +412,10 @@ function loadSlices() {
 						loadFeature(that, item_id);
 					});
 				});
+				checkHash();
 			}
 			$(window).resize();
-			$(".items").css({"overflow-x" : "scroll", "overflow-y" : "hidden"});
+			// $(".items").css({"overflow-x" : "scroll", "overflow-y" : "hidden"});
 		});
 		if (sidebar != "") {
 			$("div.lefttext p.msg").html(sidebar);
@@ -688,6 +689,8 @@ $(document).ready(function(e) {
 	/////////////////////////////////////////////////
 	//			When you close the big image       //
 	/////////////////////////////////////////////////
+	
+	$("#go-back").on("click", leaveStory);
 	$("#nav_home").on("click", switch_view);
 	$("#nav_exp").on("click", switch_view);
 	$("#nav_fav").on("click", switch_view);
