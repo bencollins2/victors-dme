@@ -42,6 +42,9 @@
                     <p class="four p_short"></p>
                 </div>
             </div>
+			<div id="msg_nav">
+				<div class="msgicon"></div>
+			</div>
         </header>
 
     	

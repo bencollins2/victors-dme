@@ -168,15 +168,34 @@ body.slicesOne, body.exploreOne {
 .navi_item:hover p{
 	background:#FEC33A;
 }
+#msg_nav{
+    position: absolute;
+    top: 0;
+	right:0;
+    width: 60px;
+    cursor: pointer;
+	color:white;
+}
+#msg_nav .msgicon{
+	height:30px;
+	width:60px;
+	margin:8px 0;
+	border-left:1px solid white;
+	background:url("../img/msgicon.png") center center no-repeat;
+	transition: background 1s ease;
+}
+#msg_nav:hover .msgicon{
+	background:url("../img/msgicon_hover.png") center center no-repeat;
+}
 
 #nav_exp{
-	right: 120px;
+	right: 180px;
 }
 #nav_home{
-	right:240px;
+	right:300px;
 }
 #nav_fav{
-	right:10px;
+	right:70px;
 }
 
 .navi_item span {
