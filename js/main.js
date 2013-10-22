@@ -624,6 +624,7 @@ function resizeWindow() {
 	$(".exploreOne li.current, .slicesOne li.current").css({"width":width+"px"});
 	$(".slices .items").css({"width":itemsWidth, "height":itemsHeight+"px"});
 	$(".explore .items").css({"width":itemsWidth + "px", "height":itemsHeight});
+	$(".favorite .items").css({"width":itemsWidth + "px", "height":itemsHeight});
 
 	if ($("body").hasClass("slices")) {
 
@@ -636,6 +637,7 @@ function resizeWindow() {
 	$(".content-info").css({"margin-top":bodymargin});
 	$(".slices .items").css({"left":leftwidth+"px"});
 	$(".explore .items").css({"left":""});
+	$(".favorite .items").css({"left":""});
 
 
 	var ifwidth = $(".content-info div.body iframe").width(), ifheight = ifwidth * (2/3);
@@ -650,20 +652,23 @@ function switch_view(){
 	switch ($(this).attr('id')) {
 	case 'nav_home':
 		$(".filter").hide();
+		$(".favtext").hide();
 		$(".left").show();
-		$(".lefttext, .leftlogo").fadeIn(500);
+		$(".lefttext").fadeIn(500);
 		hideExplore();
 		break;
 	case 'nav_exp':
 		$(".left").show();
+		$(".favtext").hide();
+		$(".lefttext").hide();
 		$(".filter").fadeIn(500);
-		$(".lefttext, .leftlogo").hide();
 		hideSlices();
 		break;
 	case 'nav_fav':
 		$(".filter").hide();
+		$(".lefttext").hide();
 		$(".left").show();
-		$(".lefttext, .leftlogo").fadeIn(500);
+		$(".favtext").fadeIn(500);
 		hidetest();
 		break;
 	default:

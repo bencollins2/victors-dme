@@ -94,6 +94,20 @@ body.slicesOne, body.exploreOne {
     font-size: 16px;
     line-height: 1.5;
 }
+.left .favtext {
+    width: 200px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    color: #032B5B;
+    font-weight: 100;
+    border-bottom: thin solid rgba(3, 43, 91, .3);
+    border-top: thin solid rgba(3, 43, 91, .3);
+    padding: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+	display:none;
+}
 
 .left h2 {
     font-family: "league-gothic", sans-serif;
@@ -232,6 +246,12 @@ body.slicesOne, body.exploreOne {
     width: auto;
 }
 
+.favorite .items {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: auto;
+}
+
 .itemcontainer {
     width: 1440px;
     padding: 0;
@@ -244,6 +264,12 @@ body.slicesOne, body.exploreOne {
 }
 
 .explore .itemcontainer, .explore .itemcontainer .slides {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+.favorite .itemcontainer, .explore .itemcontainer .slides {
     height: 100%;
     width: 100%;
     overflow: auto;
@@ -454,6 +480,7 @@ li.current {
 }
 
 .favorite .explore-item{
+	height:auto;
 	overflow:auto;
 }
 
