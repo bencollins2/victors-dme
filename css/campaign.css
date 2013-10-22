@@ -263,6 +263,11 @@ body.slicesOne, body.exploreOne {
     width: 100%;
     overflow: auto;
 }
+.favorite .itemcontainer, .explore .itemcontainer .slides {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
 
 ul.slider {
 	list-style: none;
@@ -420,7 +425,8 @@ li.current {
 }
 
 .favorite .explore-item{
-	overflow:auto;
+	height:auto;
+/*	overflow:auto;*/
 }
 
 

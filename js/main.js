@@ -353,40 +353,38 @@ function loadFavorites(){
 		favs = fav_array.join();
 		url = 'explore.php?favs=' + favs;
 		console.log(url);
-		setTimeout(function(){
-			$.getJSON(url, function(data){
-				var len = data.length;
-				$.each(data, function(key, val) {
-					console.log("Data: ", data);
-					if (data[key] != false) {
-						$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
-					}
+		$.getJSON(url, function(data){
+			var len = data.length;
+			$.each(data, function(key, val) {
+				console.log("Data: ", data);
+				if (data[key] != false) {
+					$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
+				}
 
-					if (key == len - 1) {
-						doMasonry();
-						fader($(".hidestart:first"));
-						// console.log("Testing ", msnry);
-				
-						///////////////////////////////////
-						// When you open the big image //
-						///////////////////////////////////
-
-						$(".img-cover").each(function(index, element) {
-							var item_id = $(this).parent().attr("id"), itemheight;
-
-							////////////////////////////////////////////////////////////////////////////////////////
-							// Click event: when click on an image, load the image and append it into the HTML //
-							////////////////////////////////////////////////////////////////////////////////////////
-							$(this).click(function(){
-								loadFeature(this, item_id);
-							});
-						});
-					}
+				if (key == len - 1) {
+					doMasonry();
+					fader($(".hidestart:first"));
+					// console.log("Testing ", msnry);
 			
-					resizeWindow();
-				});
+					///////////////////////////////////
+					// When you open the big image //
+					///////////////////////////////////
+
+					$(".img-cover").each(function(index, element) {
+						var item_id = $(this).parent().attr("id"), itemheight;
+
+						////////////////////////////////////////////////////////////////////////////////////////
+						// Click event: when click on an image, load the image and append it into the HTML //
+						////////////////////////////////////////////////////////////////////////////////////////
+						$(this).click(function(){
+							loadFeature(this, item_id);
+						});
+					});
+				}
+		
+				resizeWindow();
 			});
-		}, 500);
+		});
 
 	}else{
 		alert("You haven't fav anything");
@@ -447,7 +445,7 @@ function loadExplore(cats) {
 				doMasonry();
 				fader($(".hidestart:first"));
 				// console.log("Testing ", msnry);
-				
+			
 				///////////////////////////////////
 				// When you open the big image //
 				///////////////////////////////////
@@ -463,7 +461,7 @@ function loadExplore(cats) {
 					});
 				});
 			}
-			
+		
 			resizeWindow();
 		});
 	});
@@ -628,15 +626,17 @@ function cleanStyle(callback){
 	
 	// second remove all the contents, events, and msnry
 	$("ul.slides li").remove();
-	// if (msnry !== undefined) msnry.destroy();
+	// if (msnry !== undefined) {
+	// 	msnry.destroy();
+	// }
+	$(window).resize();
 	
 	//remove the body class
 	$('body').removeClass();
 	
 	//start to load
-	setTimeout(function(){
-		callback();
-	},0);
+
+	callback();
 	
 }
 
