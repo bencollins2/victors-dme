@@ -316,6 +316,22 @@ li.current {
     float: none;
 }
 
+.explore .fav-star{
+	position:absolute;
+	width:40px;
+	height:40px;
+	z-index:101;
+	cursor:pointer;
+	opacity:0;
+}
+.explore .slides li:hover .fav-star{
+	opacity:1;
+}
+
+.exploreOne .fav-star, .slicesOne .fav-star, .favOne .fav-star{
+	display:none;
+}
+
 .meta {
     display: none;
 }
