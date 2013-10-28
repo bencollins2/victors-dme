@@ -124,6 +124,7 @@
         $r = mysql_query($q);
         $u=0;
         $c=0;
+        $lnk = (int)$_GET['link'];
 
         while($line = mysql_fetch_array($r)){
             $u++;
@@ -137,18 +138,50 @@
             $sidebar = $line["sidebar"];
             $mailimg = $line["mailimg"];
 			$favorites = $line["favorites"];
-            
-
         }
 
         // $qq = "SELECT * FROM `adminusers` WHERE "
 
+
+        // If they're logged into facebook, and there's a link ID 
+
+        if ($lnk > 0 && $user > 0 && $_GET['add'] == 1) {
+            $q = "SELECT * FROM `users` WHERE `id` = '$lnk' LIMIT 0,1;";
+            $r = mysql_query($q);
+            $l = mysql_fetch_array($r);
+
+            $q = "INSERT INTO users (id,name,first,last,email,categories,individuals,sidebar,mailimg,fromlink,showasnew) VALUES ('$user','$name','$first_name','$last_name','$email','".$l['categories']."','".$l['individuals']."','".$l['sidebar']."','".$l['mailimg']."','".$lnk."','1');";
+            $r = mysql_query($q);
+            $lastid = mysql_insert_id();
+            if ($lastid > 0) $_GET['register'] = 0;
+            else $regerror = 1;
+
+            $q = "UPDATE `users` SET `todelete` = '1' WHERE `id` = '$lnk'";
+            $r = mysql_query($q) or die("Failure to update temp user.");
+
+            $q = "SELECT * FROM `adminusers` WHERE `uids` LIKE '%$lnk%' LIMIT 0,1;";
+            $r = mysql_query($q) or die("Failure to select current admin user IDs.");
+            $l = mysql_fetch_array($r);
+            $aid = $l["id"];
+            $uids = $l["uids"];
+
+            $newuids = preg_replace("/(,?)".$lnk."/", "", $uids);
+            $newuids = $user.",".$newuids;
+
+            $q = "UPDATE `adminusers` SET `uids` = '$newuids' WHERE `id` = '$aid'";
+            $r = mysql_query($q) or die("Couldn't update admin record.");
+
+        }
+
         /////////////////////////////////////////////////////////////////
         // If they're logged into facebook, but we don't have their ID //
         /////////////////////////////////////////////////////////////////
-        if ($u == 0 && $user > 0) {
+        else if ($u == 0 && $user > 0 && $_GET["add"]==1 && $lnk == 0) {
             $q = "INSERT INTO users (id,name,first,last,email,categories,individuals,premium) VALUES ('$user','$name','$first_name','$last_name','$email','','','0');";
-            $r = mysql_query($q) or die("Failure: ". $q);
+            $r = mysql_query($q);
+            $lastid = mysql_insert_id();
+            if ($lastid > 0) $_GET['register'] = 0;
+            else $regerror = 1;
         }
         // They have a user account but no categories
         if ($u > 0 && $c == 0) {
@@ -201,7 +234,7 @@
     if ($_GET["register"] == "1") {
         $normalize = "css/normalize.css";
         $main = "css/main.css";
-        $campstyle = "css/login.css";
+        $campstyle = "css/register.css";
         $body = "register.php";
     }
 

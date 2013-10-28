@@ -10,9 +10,18 @@
  * Last Updated: August 19, 2004
  */
 require_once("include/session.php");
+$userInfo = $session->linkInfo($_GET["link"]);
+$linked = false;
+if ($userInfo["first"] != "") {
+  $linked = true;
+  $firstName = $userInfo["first"];
+
+
+
+}
 ?>
 
-
+<body>
 <header class="sticky" id="nav">
     <ul>
         <li class="home"><a href="http://engin.umich.edu">Michigan Engineering</a></li>
@@ -70,26 +79,93 @@ else if(isset($_SESSION['regsuccess'])){
 else{
 ?>
 
+<? if ($linked) { ?> 
+
+  <h1>Welcome, <?= $firstName?>.</h1>
+
+<? } else { ?> 
 
   <h1>Register</h1>
+
+<? } ?>
+
+<? if ($regerror ==1 ) { ?>
+
+  <h3 class="error">This user is already in the system.</h3>
+
+<? } ?>
+
   <?
   if($form->num_errors > 0){
      echo "<span><font size=\"2\" color=\"#ff0000\">".$form->num_errors." error(s) found</font></span>";
   }
   ?>
+  <?= ($linked) ? "<h2>We've selected some content we think you'll like. Please <a class='fbl' href='#'>sign up using Facebook</a>!</h2>" : "<h2>Please <a class='fbl' href='#'>sign up using Facebook</a>!</h2>"?>
+
+  <div class="or">
+    <span>..or if you'd prefer, you can create an account directly.</span>
+  </div>
+
   <form action="process.php" method="POST">
+
     <div class="table">
       <div><span>Email:</span><span><input type="text" name="email" maxlength="50" value="<? echo $form->value("email"); ?>"></span><span><? echo $form->error("email"); ?></span></div>
       <div><span>Password:</span><span><input type="password" name="pass" maxlength="30" value="<? echo $form->value("pass"); ?>"></span><span><? echo $form->error("pass"); ?></span></div>
       <div><span>First Name:</span><span><input type="text" name="first" maxlength="30" value="<? echo $form->value("first"); ?>"></span><span><? echo $form->error("first"); ?></span></div>
       <div><span>Last Name:</span><span><input type="text" name="last" maxlength="30" value="<? echo $form->value("last"); ?>"></span><span><? echo $form->error("last"); ?></span></div>
-      <div><span colspan="2" align="right">
+      <div class="submit"><span colspan="2" align="right">
       <input type="hidden" name="subjoin" value="1">
+      <?php if ($_GET["link"] > 0) { 
+        $lnk = (int) $_GET["link"];
+      ?> 
+      <input type="hidden" name="link" value="<?= $lnk?>">
+      <? }?>
       <input type="submit" value="Join!"></span></div>
-      <div><span colspan="2" align="left"><a href="main.php">Back to Main</a></span></div>
     </div>
   </form>
 <?
 }
 ?>
 </div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+<script src="js/masonry.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/fb.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$(".fbl").on("click",function(e){
+  e.preventDefault();
+  FB.login(function(response) {
+      window.location.assign("index.php?register=1&link=<?= $_GET['link']?>&add=1");
+    }, {scope: 'read_stream'});;
+  });
+
+        if (<?= $open?> == 1) {
+            $(".custom").show();
+        }
+
+        $(".or a").on("click", function(e){
+            e.preventDefault();
+            $(".custom").slideToggle();
+        })
+});
+</script>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-39713895-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>

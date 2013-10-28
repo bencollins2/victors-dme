@@ -324,7 +324,7 @@ li.current {
 	cursor:pointer;
 	opacity:0;
 }
-.explore .slides li:hover .fav-star{
+.explore .slides li .fav-star{
 	opacity:1;
 }
 

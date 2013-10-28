@@ -109,7 +109,9 @@ class Process
          $_POST['last'] = strtolower($_POST['last']);
       }
       /* Registration attempt */
-      $retval = $session->register($_POST['first'], $_POST['last'], $_POST['pass'], $_POST['email']);
+
+      if ($_POST["link"] > 0) $retval = $session->register($_POST['first'], $_POST['last'], $_POST['pass'], $_POST['email'], $_POST['link']);
+      else $retval = $session->register($_POST['first'], $_POST['last'], $_POST['pass'], $_POST['email']);
       
       /* Registration Successful */
       if($retval == 0){

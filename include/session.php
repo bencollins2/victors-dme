@@ -81,8 +81,6 @@ class Session
       $qs = substr($qs, 0, -1);
 
       $this->url = $_SESSION['url'] = $_SERVER['PHP_SELF'].$qs;
-      
-
 
    }
 
@@ -247,7 +245,7 @@ class Session
     * 1. If no errors were found, it registers the new user and
     * returns 0. Returns 2 if registration failed.
     */
-   function register($subfirst, $sublast, $subpass, $subemail){
+   function register($subfirst, $sublast, $subpass, $subemail, $lnk){
       global $database, $form, $mailer;  //The database, form and mailer object
       
       /* Username error checking */
@@ -349,6 +347,9 @@ class Session
             if(EMAIL_WELCOME){
                $mailer->sendWelcome($subfirst,$subemail,$subpass);
             }
+            if ($lnk > 0) {
+              $database->copyFromLink($lnk,$database->recent_insert);
+            }
             return 0;  //New user added succesfully
          }else{
             return 2;  //Registration attempt failed
@@ -443,6 +444,15 @@ class Session
    function isAdmin(){
       return ($this->userlevel == ADMIN_LEVEL ||
               $this->username  == ADMIN_NAME);
+   }
+
+   //////////////////////////////////////////////////////////////
+   // linkInfo - Gets info on the account that will be linked  //
+   //////////////////////////////////////////////////////////////
+   function linkInfo($id){
+      global $database;
+      $id = (int)$id;
+      return $database->getUserInfoById($id);
    }
    
    /**
