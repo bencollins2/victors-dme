@@ -519,14 +519,16 @@ function loadExplore(cats) {
 			if (data[key] != false) {
 				
 				var fav_img = "img/storyFav.png";
+				var faved = 0;
 				for (var i=0; i<fav_array.length; i++){
 					if (val["id"] == fav_array[i]){
-						fav_img = "img/storyFaved.png"
+						fav_img = "img/storyFaved.png";
+						faved = 1;
 						break;
 					}
 				}
 				
-				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<img class="fav-star" src="'+fav_img+'"><div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
+				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<img class="fav-star" src="'+fav_img+'" faved = '+faved+'><div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
 			}
 
 			if (key == len - 1) {
@@ -551,6 +553,27 @@ function loadExplore(cats) {
 			}
 			
 			resizeWindow();
+		});
+		
+		$(".fav-star").click(function(){
+			var item_id = $(this).parent().attr('id').slice(5);
+			var faved = $(this).attr('faved');
+			if (faved == 0){
+				this.src = "img/storyFaved.png";
+				$(this).attr('faved',1);
+				fav_array.push(item_id);
+			}else{
+				this.src = "img/storyFav.png";
+				$(this).attr('faved',0);
+				fav_array.splice(fav_array.indexOf(item_id),1);
+			}
+			$.ajax({
+				type: "POST",
+				url: "dostuff.php",
+				data: { id: userid, type: "newfav", favs: fav_array.join()}
+			}).done(function( msg ) {
+				console.log("Message: ", msg);
+			});
 		});
 	});
 }
@@ -711,9 +734,6 @@ $(document).ready(function(e) {
 	
 	$("#nav_msg").click(function(){
 		$("#item-mail .img-cover").click();
-	});
-	
-	$(".fav-star").click(function(){
 	});
 
 	/////////////////////////////
