@@ -16,6 +16,7 @@ class MySQLDB
    var $num_active_users;   //Number of active users viewing site
    var $num_active_guests;  //Number of active guests viewing site
    var $num_members;        //Number of signed-up users
+   var $recent_insert;      //Id of most recent insert
    /* Note: call getNumMembers() to access $num_members! */
 
    /* Class constructor */
@@ -165,7 +166,45 @@ class MySQLDB
       }
       $q = "INSERT INTO ".TBL_USERS."(first, last, password, id, userlevel, email, username, timestamp) VALUES ('$first', '$last', '$password', '0', $ulevel, '$email', '$email', $time)";
 
-      return mysql_query($q, $this->connection);
+      $ret = mysql_query($q, $this->connection);
+      $this->recent_insert = mysql_insert_id();
+
+      return $ret;
+   }
+
+   /**
+    * copyFromLink - Copies data from another record.
+    */
+   function copyFromLink($lnk,$copyto){
+      $time = time();
+      /* If admin sign up, give admin user level */
+      
+      $q = "SELECT * FROM `users` WHERE `id` = '$lnk' LIMIT 0,1;";
+      $r = mysql_query($q);
+      $l = mysql_fetch_array($r);
+      
+      $q = "UPDATE `users` SET `name` = '".$l['first'] . ' ' . $l['last']."', `categories` = '".$l['categories']."', `individuals` = '".$l['individuals']."', `sidebar` = '".$l['sidebar']."', `first` = '".$l['first']."', `last` = '".$l['last']."', `mailimg` = '".$l['mailimg']."', `fromlink` = '".$lnk."', `showasnew` = '1' WHERE `id` = '".$copyto."'";
+      $r = mysql_query($q);
+      $lastid = mysql_insert_id();
+      if ($lastid > 0) {}
+      else $regerror = 1;
+
+      $q = "UPDATE `users` SET `todelete` = '1' WHERE `id` = '$lnk'";
+      $r = mysql_query($q) or die("Failure.");
+
+      $q = "SELECT * FROM `adminusers` WHERE `uids` LIKE '%$lnk%' LIMIT 0,1;";
+      $r = mysql_query($q) or die("Failure.");
+      $l = mysql_fetch_array($r);
+      $aid = $l["id"];
+      $uids = $l["uids"];
+
+      $newuids = preg_replace("/(,?)".$lnk."/", "", $uids);
+      $newuids = $user.",".$newuids;
+
+      $q = "UPDATE `adminusers` SET `uids` = '$newuids' WHERE `id` = '$aid'";
+      $r = mysql_query($q) or die("Couldn't update admin record.");
+
+      return true;
    }
    
    /**
@@ -184,6 +223,23 @@ class MySQLDB
     */
    function getUserInfo($username){
       $q = "SELECT * FROM ".TBL_USERS." WHERE username = '$username'";
+      $result = mysql_query($q, $this->connection);
+      /* Error occurred, return given name by default */
+      if(!$result || (mysql_numrows($result) < 1)){
+         return NULL;
+      }
+      /* Return result array */
+      $dbarray = mysql_fetch_array($result);
+      return $dbarray;
+   }
+
+   /**
+    * getUserInfoById - Returns the result array from a mysql
+    * query asking for all information stored regarding
+    * the given username. If query fails, NULL is returned.
+    */
+   function getUserInfoById($id){
+      $q = "SELECT * FROM ".TBL_USERS." WHERE id = '$id'";
       $result = mysql_query($q, $this->connection);
       /* Error occurred, return given name by default */
       if(!$result || (mysql_numrows($result) < 1)){
