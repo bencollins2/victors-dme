@@ -380,6 +380,9 @@ function loadSlices() {
 
 				var mimg = mailimg.substring(0, mailimg.length - 4) + "_cover.jpg";
 				$newLi = $("<li />", {'class': 'one-item hidestart mail', 'id': 'item-mail', 'html':'<div class="info"><h2>From: '+firstmsgfrom+'</h2><div class="description">'+firstmsg+'</div></div><div class="img-cover"><img class="cover" src="img/'+mimg+'" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">Message</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
+				if(msgslice == '0'){
+					$('#item-mail').hide();
+				}
 			}
 			if (key == 5) {
 				$newLi = $("<li />", {'class': 'one-item hidestart map', 'id': 'item-map', 'html':'<div class="info"><h2>Campus Map</h2><div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div></div><div class="img-cover"><img class="cover" src="img/map_cover.jpg" alt="map cover" /></div><div class="meta" id="title">New Messages</div><div class="meta" id="body">stuff</div></div><a href="mail.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
@@ -741,6 +744,7 @@ $(document).ready(function(e) {
 	
 	$("#nav_msg").click(function(){
 		$("#item-mail .img-cover").click();
+		$('#item-mail').show();
 	});
 
 	/////////////////////////////
