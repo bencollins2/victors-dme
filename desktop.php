@@ -171,13 +171,14 @@
 		
 		<!-- load data from php into js -->
         <script type="text/javascript">
-            var usercats = "<?= $cats?>", userinds = "<?= $inds?>", sidebar = "<?= $sidebar ?>", mailimg = <? if (!$mailimg) echo "\"mail.jpg\""; else echo "\"" . $mailimg . "\"";?>, firstmsg = "<?= $firstmsg?>", firstmsgfrom = "<?= $firstmsgfrom?>", userid = "<?= $user?>", username="<?= $name?>", favorites="<?= $favorites?>";
+            var usercats = "<?= $cats?>", userinds = "<?= $inds?>", sidebar = "<?= $sidebar ?>", mailimg = <? if (!$mailimg) echo "\"mail.jpg\""; else echo "\"" . $mailimg . "\"";?>, firstmsg = "<?= $firstmsg?>", firstmsgfrom = "<?= $firstmsgfrom?>", userid = "<?= $user?>", username="<?= $name?>", favorites="<?= $favorites?>", msgslice="<?= $msgslice?>";
 	        // var usercats = "<?= $cats?>", userinds = "<?= $inds?>", sidebar = "<?= $sidebar ?>", mailimg = <? if (!$mailimg) echo "\"mail.jpg\""; else echo "\"" . $mailimg . "\"";?>, firstmsg = "<?= $firstmsg?>", userid = "<?= $user?>", username="<?= $name?>", favorites="<?= $favorites?>";
 			if(favorites != ''){
 				fav_array = favorites.split(',');
 			}else{
 				fav_array = Array();
 			}
+			console.log("msgslice:" + msgslice);
 		
         </script>
 		
