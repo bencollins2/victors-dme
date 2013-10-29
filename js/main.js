@@ -182,11 +182,11 @@ function loadFeature(that, item_id) {
 	stWidget.addEntry({
 		"service":"facebook",
 		"element":document.getElementById('fb'),
-		"url":"http://facebook.com",
+		"url":"http://google.com",
 		"title":"facebook",
 		"type":"large",
 		"text":"Share on facebook",
-		"summary":"Share on facebook"   
+		"summary":"Share on facebook",
 	});
 
 	stWidget.addEntry({
