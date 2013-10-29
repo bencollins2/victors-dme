@@ -128,7 +128,7 @@ html;
 		stWidget.addEntry({
 			"service":"facebook",
 			"element":document.getElementById('fb'),
-			"url":"http://facebook.com",
+			"url":"article.php?item=<?= $item_id ?>",
 			"title":"facebook",
 			"type":"large",
 			"text":"Share on facebook",
