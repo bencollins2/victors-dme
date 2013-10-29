@@ -116,6 +116,8 @@
 			// Do nothing
 		}
 		else {
+			$newHTML = "";
+			
 			$img_json = $arr[$k]['story_images'];
 			$img_arr = json_decode($img_json);
 
@@ -135,8 +137,22 @@
 						foreach ($vvv->style as $kkkk => $vvvv) {
 							$style .= $kkkk . ": ". $vvvv . "; ";
 						}
+						//set image position
+						if($vvv->position !=null && $vvv->position == 'center'){
+							$style .= "display:block; margin:0 auto 10px;";
+						}elseif($vvv->position !=null && $vvv->position == 'right'){
+							$style .= "float:right; margin:0 0 10px 10px;";
+						}else{
+							$style .= "float:left; margin:0 10px 10px 0;"; 
+						}
+						//set image size
+						if($vvv->width !=null){
+							$width = " width='".$vvv->width."'";
+						}else{
+							$width = "";
+						}
 						$style .= "'";
-						$newHTML .= "<img".$style." src = '".$vvv->src."' alt='alt' />";
+						$newHTML .= "<img".$style." src = '".$vvv->src."' alt='alt' ".$width."/>";
 					}
 				}
 				$newHTML .= $vv . "</p>\n\n";

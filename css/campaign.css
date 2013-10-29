@@ -641,10 +641,15 @@ li.current {
     z-index: 1;
 }
 
-.item-content img {
+.item-content .content-image-div img {
     height: auto;
     min-width: 370px;
     width: 100%;
+}
+
+.body img {
+    height: auto;
+	max-width: 100%;
 }
 
 .item-content iframe {
