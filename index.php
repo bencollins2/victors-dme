@@ -138,6 +138,7 @@
             $sidebar = $line["sidebar"];
             $mailimg = $line["mailimg"];
 			$favorites = $line["favorites"];
+			$msgslice = $line["show_message_slice"];
         }
 
         // $qq = "SELECT * FROM `adminusers` WHERE "
