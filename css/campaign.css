@@ -24,6 +24,7 @@ body.slicesOne, body.exploreOne {
 	background:rgba(0,0,0,0.75);
 	z-index:9999;
 	position:relative;
+	display:none;
 }
 #tutorial .bullet{
 	width:80px;
@@ -76,6 +77,41 @@ body.slicesOne, body.exploreOne {
 	height:356px;
 	top:60px;
 	right:70px;
+}
+#tutorial .close{
+	width:auto;
+	height:auto;
+	position:absolute;
+	left:25px;
+	top:10px;
+	color:rgba(255,255,255,0.85);
+	font-size:46px;
+	font-weight:normal;
+	cursor:pointer;
+}
+#tutorial .close:hover{
+	color:#FEC33A;
+}
+#tutoicon{
+	width:auto;
+	height:auto;
+	float:right;
+	position:absolute;
+	bottom:5px;
+	right:15px;
+	text-align:center;
+	color:#032B5A;
+	font-size:32px;
+	display:none;
+}
+#tutoicon:hover{
+	transform:rotate(20deg);
+	-webkit-transform:rotate(20deg);
+	-moz-transform:rotate(20deg);
+	-o-transform:rotate(20deg);
+}
+.slices #tutoicon{
+	display:block;
 }
 
 .left {

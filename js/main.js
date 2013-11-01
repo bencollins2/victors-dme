@@ -729,37 +729,68 @@ function setTutorial(slide){
 
 $(document).ready(function(e) {
 	
-	//check tutotial status
-	if(tutorial!=1){
+	// set the tutorial
+	setTutorial(1);
+	tutorial_slide = 1;
+	$('#tutorial').on('click',function(){
+		if(tutorial_slide == 4){
+			$('#tutorial').hide();
+			setTutorial(1);
+			tutorial_slide = 1;
+			$.ajax({
+				type: "POST",
+				url: "dostuff.php",
+				data: { id: userid, type: "tutorial"}
+			}).done(function( msg ) {
+				console.log("Message: ", msg);
+			});
+		}else{
+			++tutorial_slide;
+			setTutorial(tutorial_slide);
+		}
+	});
+
+	$('#tutorial li').on('click', function(){
+		// cancel the click event on #tutorial
+		var evnt = window.event?window.event:arg;
+		if(evnt.stopPropagation){
+			evnt.stopPropagation();
+		}else{
+			evnt.cancelBubble=true;
+		}
+		tutorial_slide = $(this).index() + 1;
+		setTutorial(tutorial_slide);
+	});
+	
+	$('#tutorial .close').on('click', function(){
+		// cancel the click event on #tutorial
+		var evnt = window.event?window.event:arg;
+		if(evnt.stopPropagation){
+			evnt.stopPropagation();
+		}else{
+			evnt.cancelBubble=true;
+		}
+		$('#tutorial').hide();
 		setTutorial(1);
 		tutorial_slide = 1;
-		$('#tutorial').on('click',function(){
-			if(tutorial_slide == 4){
-				$('#tutorial').remove();
-				$.ajax({
-					type: "POST",
-					url: "dostuff.php",
-					data: { id: userid, type: "tutorial"}
-				}).done(function( msg ) {
-					console.log("Message: ", msg);
-				});
-			}else{
-				++tutorial_slide;
-				setTutorial(tutorial_slide);
-			}
-		});
+	});
 	
-		$('#tutorial li').on('click', function(){
-			// cancel the click event on #tutorial
-			var evnt = window.event?window.event:arg;
-			if(evnt.stopPropagation){
-				evnt.stopPropagation();
-			}else{
-				evnt.cancelBubble=true;
-			}
-			tutorial_slide = $(this).index() + 1;
-			setTutorial(tutorial_slide);
-		});
+	$(document).keyup(function(e){
+		if (e.keyCode == 27){
+			$('#tutorial').hide();
+			setTutorial(1);
+			tutorial_slide = 1;
+		}
+	});
+	
+	$('#tutoicon').on('click',function(){
+		$('#tutorial').show();
+	})
+	
+	//check tutotial status
+	
+	if(tutorial!=1){
+		$('#tutorial').show();
 	}	
 	
 	loadSlices();
