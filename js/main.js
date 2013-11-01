@@ -281,11 +281,11 @@ function loadFeature(that, item_id) {
 	///////////////////////////
 	// Get height of img div //
 	///////////////////////////
-	$(".content-image").load(function(){
+	// $(".content-image").load(function(){
 		itemheight = $(".content-image-div").height();
 		bodymargin = $(".content-image-div").height()+"px";
 		$(".content-info").css({"margin-top":bodymargin});
-	});
+	// });
 
 	var margintop = $(".content-info .body").height()/-3;
 	margintop = String(margintop) + "px";
@@ -399,7 +399,7 @@ function loadSlices() {
 					////////////////////////////////////////////////////////////////////////////////////////
 					$(this).click(function(e) {
 						console.log("This looks like ", this);
-						// loadFeature(this, item_id);
+						loadFeature(this, item_id);
 						window.location.hash = item_id;
 
 					});
