@@ -473,7 +473,7 @@ function loadFavorites(){
 		}, 500);
 
 	}else{
-		alert("You haven't fav anything");
+		alert("You haven't favorited anything yet.");
 		$("#nav_home").click();
 	}
 }
