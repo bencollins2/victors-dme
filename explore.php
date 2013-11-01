@@ -4,7 +4,7 @@
 	////////////////////////////////////
 	// No where, no limit, no order  //
 	////////////////////////////////////
-	$where = "";
+	$where = " where `public` = 1 and (";
 	$limit = "";
 	$order = "";
 
@@ -21,6 +21,7 @@
 			$where .= "\"%$v%\" OR `tags` LIKE ";
 		}
 		$where = substr($where, 0, -16);
+		$where .= ")";
 	}
 
 	$query = "SELECT * FROM `features`$where";
