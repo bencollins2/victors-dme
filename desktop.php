@@ -1,15 +1,14 @@
 <body class="slices">
-	<?
-	if($tutorial!=1){
-		echo '<div id="tutorial">
+
+	<div id="tutorial">
+		<div class="close"><i class="fa fa-times"></i></div>
 		<img class="slide1" src="img/tutorial/slide1.png">
 		<img class="slide2" src="img/tutorial/slide2.png">
 		<img class="slide3" src="img/tutorial/slide3.png">
 		<img class="slide4" src="img/tutorial/slide4.png">
 		<div class="bullet"><ul><li></li><li></li><li></li><li></li></ul></div>
-	</div>';
-	}
-	?>
+	</div>
+
     <div id="fb-root"></div>
 
         <header class="sticky" id="nav">
@@ -168,6 +167,10 @@
                 <img src="img/gift_box_50.png" />
                 <a>Ready to Give</a>
             </div>
+			
+			<div id="tutoicon">
+				<i class="fa fa-question"></i>
+			</div>
         </div>
 
         <div class="items">
