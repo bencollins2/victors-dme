@@ -18,6 +18,66 @@ body.slicesOne, body.exploreOne {
     background: white;
 }
 
+#tutorial{
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,0.75);
+	z-index:9999;
+	position:relative;
+}
+#tutorial .bullet{
+	width:80px;
+	height:10px;
+	margin: 0 auto;
+}
+#tutorial ul{
+	list-style-type:none;
+	width:80px;
+	height:10px;
+	position:absolute;
+	bottom:20px;
+}
+#tutorial ul li{
+	margin:0 5px;
+	float:left;
+	width:10px;
+	height:10px;
+	border-radius:10px;
+	background:rgba(255,255,255,0.4);
+	cursor:pointer;
+}
+#tutorial .selected{
+	background:white;
+}
+#tutorial img{
+	position:absolute;
+	display:none;
+}
+#tutorial .slide1{
+	width:800px;
+	height:334px;
+	top:300px;
+	left:100px;
+}
+#tutorial .slide2{
+	width:740px;
+	height:120px;
+	top:60px;
+	right:180px;
+}
+#tutorial .slide3{
+	width:622px;
+	height:290px;
+	top:60px;
+	right:0px;
+}
+#tutorial .slide4{
+	width:670px;
+	height:356px;
+	top:60px;
+	right:70px;
+}
+
 .left {
     display: block;
     position: absolute;
@@ -974,6 +1034,29 @@ body .messages .message p.avatar {
 
     .explore-item .info {
     }
+	
+	#tutorial .slide1{
+		top:120px;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+    #tutorial .slide1{
+    	width:75%;
+		height:auto;
+    }
+	#tutorial .slide2{
+		width:75%;
+		height:auto;
+	}
+	#tutorial .slide3{
+		width:75%;
+		height:auto;
+	}
+	#tutorial .slide4{
+		width:75%;
+		height:auto;
+	}
 }
 
 @media only screen and (max-width: 1200px) {
@@ -1034,6 +1117,11 @@ body .messages .message p.avatar {
     .explore-item .info .description {
         font-size: .9em;
     }
+	
+	
+	#tutorial .slide1{
+		left:60px;
+	}
 
 }
 

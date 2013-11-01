@@ -718,7 +718,50 @@ function switch_view(){
 	}
 }
 
+function setTutorial(slide){
+	$('#tutorial img').hide('slow');
+	$('#tutorial li').removeClass();
+
+	$('#tutorial .slide'+slide).show('slow');
+	$('#tutorial ul').children().eq(slide-1).addClass('selected');
+
+}
+
 $(document).ready(function(e) {
+	
+	//check tutotial status
+	if(tutorial!=1){
+		setTutorial(1);
+		tutorial_slide = 1;
+		$('#tutorial').on('click',function(){
+			if(tutorial_slide == 4){
+				$('#tutorial').remove();
+				$.ajax({
+					type: "POST",
+					url: "dostuff.php",
+					data: { id: userid, type: "tutorial"}
+				}).done(function( msg ) {
+					console.log("Message: ", msg);
+				});
+			}else{
+				++tutorial_slide;
+				setTutorial(tutorial_slide);
+			}
+		});
+	
+		$('#tutorial li').on('click', function(){
+			// cancel the click event on #tutorial
+			var evnt = window.event?window.event:arg;
+			if(evnt.stopPropagation){
+				evnt.stopPropagation();
+			}else{
+				evnt.cancelBubble=true;
+			}
+			tutorial_slide = $(this).index() + 1;
+			setTutorial(tutorial_slide);
+		});
+	}	
+	
 	loadSlices();
 
 	var width = $(window).width(), height = $(window).height();
