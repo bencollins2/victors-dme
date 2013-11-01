@@ -281,11 +281,11 @@ function loadFeature(that, item_id) {
 	///////////////////////////
 	// Get height of img div //
 	///////////////////////////
-	$(".content-image").load(function(){
+	// $(".content-image").load(function(){
 		itemheight = $(".content-image-div").height();
 		bodymargin = $(".content-image-div").height()+"px";
 		$(".content-info").css({"margin-top":bodymargin});
-	});
+	// });
 
 	var margintop = $(".content-info .body").height()/-3;
 	margintop = String(margintop) + "px";
@@ -399,7 +399,7 @@ function loadSlices() {
 					////////////////////////////////////////////////////////////////////////////////////////
 					$(this).click(function(e) {
 						console.log("This looks like ", this);
-						// loadFeature(this, item_id);
+						loadFeature(this, item_id);
 						window.location.hash = item_id;
 
 					});
@@ -718,7 +718,81 @@ function switch_view(){
 	}
 }
 
+function setTutorial(slide){
+	$('#tutorial img').hide('slow');
+	$('#tutorial li').removeClass();
+
+	$('#tutorial .slide'+slide).show('slow');
+	$('#tutorial ul').children().eq(slide-1).addClass('selected');
+
+}
+
 $(document).ready(function(e) {
+	
+	// set the tutorial
+	setTutorial(1);
+	tutorial_slide = 1;
+	$('#tutorial').on('click',function(){
+		if(tutorial_slide == 4){
+			$('#tutorial').hide();
+			setTutorial(1);
+			tutorial_slide = 1;
+			$.ajax({
+				type: "POST",
+				url: "dostuff.php",
+				data: { id: userid, type: "tutorial"}
+			}).done(function( msg ) {
+				console.log("Message: ", msg);
+			});
+		}else{
+			++tutorial_slide;
+			setTutorial(tutorial_slide);
+		}
+	});
+
+	$('#tutorial li').on('click', function(){
+		// cancel the click event on #tutorial
+		var evnt = window.event?window.event:arg;
+		if(evnt.stopPropagation){
+			evnt.stopPropagation();
+		}else{
+			evnt.cancelBubble=true;
+		}
+		tutorial_slide = $(this).index() + 1;
+		setTutorial(tutorial_slide);
+	});
+	
+	$('#tutorial .close').on('click', function(){
+		// cancel the click event on #tutorial
+		var evnt = window.event?window.event:arg;
+		if(evnt.stopPropagation){
+			evnt.stopPropagation();
+		}else{
+			evnt.cancelBubble=true;
+		}
+		$('#tutorial').hide();
+		setTutorial(1);
+		tutorial_slide = 1;
+	});
+	
+	$(document).keyup(function(e){
+		if (e.keyCode == 27){
+			$('#tutorial').hide();
+			setTutorial(1);
+			tutorial_slide = 1;
+		}
+	});
+	
+	$('#tutoicon').on('click',function(){
+		$('#tutorial').show();
+	})
+	
+	//check tutotial status
+	
+	if(tutorial!=1){
+		$('#tutorial').show();
+	}	
+	
 	loadSlices();
 
 	var width = $(window).width(), height = $(window).height();

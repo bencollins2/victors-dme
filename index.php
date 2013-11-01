@@ -139,6 +139,7 @@
             $mailimg = $line["mailimg"];
 			$favorites = $line["favorites"];
 			$msgslice = $line["show_message_slice"];
+			$tutorial = $line["tutorial"];
         }
 
         // $qq = "SELECT * FROM `adminusers` WHERE "
@@ -281,6 +282,7 @@
         <link rel="stylesheet" href="css/dme.css">
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="<?= $campstyle?>">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
         
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 		<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
