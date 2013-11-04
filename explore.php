@@ -27,6 +27,7 @@
 	$query = "SELECT * FROM `features`$where";
 	// echo $query;
 	$result = mysql_query($query) or die("Fail: " . $query);
+	
 	$arr = recordToArray($result);
 
 	////////////////////////////////////////////////////////
@@ -42,7 +43,7 @@
 		foreach($inds as $k => $v) {
 			
 			if ($v != 0) {
-				$query2 = "SELECT * FROM `features` WHERE `id` LIKE $v LIMIT 0,1;";
+				$query2 = "SELECT * FROM `features` WHERE `id` LIKE $v AND `public` = 1 LIMIT 0,1;";
 				$result = mysql_query($query2) or die("Fail: " . $query2);
 				$temp = recordToArray($result);
 				array_pop($temp);
@@ -66,7 +67,7 @@
 
 	if ($count < 6) {
 		$limit = 7 - $count;
-		$query3 = "SELECT * FROM `features` ORDER BY `id` DESC LIMIT 0,$limit;";
+		$query3 = "SELECT * FROM `features` WHERE `public` = 1 ORDER BY `id` DESC LIMIT 0,$limit;";
 		$result3 = mysql_query($query3);
 		$temp = recordToArray($result3);
 		array_pop($temp);
@@ -97,7 +98,7 @@
 		// $favs = explode(",", $urlstr);
 	// 	$test = $favs[0];
 		
-		$query = "SELECT * FROM `features` WHERE `id` in ($urlstr)";
+		$query = "SELECT * FROM `features` WHERE `id` in ($urlstr) AND `public` = 1";
 		// echo $query;
 		$result = mysql_query($query) or die("Fail: " . $query);
 		$arr = recordToArray($result);

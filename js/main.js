@@ -48,7 +48,8 @@ function loadFeature(that, item_id) {
 	if (msnry !== undefined) msnry.destroy();
 	window.location.hash = item_id;
 	$parent.addClass("current");
-	var title = $(that).children(".meta#title").html(), body = $(that).children(".meta#body").html(), customStyle = $(that).children(".meta#customStyle").html(), author = $(that).children(".meta#byline").html(), $itemcontent = $("#" + item_id + " .item-content");
+	var title = $(that).children(".meta#title").html(), subtitle = $(that).children(".meta#subtitle").html(), titletop = $(that).children(".meta#title").data().titletop, body = $(that).children(".meta#body").html(), customStyle = $(that).children(".meta#customStyle").html(), author = $(that).children(".meta#byline").html(), $itemcontent = $("#" + item_id + " .item-content");
+
 	current = item_id;
 	if ($("body").hasClass("explore")) $("body").removeClass().addClass("exploreOne");
 	if ($("body").hasClass("slices")) $("body").removeClass().addClass("slicesOne");
@@ -170,13 +171,34 @@ function loadFeature(that, item_id) {
 	// For now, this is the only thing that matters.  //
 	////////////////////////////////////////////////////
 	else {
-		$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><div class="left-stuff">\
+		if (titletop == 1) {
+			$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><h2 class="fadewithme">'+title+'</h2><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
 			<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
 			<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
 			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-			</div><h2 class="fadewithme">'+title+'</h2><h3>Subtitle</h3><span class="byline">'+author+'</span><div class="body"><a id="fav"></a>'+body+'</div></div>');
+			</div><h3>'+subtitle+'</h3><span class="byline">'+author+'</span><div class="body"><a href="#" id="fav"></a>'+body+'</div></div>');
+			$("img.content-image").on("load",function(){
+				$(window).resize();
+				$(".content-info").fadeIn(1000);
+			});
+			// debugger;
+		}
+		else {
+			$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+			<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+			<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+			</div><h2 class="fadewithme">'+title+'</h2><h3>'+subtitle+'</h3><span class="byline">'+author+'</span><div class="body"><a href="#" id="fav"></a>'+body+'</div></div>');
+			$("img.content-image").on("load",function(){
+				$(window).resize();
+				$(".content-info").fadeIn(1000);
+			});
+		}
+		
 	}
 
 	stWidget.addEntry({
@@ -282,9 +304,9 @@ function loadFeature(that, item_id) {
 	// Get height of img div //
 	///////////////////////////
 	// $(".content-image").load(function(){
-		itemheight = $(".content-image-div").height();
-		bodymargin = $(".content-image-div").height()+"px";
-		$(".content-info").css({"margin-top":bodymargin});
+		// itemheight = $(".content-image-div").height();
+		// bodymargin = $(".content-image-div").height()+"px";
+		// $(".content-info").css({"margin-top":bodymargin});
 	// });
 
 	var margintop = $(".content-info .body").height()/-3;
@@ -364,14 +386,32 @@ function loadSlices() {
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
-	//
+
 	console.log("URL: ", 'explore.php?slices=1&cats='+usercats+"&inds="+userinds);
 	$.getJSON('explore.php?slices=1&cats='+usercats+"&inds="+userinds, function(data) {
+
 		console.log(data);
 		$.each(data, function(key, val) {
 			if (data[key] != false) {
 				var html = val["html"];
-				$newLi = $("<li />", {'class': 'one-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><div class="img-cover"><img class="cover" src="img/'+val["img_large"]+'_cover.jpg" alt="mail cover" /><div class="meta" id="customStyle">'+val["customStyle"]+'</div><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="byline">'+val["byline"]+'</div><div class="meta" id="body">'+html+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
+				$newLi = $("<li />", {'class': 'one-item hidestart', 'id': 'item-'+val["id"], 'html':'\
+					<div class="info">\
+						<h2>'+val["title"]+'</h2>\
+						<div class="description">\
+							'+val["description"]+'\
+						</div>\
+					</div>\
+					<div class="img-cover">\
+						<img class="cover" src="img/'+val["img_large"]+'_cover.jpg" alt="mail cover" />\
+						<div class="meta" id="customStyle">'+val["customStyle"]+'</div>\
+						<div class="meta" id="title" data-titletop="'+val["titletop"]+'">'+val["title"]+'</div>\
+						<div class="meta" id="subtitle">'+val["description"]+'</div>\
+						<div class="meta" id="byline">'+val["byline"]+'</div>\
+						<div class="meta" id="body">'+html+'</div>\
+					</div>\
+					<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
+					<div class="item-content"></div>'}).appendTo("ul.slides");
+				
 			}
 			if (key == 2) {
 				////////////////////
@@ -724,7 +764,20 @@ function setTutorial(slide){
 
 	$('#tutorial .slide'+slide).show('slow');
 	$('#tutorial ul').children().eq(slide-1).addClass('selected');
+}
 
+function setUserTutorial(val) {
+	var request = $.ajax({
+		type: "POST",
+		url: "dostuff.php",
+		data: { id: userid, type: "setUserTutorial", val: val }
+	});
+	request.done(function(msg) {
+		console.log(msg);
+	});
+	request.fail(function(jqXHR, textStatus) {
+		console.log( " Failed: " + textStatus );
+	});
 }
 
 $(document).ready(function(e) {
@@ -779,6 +832,7 @@ $(document).ready(function(e) {
 		if (e.keyCode == 27){
 			$('#tutorial').hide();
 			setTutorial(1);
+			setUserTutorial(1);
 			tutorial_slide = 1;
 		}
 	});
@@ -790,6 +844,7 @@ $(document).ready(function(e) {
 	//check tutotial status
 	
 	if(tutorial!=1){
+
 		$('#tutorial').show();
 	}	
 	
