@@ -1,6 +1,6 @@
 <?php
-if (isset($_GET["item"]) && $_GET["item"]!=""){
-	$item_id = $_GET["item"];
+if (isset($_GET["id"]) && $_GET["id"]!=""){
+	$item_id = $_GET["id"];
 		
 	require("../db_campaign.php");
 	$getfeature = "SELECT * FROM features WHERE id = $item_id";
@@ -86,7 +86,7 @@ html;
                     <p class="one p_long"></p>
                     <p class="two p_long"></p>
                     <p class="three p_long"></p>
-                    <p class="four p_long"></p>
+                    <p class="four p_long"></p>`
                 </div>
             </div>
              <!-- <div id="nav_exp" class="navi_item">

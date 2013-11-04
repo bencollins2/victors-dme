@@ -17,7 +17,10 @@
 	 while($rs[] = mysql_fetch_assoc($mysql_result)) {
 	    // you don´t really need to do anything here.
 	  }
-	 // return json_encode($rs);
+	 
+	  foreach($rs as $k => $v) {
+	  	if ($v==false) unset($rs[$k]);
+	  }
 	 return $rs;
 	}
 ?>

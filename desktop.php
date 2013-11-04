@@ -24,13 +24,16 @@
                     <p class="four p_long"></p>
                 </div>
             </div> -->
-            <div id="nav_home" class="navi_item">
-                <span>Home</span>
+            <div class="navi_item" id="nav_msg">
+                <div class="msgicon"></div>
+            </div>
+            <div id="nav_fav" class="navi_item">
+                <span>Favorite</span>
                 <div class="square">
                     <p class="one p_long"></p>
                     <p class="two p_long"></p>
-                    <p class="three p_long"></p>
-                    <p class="four p_long"></p>
+                    <p class="three p_short"></p>
+                    <p class="four p_short"></p>
                 </div>
             </div>
             <div id="nav_exp" class="navi_item">
@@ -42,18 +45,18 @@
                     <p class="four p_short"></p>
                 </div>
             </div>
-            <div id="nav_fav" class="navi_item">
-                <span>Favorite</span>
+            <div id="nav_home" class="navi_item">
+                <span>Home</span>
                 <div class="square">
                     <p class="one p_long"></p>
                     <p class="two p_long"></p>
-                    <p class="three p_short"></p>
-                    <p class="four p_short"></p>
+                    <p class="three p_long"></p>
+                    <p class="four p_long"></p>
                 </div>
             </div>
-			<div id="nav_msg">
-				<div class="msgicon"></div>
-			</div>
+            
+            
+
         </header>
 
     	

@@ -52,6 +52,16 @@
 			// echo $query;
 		}
 	}
+
+	if ($type == "setUserTutorial") {
+		if ($_REQUEST["val"] != "") {
+			$val = (int)$_REQUEST["val"];
+			$query = "UPDATE users SET `tutorial` = '$val' WHERE `id` LIKE '$userid'";
+			$result = mysql_query($query) or die("Sorry: " . $query);
+			echo "Changed tutorial val to $val.";
+			// echo $query;
+		}
+	}
 	
 	if($type == "newfav"){
 		$query = "UPDATE users SET `favorites` = '$favs' WHERE `id` LIKE '$userid'";
