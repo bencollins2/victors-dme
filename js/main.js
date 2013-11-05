@@ -390,10 +390,13 @@ function loadSlices() {
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
-
-	console.log("URL: ", 'explore.php?slices=1&cats='+usercats+"&inds="+userinds);
-	$.getJSON('explore.php?slices=1&cats='+usercats+"&inds="+userinds, function(data) {
-
+	var url = 'explore.php?slices=1&cats='+usercats+"&inds="+userinds;
+	if (firsttime != 1){
+		url = 'explore.php?slices=1&cats='+usercats+"&inds="+userinds+"&intro=1";
+	}
+	
+	console.log("URL: ", url);
+	$.getJSON(url, function(data) {
 		console.log(data);
 		$.each(data, function(key, val) {
 			if (data[key] != false) {
