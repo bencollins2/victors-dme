@@ -8,6 +8,7 @@
 	$limit = "";
 	$order = "";
 
+
 	/////////////////////////
 	// Set up categories  //
 	/////////////////////////
@@ -62,6 +63,16 @@
 				array_splice($arr, $k, 0, $temp);
 			}
 		}
+	}
+	
+	/////////////////////////
+	// Set up intro slices  //
+	/////////////////////////
+	if($_GET['intro'] == 1) {
+		$getintro = "SELECT * FROM features WHERE id = 115";
+		$result = mysql_query($getintro) or die ("Get Feature Error: " . $getintro);
+		$intro = recordToArray($result);
+		array_splice($arr, 0, 0, $intro);
 	}
 
 	//////////////////////////////////////////////////
