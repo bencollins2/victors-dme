@@ -474,6 +474,11 @@ li.current {
     top: 10%;
     width: 156px;
     height: 180px;
+	/* IE 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
+	/* IE 5-7 */
+	filter: alpha(opacity=85);
+	background: rgb(33,33,33);
     background: rgba(33,33,33,.85);
     font-size: 14px;
     color: white;
