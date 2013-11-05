@@ -72,8 +72,8 @@
     if ($user == 0 && !$session->logged_in) {
         $normalize = "css/normalize.css";
         $main = "css/main.css";
-        $campstyle = "css/login.css";
-        $body = "login.php";
+        $campstyle = "css/register.css";
+        $body = "register.php";
     }
 
     ////////////////////////////////

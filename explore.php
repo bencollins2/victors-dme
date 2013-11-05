@@ -24,7 +24,12 @@
 		$where .= ")";
 	}
 
-	$query = "SELECT * FROM `features`$where";
+	if ($where == " where `public` = 1 and (") $where = " where `public` = 1";
+
+
+	if ($_GET["pvt"] == 1 && $where == " where `public` = 1") $where = "";
+
+	$query = "SELECT * FROM `features`$where ORDER BY id DESC";
 	// echo $query;
 	$result = mysql_query($query) or die("Fail: " . $query);
 	
@@ -114,7 +119,7 @@
 		//////////////////////////////////////
 		// Ignore records without images  //
 		//////////////////////////////////////
-		if ( $v[story_images] == "") {
+		if ( $v[story_images] == "" || $v[story_images] == "{}") {
 			// Do nothing
 		}
 		else {
@@ -124,17 +129,22 @@
 			$img_arr = json_decode($img_json);
 
 			// Remove parent <p> tags, split result by paragraph
-			$split0 = preg_split("/^<p>/", $arr[$k]['html']);
-			$split1 = preg_split("/<\/p>\Z/", $split0[1]);
-			$split = preg_split("/(<\/p>*.<p>)|(<br*\s\/>)/", $split1[0]);
+			$arr[$k]['html'] = str_replace('</p>', '', trim($arr[$k]['html']));
+			$split0 = explode('<p>', $arr[$k]['html']);
+
+			foreach($split0 as $kk => $vv) {
+				if($vv == "") unset($split0[$kk]);
+			}
+			$split = array_values($split0);
 
 			// Loop each paragraph in the array
 			foreach($split as $kk => $vv) {
+				$currentpara = $kk + 1;
 				$newHTML .= "<p>";
 				// Loop images
 				foreach ($img_arr as $kkk => $vvv) {
 					// If we're currently in the paragraph for this image..
-					if ($vvv->para == $kk) {
+					if ($vvv->para == $currentpara) {
 						$style = " style='";
 						foreach ($vvv->style as $kkkk => $vvvv) {
 							$style .= $kkkk . ": ". $vvvv . "; ";
@@ -155,6 +165,46 @@
 						}
 						$style .= "'";
 						$newHTML .= "<img".$style." src = '".$vvv->src."' alt='alt' ".$width."/>";
+					}
+				}
+				$newHTML .= $vv . "</p>\n\n";
+			}
+			$arr[$k]['html'] = $newHTML;
+			// echo $newHTML;
+		}
+
+		/////////////////////////////////////////
+		// Ignore records without pullquotes //
+		/////////////////////////////////////////
+		if ( $v[pullquotes] == "" || $v[pullquotes] == "{}") {
+			// Do nothing
+		}
+		else {
+			$newHTML = "";
+			
+			$pq_json = $arr[$k]['pullquotes'];
+			$pq_array = json_decode($pq_json);
+
+			// Remove parent <p> tags, split result by paragraph
+			$arr[$k]['html'] = str_replace('</p>', '', trim($arr[$k]['html']));
+			$split0 = explode('<p>', $arr[$k]['html']);
+
+
+			foreach($split0 as $kk => $vv) {
+				if($vv == "") unset($split0[$kk]);
+			}
+			$split = array_values($split0);
+
+			// Loop each paragraph in the array
+			foreach($split as $kk => $vv) {
+				$currentpara = $kk + 1;
+				$newHTML .= "<p>";
+				// Loop images
+				foreach ($pq_array as $kkk => $vvv) {
+					$thi = $vvv;
+					// If we're currently in the paragraph for this image..
+					if ($vvv->para == $currentpara) {
+						$newHTML .= "<span class='pullquote'>".$vvv->quote."</span>";
 					}
 				}
 				$newHTML .= $vv . "</p>\n\n";
