@@ -1,18 +1,21 @@
 <?php
+
 if (isset($_GET["id"]) && $_GET["id"]!=""){
 	$item_id = $_GET["id"];
-		
 	require("../db_campaign.php");
+	if (!extension_loaded('json')) {
+			dl('json.so');  
+	}
 	$getfeature = "SELECT * FROM features WHERE id = $item_id";
 	$result = mysql_query($getfeature) or die ("Get Feature Error: " . $getfeature);
 	$row = mysql_fetch_assoc($result);
+
 	if($row !== false){
 		if($row["story_images"] == ""){
-			//doing nothing
+
 		}else{
 			$img_json = $row['story_images'];
 			$img_arr = json_decode($img_json);
-
 			// Remove parent <p> tags, split result by paragraph
 			$split0 = preg_split("/^<p>/", $row['html']);
 			$split1 = preg_split("/<\/p>\Z/", $split0[1]);
@@ -36,8 +39,8 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 				$newHTML .= $vv . "</p>\n\n";
 			}
 			$row['html'] = $newHTML;
+
 		}
-		
 		$feature_content = <<<html
 			<style type="text/css">{$row["customStyle"]}</style><div class="content-image-div"><!--<img class="content-image" src="img/big/{$row["img_large"]}.jpg" alt="item image" />--></div>
 			<div class="content-info"><div class="left-stuff">
@@ -56,6 +59,7 @@ html;
 }else{
 	header("Location: index.php");
 }
+
 ?>
 
 <!DOCTYPE html>

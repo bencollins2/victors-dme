@@ -14,6 +14,24 @@ body.favorites{
     overflow: hidden;
 }
 
+a.fav {
+    font-size: 12px;
+    display: block;
+    text-decoration: none;
+    background: url(../img/storyFav_30.png) no-repeat;
+    padding: 8px 0 3px 27px;
+    color: #333;
+}
+
+a.unfav {
+    font-size: 12px;
+    display: block;
+    text-decoration: none;
+    background: url(../img/storyFaved_30.png) no-repeat;
+    padding: 8px 0 3px 27px;
+    color: #333;
+}
+
 body.slicesOne, body.exploreOne {
     background: white;
 }
@@ -746,6 +764,8 @@ li.current {
     width: 100%;
 }
 
+
+
 .body img {
     height: auto;
 	max-width: 100%;
@@ -864,12 +884,16 @@ li.current {
 
 .content-info h2, .content-info h3 {
     font-family: "league-gothic",sans-serif;
-    margin: 0 0 9px 65px;
     font-weight: 100;
     line-height: 37px;
     text-transform: uppercase;
     font-size: 32px;
     color: #333;
+    margin-left:0;
+}
+
+.content-info h3.subtitle {
+    margin: 0 0 9px 65px;
 }
 
 .content-info div.body {
@@ -885,12 +909,25 @@ li.current {
     width: 80%;
 }
 
+.content-info div.body p span.pullquote {
+    display: block;
+    float: right;
+    width: 190px;
+    margin: 0 10px 0px 10px;
+    font-family: "league-gothic";
+    font-size: 35px;
+    line-height: 40px;
+    color: #333;
+    background: url(../img/bluequote.png) no-repeat top left;
+    padding: 10px 0 0 33px;
+}
+
 .content-info div.body iframe {
     min-width: 400px;
     width: 100%;
     height: auto;
     min-height: 340px;
-    margin: 0 0 30px;
+    margin: 0;
 }
 
 .sticky {
@@ -993,7 +1030,7 @@ a#circle {
 #item-mail .content-info h2 {
     color: white;
     font-size: 90px;
-    top: -65px;
+
     text-shadow: 0 0 10px black;
     display: block;
 }

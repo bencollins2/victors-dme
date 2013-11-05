@@ -36,6 +36,12 @@ function fader(elm) {
 	elm.animate({"opacity":"1"}, 1000, function(){});
 }
 
+function imageLoaded(e) {
+	// debugger;
+	$(window).resize();
+	$(".content-info").fadeIn(1000);
+}
+
 function loadFeature(that, item_id) {
 	///////////////////////////////
 	// Load an individual story  //
@@ -178,11 +184,8 @@ function loadFeature(that, item_id) {
 			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-			</div><h3>'+subtitle+'</h3><span class="byline">'+author+'</span><div class="body"><a href="#" id="fav"></a>'+body+'</div></div>');
-			$("img.content-image").on("load",function(){
-				$(window).resize();
-				$(".content-info").fadeIn(1000);
-			});
+			</div><h3 class="subtitle">'+subtitle+'</h3><span class="byline">'+author+'</span><div class="body"><a href="#" id="fav"></a>'+body+'</div></div>');
+			$("img.content-image").on("load",imageLoaded);
 			// debugger;
 		}
 		else {
@@ -192,19 +195,17 @@ function loadFeature(that, item_id) {
 			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-			</div><h2 class="fadewithme">'+title+'</h2><h3>'+subtitle+'</h3><span class="byline">'+author+'</span><div class="body"><a href="#" id="fav"></a>'+body+'</div></div>');
-			$("img.content-image").on("load",function(){
-				$(window).resize();
-				$(".content-info").fadeIn(1000);
-			});
+			</div><h2>'+title+'</h2><h3 class="subtitle">'+subtitle+'</h3><span class="byline">'+author+'</span><div class="body"><a href="#" id="fav"></a>'+body+'</div></div>');
+			$("img.content-image").on("load",imageLoaded);
 		}
-		
 	}
+
+	debugger;
 
 	stWidget.addEntry({
 		"service":"facebook",
 		"element":document.getElementById('fb'),
-		"url":"http://google.com",
+		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
 		"title":"facebook",
 		"type":"large",
 		"text":"Share on facebook",
@@ -214,7 +215,7 @@ function loadFeature(that, item_id) {
 	stWidget.addEntry({
 		"service":"twitter",
 		"element":document.getElementById('tw'),
-		"url":"http://twitter.com",
+		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
 		"title":"twitter",
 		"type":"large",
 		"text":"Share on twitter",
@@ -224,7 +225,7 @@ function loadFeature(that, item_id) {
 	stWidget.addEntry({
 		"service":"googleplus",
 		"element":document.getElementById('gp'),
-		"url":"http://googleplus.com",
+		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
 		"title":"googleplus",
 		"type":"large",
 		"text":"Share on googleplus",
@@ -234,7 +235,7 @@ function loadFeature(that, item_id) {
 	stWidget.addEntry({
 		"service":"pinterest",
 		"element":document.getElementById('pn'),
-		"url":"http://pinterest.com",
+		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
 		"title":"pinterest",
 		"type":"large",
 		"text":"Share on pinterest",
@@ -244,7 +245,7 @@ function loadFeature(that, item_id) {
 	stWidget.addEntry({
 		"service":"reddit",
 		"element":document.getElementById('rd'),
-		"url":"http://reddit.com",
+		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
 		"title":"reddit",
 		"type":"large",
 		"text":"Share on reddit",
@@ -271,20 +272,24 @@ function loadFeature(that, item_id) {
 	}
 	
 	if(is_faved == false){
-		$('a#fav').html('Fav');
+		$('a#fav').html('Favorite');
+		$('a#fav').removeClass("unfav").addClass("fav");
 	}else{
-		$('a#fav').html('Unfav');
+		$('a#fav').html('Unfavorite');
+		$('a#fav').removeClass("fav").addClass("unfav");
 	}
 	
 	$('a#fav').click(function(){
 		if(is_faved ==false){
 			is_faved=true;
-			$('a#fav').html('Unfav');
+			$('a#fav').html('Unfavorite');
+			$('a#fav').removeClass("fav").addClass("unfav");
 			fav_array.push(item_id.slice(5));
 			console.log(fav_array);
 		}else{
 			is_faved=false;
-			$('a#fav').html('Fav');
+			$('a#fav').html('Favorite');
+			$('a#fav').removeClass("unfav").addClass("fav");
 			fav_array.splice(fav_array.indexOf(item_id.slice(5)),1);
 			console.log(fav_array);
 		}
@@ -304,11 +309,10 @@ function loadFeature(that, item_id) {
 	// Get height of img div //
 	///////////////////////////
 	// $(".content-image").load(function(){
-		// itemheight = $(".content-image-div").height();
 		// bodymargin = $(".content-image-div").height()+"px";
 		// $(".content-info").css({"margin-top":bodymargin});
 	// });
-
+	itemheight = $(".content-image-div").height();
 	var margintop = $(".content-info .body").height()/-3;
 	margintop = String(margintop) + "px";
 	var itemwidth = $(window).width() - ($(window).width()/3);
@@ -326,7 +330,7 @@ function loadFeature(that, item_id) {
 		} else {
 			$(this).css({"width" : width+"px", "overflow" : "visible", "height": "auto"});
 			$(window).scroll(function(e) {
-
+				// debugger;
 				if (!($("body").hasClass("explore"))) {
 					var opac = (itemheight - $("body").scrollTop())/itemheight;
 					if (opac >= 0.01 && opac <= 1) {
@@ -570,8 +574,24 @@ function loadExplore(cats) {
 						break;
 					}
 				}
-				
-				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<img class="fav-star" src="'+fav_img+'" faved = '+faved+'><div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
+				debugger;
+				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'\
+					<img class="fav-star" src="'+fav_img+'" faved = '+faved+'>\
+					<div class="img-cover">\
+						<img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" />\
+						<div class="meta" id="customStyle">'+val["customStyle"]+'</div>\
+						<div class="meta" id="title" data-titletop="'+val["titletop"]+'">'+val["title"]+'</div>\
+						<div class="meta" id="subtitle">'+val["description"]+'</div>\
+						<div class="meta" id="byline">'+val["byline"]+'</div>\
+						<div class="meta" id="body">'+val["html"]+'</div>\
+					</div>\
+					<div class="info">\
+						<h2>'+val["title"]+'</h2>\
+						<div class="description">'+val["description"]+'</div>\
+					</div>\
+					<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
+					<div class="item-content"></div>\
+					'}).appendTo("ul.slides").delay(200);
 			}
 
 			if (key == len - 1) {

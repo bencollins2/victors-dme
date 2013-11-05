@@ -1,7 +1,106 @@
 body {
     display: block;
     height: 100%;
-    background: #212A55;
+    width: 100%;
+    min-width: 1170px;
+}
+
+.upper {
+    display: none;
+}
+
+#register {}
+
+#register .left {
+    float: left;
+    position: relative;
+    min-width: 280px;
+    height: 100%;
+    padding: 120px 0 0;
+    background: #333;
+    box-shadow: 0 0 6px black;
+}
+
+#register .right {
+    float: left;
+    margin: 90px 0 90px 50px;
+    width: 810px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 100;
+}
+
+#register .right p {
+    margin: 0 0 20px;
+    font-size: 16px;
+    font-family: Georgia, times, serif;
+    font-size: 18px;
+    font-weight: lighter;
+    text-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+
+#register .right p:nth-child(2) {
+    font-family: Helvetica, arial, serif;
+    font-size: 45px;
+    line-height: 1.1;
+    margin-left: auto;
+}
+
+#register .right p:nth-child(4) {
+    font-family: Helvetica, arial, serif;
+    font-size: 76px;
+    line-height: 1.1;
+    color: #84C0D7;
+    margin: 160px 0 9px 0px;
+    text-shadow: 0 0 10px black;
+}
+
+#register .play {
+    display: block;
+    background: url(../img/play_120.png) no-repeat;
+    margin: 0px 0;
+    padding: 35px 0 37px 134px;
+    cursor: pointer;
+    -webkit-transition: all 2s ease;
+    -moz-transition: all 2s ease;
+    -o-transition: all 2s ease;
+    -ms-transition: all 2s ease;
+    transition: all 2s ease;
+    font-size: 34px;
+    text-decoration: none;
+    color: white;
+    font-family: Georgia, times, serif;
+}
+
+#register p.play:hover {
+    text-shadow: 0 0 20px white;
+}
+
+.bg {
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url(../img/home1.jpg) no-repeat left top;
+}
+
+.bg.two {
+    background: url(../img/home1_blur.jpg) no-repeat left top;
+
+}
+
+.left .createacct {
+    position: relative;
+    top: 0;
+    display:none;
+    width: 274px;
+    margin: 0;
+    padding: 0;
+}
+
+.left.create .createacct {
+    display:block;
+    -webkit-transition: all 1s ease;
 }
 
 #register h2 {
@@ -11,7 +110,6 @@ body {
 }
 
 .sticky {
-    background: #212A55;
 }
 
 .sticky ul li.home {
@@ -60,23 +158,25 @@ h3.error {
     color: white;
 
     font-family: Georgia, serif;
-    font-size: 33px;
+    font-size: 27px;
     line-height: 1.2em;
     text-transform: uppercase;
+    background: url(../img/m_180.png) no-repeat center top;
+    padding: 165px 0 0;
 }
 
 .vfm span {
     display: block;
 	
-    font-size: 42px;
+    font-size: 34px;
 }
 
 #customlogin, #forgot, #register {
     display: block;
     color: white;
     overflow: hidden;
-    width: 310px;
-    margin: 130px auto;
+    height: 100%;
+    margin: auto;
     font-weight: 100;
     text-align: center;
 }
@@ -91,11 +191,11 @@ h3.error {
 
 .or {
     width: 228px;
-    color: white;
+    color: #D9DBE2;
     font-weight: 100;
     font-size: 12px;
     border-top: thin solid white;
-    margin: 23px auto 0;
+    margin: 0px auto 0;
     text-align: center;
     padding: 10px 0;
 }
@@ -118,10 +218,32 @@ h3.error {
     width: 130px;
 }
 
+.semitrans {
+    width: 100%;
+    
+    height: 100%;
+    z-index: 100;
+    position: absolute;
+    background: rgba(0,0,0,.6);
+    display: none;
+}
+
 .custom a {
     color: white;
 }
 
+#cboxContent:focus, #cboxContent * {
+    outline: none;
+}
+
+.cboxIframe {
+    width: 100%; height:100%%
+}
+
+#cboxClose {
+    height: auto;
+    margin: 10px 0;
+}
 
 .table {
     width: 272px;
@@ -145,6 +267,19 @@ h3.error {
 }
 
 .table div span {}
+
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+#cboxWrapper {max-width:none;}
+#cboxOverlay{position:fixed; width:100%; height:100%;background: rgba(0,0,0,.8);}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.cboxIframe{width:100%; height:100%; display:block; border:0;}
+#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
 
 
 @media only screen and (max-height: 750px) {

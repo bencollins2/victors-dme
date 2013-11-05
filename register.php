@@ -37,13 +37,13 @@ if ($userInfo["first"] != "") {
         </div>
     </div> -->
 </header>
-
+<div class="upper">
 
 <?
+
 /**
  * The user is already logged in, not allowed to register.
  */
-echo "<div id='register'>";
 if($session->logged_in){
 
    echo "<h1>Registered</h1>";
@@ -100,37 +100,57 @@ else{
      echo "<span><font size=\"2\" color=\"#ff0000\">".$form->num_errors." error(s) found</font></span>";
   }
   ?>
-  <?= ($linked) ? "<h2>We've selected some content we think you'll like. Please <a class='fbl' href='#'>sign up using Facebook</a>!</h2>" : "<h2>Please <a class='fbl' href='#'>sign up using Facebook</a>!</h2>"?>
+</div>
+<div class="bg two"></div>
+<div class="bg one"/></div>
+<div class="semitrans"></div>
+<div id='register'>
+    <div class="left">
+      <div class="vfm">Victors for <span>Michigan</span></div>
+      <a class="fbl" href="#">
+        <?= ($linked) ? "<h2>We've selected some content we think you'll like.</h2>" : ""?>
+        <img src="img/signupwithfb_220.png" />
+      </a>
+      <div class="or">
+        <span>..or if you'd prefer, you can <a href="#" class="create">create an account directly</a>.</span>
+      </div>
+      <div class="createacct">
+        <form action="process.php" method="POST">
 
-  <div class="or">
-    <span>..or if you'd prefer, you can create an account directly.</span>
-  </div>
-
-  <form action="process.php" method="POST">
-
-    <div class="table">
-      <div><span>Email:</span><span><input type="text" name="email" maxlength="50" value="<? echo $form->value("email"); ?>"></span><span><? echo $form->error("email"); ?></span></div>
-      <div><span>Password:</span><span><input type="password" name="pass" maxlength="30" value="<? echo $form->value("pass"); ?>"></span><span><? echo $form->error("pass"); ?></span></div>
-      <div><span>First Name:</span><span><input type="text" name="first" maxlength="30" value="<? echo $form->value("first"); ?>"></span><span><? echo $form->error("first"); ?></span></div>
-      <div><span>Last Name:</span><span><input type="text" name="last" maxlength="30" value="<? echo $form->value("last"); ?>"></span><span><? echo $form->error("last"); ?></span></div>
-      <div class="submit"><span colspan="2" align="right">
-      <input type="hidden" name="subjoin" value="1">
-      <?php if ($_GET["link"] > 0) { 
-        $lnk = (int) $_GET["link"];
-      ?> 
-      <input type="hidden" name="link" value="<?= $lnk?>">
-      <? }?>
-      <input type="submit" value="Join!"></span></div>
+          <div class="table">
+            <div><span>Email:</span><span><input type="text" name="email" maxlength="50" value="<? echo $form->value("email"); ?>"></span><span><? echo $form->error("email"); ?></span></div>
+            <div><span>Password:</span><span><input type="password" name="pass" maxlength="30" value="<? echo $form->value("pass"); ?>"></span><span><? echo $form->error("pass"); ?></span></div>
+            <div><span>First Name:</span><span><input type="text" name="first" maxlength="30" value="<? echo $form->value("first"); ?>"></span><span><? echo $form->error("first"); ?></span></div>
+            <div><span>Last Name:</span><span><input type="text" name="last" maxlength="30" value="<? echo $form->value("last"); ?>"></span><span><? echo $form->error("last"); ?></span></div>
+            <div class="submit"><span colspan="2" align="right">
+            <input type="hidden" name="subjoin" value="1">
+            <?php if ($_GET["link"] > 0) { 
+              $lnk = (int) $_GET["link"];
+            ?> 
+            <input type="hidden" name="link" value="<?= $lnk?>">
+            <? }?>
+            <input type="submit" value="Join!"></span></div>
+          </div>
+        </form>
+      </div>
     </div>
-  </form>
-<?
-}
-?>
+    <div class="right">
+      <p>The world is facing challenges, the likes of which it has never faced before.</p>
+      <p>Problems that only engineers can solve.</p>
+      <p>Because we are Michigan Engineering, we are stepping up to tackle these great challenges and make breakthrough solutions.</p>
+      <p>Step forward with us.</p>
+      <p>Because the world needs victors of engineering.</p>
+      <a href="http://www.youtube.com/embed/VOJyrQa_WR4?rel=0&amp;wmode=transparent" class="play youtube cboxElement">Watch the video.</a>
+    </div>
+  <?
+  }
+  ?>
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
 <script src="js/masonry.js"></script>
+<script src="./js/colorbox-master/jquery.colorbox-min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/fb.js"></script>
 <script type="text/javascript">
@@ -150,6 +170,21 @@ $(".fbl").on("click",function(e){
             e.preventDefault();
             $(".custom").slideToggle();
         })
+
+        $(".create").on("click", function(e){
+          e.preventDefault();
+          $(this).parent().parent().parent().find(".createacct").fadeToggle(500);
+        });
+
+        $("a.play").on("mouseover", function(e){
+          e.preventDefault();
+          $(".bg.one").stop().fadeOut(400);
+        });
+        $("a.play").on("mouseleave", function(e){
+          e.preventDefault();
+          $(".bg.one").stop().fadeIn(400);
+        });
+        $(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390, opacity:.85});
 });
 </script>
 
