@@ -139,7 +139,7 @@
             $mailimg = $line["mailimg"];
 			$favorites = $line["favorites"];
 			$msgslice = $line["show_message_slice"];
-			$tutorial = $line["tutorial"];
+			$firsttime = $line["firsttime"];
         }
 
         // $qq = "SELECT * FROM `adminusers` WHERE "

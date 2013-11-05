@@ -70,7 +70,7 @@
 	}
 	
 	if($type == "tutorial"){
-		$query = "UPDATE users SET `tutorial` = 1 WHERE `id` LIKE '$userid'";
+		$query = "UPDATE users SET `firsttime` = 1 WHERE `id` LIKE '$userid'";
 		$result = mysql_query($query) or die("Sorry:" . $query);
 		echo "tutorial checked";
 	}

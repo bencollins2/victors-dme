@@ -863,7 +863,7 @@ $(document).ready(function(e) {
 	
 	//check tutotial status
 	
-	if(tutorial!=1){
+	if(firsttime!=1){
 
 		$('#tutorial').show();
 	}	
