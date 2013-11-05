@@ -14,6 +14,8 @@
 // print_r($_REQUEST);
 // exit;
 
+error_reporting(E_ALL);
+
 include("include/session.php");
 
 class Process
@@ -118,6 +120,20 @@ class Process
          $_SESSION['reguname'] = $_POST['user'];
          $_SESSION['regsuccess'] = true;
          // echo "Successful!";
+		 
+		 //send confirmation email
+		
+		 $message = "Dear ".$_POST['first']." ".$_POST['last'].". <br /><br />Thank you for the registration on the Michigan Engineering Campaign platform. Please <a href='http://engcomm.engin.umich.edu/campaign'>log in</a> to view more details.<br /><br />Thanks!";
+
+		 $subject = "Welcome to Michigan Engineering Campaign";
+		 
+		 $headers = "From: Michigan Engineering <engcom@umich.edu> \n";
+		 $headers .= "Reply-To: <engcom@umich.edu> \n";
+		 $headers = "MIME-Version: 1.0" . "\n";
+		 $headers .= "Content-type:text/html;charset=iso-8859-1" . "\n";
+		 
+		 mail($_POST['email'],$subject,$message,$headers);
+		 
          header("Location: ".$session->referrer);
       }
       /* Error found with form */
