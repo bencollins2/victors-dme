@@ -39,7 +39,7 @@
                 <font size="2">Remember me next time &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="hidden" name="sublogin" value="1">
                 <input type="submit" value="Login"></td></tr>
-                <tr><td colspan="2" align="left"><font size="2">[<a href="index.php?forgotpass=1">Forgot Password?</a>]</font></td><td align="right"></td></tr>
+                <tr><td colspan="2" align="left"><font size="2"><a class="forgot" href="index.php?forgotpass=1">Forgot Password?</a></font></td><td align="right"></td></tr>
                 <tr><td colspan="2" align="left">Not registered? <a href="index.php?register=1">Sign-Up!</a></td></tr>
                 </table>
                 </form>
