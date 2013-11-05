@@ -21,22 +21,25 @@ class Mailer
     * registered user, also supplying the username and
     * password.
     */
-   function sendWelcome($user, $email, $pass){
-      $from = "From: ".EMAIL_FROM_NAME." <".EMAIL_FROM_ADDR.">";
+   function sendWelcome($user, $email){
       $subject = "Victors for Engineering - Welcome!";
-      $body = $user.",\n\n"
+      $body = $user.",<br /><br />"
              ."Welcome! You've just registered at Victors for Engineering "
-             ."with the following information:\n\n"
-             ."Username: ".$user."\n"
-             ."Password: ".$pass."\n\n"
+             ."with the following information:<br /><br />"
+             ."Username: ".$user."<br /><br />"
+			 ."Please <a href='http://engcomm.engin.umich.edu/campaign'>log in</a> to view more details.<br /><br />"
              ."If you ever lose or forget your password, a new "
              ."password will be generated for you and sent to this "
              ."email address, if you would like to change your "
              ."email address you can do so by going to the "
-             ."My Account page after signing in.\n\n"
+             ."My Account page after signing in.<br /><br />"
              ."- Victors for Engineering";
-
-      return mail($email,$subject,$body,$from);
+	  
+	  $headers  = 'MIME-Version: 1.0' . "\r\n";
+	  $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	  $headers .= "From: ".EMAIL_FROM_NAME." <".EMAIL_FROM_ADDR."> \n";
+	  
+      return mail($email,$subject,$body,$headers);
    }
    
    /**
