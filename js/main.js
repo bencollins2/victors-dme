@@ -863,6 +863,7 @@ $(document).ready(function(e) {
 		}
 		$('#tutorial').hide();
 		setTutorial(1);
+		setUserTutorial(1);
 		tutorial_slide = 1;
 	});
 	
