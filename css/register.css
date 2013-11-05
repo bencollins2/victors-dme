@@ -1,3 +1,8 @@
+html {
+    height: 100%;
+    min-height: 730px;
+}
+
 body {
     display: block;
     height: 100%;
@@ -14,12 +19,50 @@ body {
 #register .left {
     float: left;
     position: relative;
-    min-width: 280px;
+    width: 280px;
     height: 100%;
     padding: 120px 0 0;
     background: #333;
     box-shadow: 0 0 6px black;
 }
+
+.info {
+    width: 230px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.5;
+    position: absolute;
+    bottom: 126px;
+    left: 25px;
+    color: #D6D6D6;
+}
+
+.sticky ul li.login {
+    font-family: Georgia, times, serif;
+    margin: 11px;
+    font-size: 20px;
+}
+
+.sticky ul li.login a {
+    font-size: 20px;
+}
+
+.learnmore {
+    color: white;
+    
+    text-decoration: none;
+    font-family: Georgia, times,serif;
+    display: block;
+    padding: 37px 0 40px 134px;
+    width: 440px;
+    font-size: 30px;
+    margin: 20px 0;
+    background: url(../img/qmark.png) no-repeat top left;
+}
+
+.info h2 {}
+
+.info p {}
 
 #register .right {
     float: left;
@@ -34,7 +77,8 @@ body {
     margin: 0 0 20px;
     font-size: 16px;
     font-family: Georgia, times, serif;
-    font-size: 18px;
+    font-size: 28px;
+    width: 370px;
     font-weight: lighter;
     text-shadow: 0 0 10px rgba(0,0,0,.2);
 }
@@ -51,7 +95,7 @@ body {
     font-size: 76px;
     line-height: 1.1;
     color: #84C0D7;
-    margin: 160px 0 9px 0px;
+    margin: 0px 0 9px 0px;
     text-shadow: 0 0 10px black;
 }
 
@@ -79,9 +123,12 @@ body {
 .bg {
     z-index: -1;
     position: absolute;
-    width: 100%;
     height: 100%;
     background: url(../img/home1.jpg) no-repeat left top;
+    top: 0;
+    right: 50%;
+    width: 1728px;
+    margin-right: -1040px;
 }
 
 .bg.two {
@@ -107,6 +154,7 @@ body {
     margin: 0;
     font-size: 16px;
     font-weight: 100;
+    color: white;
 }
 
 .sticky {
@@ -182,7 +230,7 @@ h3.error {
 }
 
 #customlogin a, #forgot a, #register a {
-    color: rgb(200, 224, 255);
+    text-shadow: 0 0 10px black;
 }
 
 #forgot input[type="submit"] {

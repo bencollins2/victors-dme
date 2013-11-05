@@ -25,6 +25,7 @@ if ($userInfo["first"] != "") {
 <header class="sticky" id="nav">
     <ul>
         <li class="home"><a href="http://engin.umich.edu">Michigan Engineering</a></li>
+        <li class="login"><a href="index.php?login=1">Login</a></li>
     </ul>
     <!-- <div id="go-back">Go back to full screen</div>
     <div id="switch">
@@ -133,14 +134,16 @@ else{
           </div>
         </form>
       </div>
+      <div class="info">
+        <h2>Explore the site</h2>
+        <p>This customizable "Victors Experience" website will allow you to filter through all the amazing work being done by Michigan Engineers on campus and around the world. Use the navigation above (or to the left, depending on where you put it) to get started and create your own custom experience.</p>
+      </div>
+
     </div>
     <div class="right">
-      <p>The world is facing challenges, the likes of which it has never faced before.</p>
-      <p>Problems that only engineers can solve.</p>
-      <p>Because we are Michigan Engineering, we are stepping up to tackle these great challenges and make breakthrough solutions.</p>
-      <p>Step forward with us.</p>
-      <p>Because the world needs victors of engineering.</p>
-      <a href="http://www.youtube.com/embed/VOJyrQa_WR4?rel=0&amp;wmode=transparent" class="play youtube cboxElement">Watch the video.</a>
+      <p>Discover why you should be a victor for engineering</p>
+      <a href="http://www.youtube.com/embed/g5J9tcRuX9U?rel=0&amp;wmode=transparent" class="play youtube cboxElement" alt="Watch the video">Watch the video.</a>
+      <a href="http://engcomm.engin.umich.edu/campaign/article.php?id=115" class="learnmore" alt="Why be a victor">Learn more about the campaign</a>
     </div>
   <?
   }
@@ -176,11 +179,11 @@ $(".fbl").on("click",function(e){
           $(this).parent().parent().parent().find(".createacct").fadeToggle(500);
         });
 
-        $("a.play").on("mouseover", function(e){
+        $("#register a").on("mouseover", function(e){
           e.preventDefault();
           $(".bg.one").stop().fadeOut(400);
         });
-        $("a.play").on("mouseleave", function(e){
+        $("#register a").on("mouseleave", function(e){
           e.preventDefault();
           $(".bg.one").stop().fadeIn(400);
         });
