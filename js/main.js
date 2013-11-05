@@ -490,7 +490,22 @@ function loadFavorites(){
 				$.each(data, function(key, val) {
 					console.log("Data: ", data);
 					if (data[key] != false) {
-						$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'<div class="img-cover"><img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">'+val["html"]+'</div></div><div class="info"><h2>'+val["title"]+'</h2><div class="description">'+val["description"]+'</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides").delay(200);
+						$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'\
+							<div class="img-cover">\
+								<img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" />\
+								<div class="meta" id="customStyle">'+val["customStyle"]+'</div>\
+								<div class="meta" id="title" data-titletop="'+val["titletop"]+'">'+val["title"]+'</div>\
+								<div class="meta" id="subtitle">'+val["description"]+'</div>\
+								<div class="meta" id="byline">'+val["byline"]+'</div>\
+								<div class="meta" id="body">'+val["html"]+'</div>\
+							</div>\
+							<div class="info">\
+								<h2>'+val["title"]+'</h2>\
+								<div class="description">'+val["description"]+'</div>\
+							</div>\
+							<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
+							<div class="item-content"></div>\
+							'}).appendTo("ul.slides").delay(200);
 					}
 
 					if (key == len - 1) {
