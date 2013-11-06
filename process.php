@@ -14,6 +14,8 @@
 // print_r($_REQUEST);
 // exit;
 
+error_reporting(E_ALL);
+
 include("include/session.php");
 
 class Process
@@ -101,6 +103,7 @@ class Process
     * created user.
     */
    function procRegister(){
+	  global $mailer;
       // echo "TEST";
       global $session, $form;
       /* Convert username to all lowercase (by option) */
@@ -118,6 +121,11 @@ class Process
          $_SESSION['reguname'] = $_POST['user'];
          $_SESSION['regsuccess'] = true;
          // echo "Successful!";
+		 
+		 //send confirmation email
+		 
+		 $mailer -> sendWelcome($_POST['first']." ".$_POST['last'], $_POST['email']);
+		 
          header("Location: ".$session->referrer);
       }
       /* Error found with form */

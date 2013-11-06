@@ -13,7 +13,7 @@ function checkHash() {
 		console.log("Has hash: ", window.location.hash + " .img-cover");
 		// $(window.location.hash + " .img-cover").click();
 		console.log("Item id: ", window.location.hash.substring(1));
-		loadFeature($(window.location.hash + " .img-cover")[0], window.location.hash.substring(1), "500px");
+		//loadFeature($(window.location.hash + " .img-cover")[0], window.location.hash.substring(1), "500px");
 	}
 	else {
 		console.log("Homepage");
@@ -51,7 +51,7 @@ function loadFeature(that, item_id) {
 	numLoads++;
 	$("#switch").hide();
 
-	if (msnry !== undefined) msnry.destroy();
+	//if (msnry !== undefined) msnry.destroy();
 	window.location.hash = item_id;
 	$parent.addClass("current");
 	var title = $(that).children(".meta#title").html(), subtitle = $(that).children(".meta#subtitle").html(), titletop = $(that).children(".meta#title").data().titletop, body = $(that).children(".meta#body").html(), customStyle = $(that).children(".meta#customStyle").html(), author = $(that).children(".meta#byline").html(), $itemcontent = $("#" + item_id + " .item-content");
@@ -76,8 +76,7 @@ function loadFeature(that, item_id) {
 	///////////////////////////////
 
 	console.log("Be quiet, the adults are testing: ", $(that).parent()[0]);
-	
-	if (typeof($parent[0].dataset.video) == "string") {
+	if ($parent[0].dataset && typeof($parent[0].dataset.video) == "string") {
 		var vid = $parent[0].dataset.video;
 		if ($(that).find("#title")[0].dataset.position == "top") {
 			$itemcontent.html('<div class="content-image-div"><h2>'+title+'</h2><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><div class="left-stuff"></div><div class="body">'+body+'</div>');
@@ -543,7 +542,7 @@ function loadFavorites(){
 }
 
 function hidetest(){
-	if (msnry !== undefined) msnry.destroy();
+	//if (msnry != undefined) msnry.destroy();
 	loadFavorites();
 }
 
@@ -663,7 +662,7 @@ function loadExplore(cats) {
 }
 
 function hideExplore() {
-	if (msnry !== undefined) msnry.destroy();
+	if (msnry != undefined) msnry.destroy();
 	$(".explore-cover").off("click");
 	// leavestory scroll-x fix
 	$(".items").css({"overflow-x" : "scroll", "overflow-y" : "hidden"});
