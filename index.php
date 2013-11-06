@@ -55,6 +55,9 @@
             $campstyle = "css/campaign.css";
             $body = "desktop.php";
     }
+
+
+
     /////////////////////
     // Facebook stuff  //
     /////////////////////
@@ -64,6 +67,10 @@
     // See if there is a user from a cookie
     $user = $facebook->getUser();
 
+    if ($_GET["link"] > 0) {
+        $session->logout();
+        
+    }
 
 
     //////////////////////////////////////
@@ -178,7 +185,7 @@
         /////////////////////////////////////////////////////////////////
         // If they're logged into facebook, but we don't have their ID //
         /////////////////////////////////////////////////////////////////
-        else if ($u == 0 && $user > 0 && $_GET["add"]==1 && $lnk == 0) {
+        else if ($u == 0 && $user > 0 && $lnk == 0) {
             $q = "INSERT INTO users (id,name,first,last,email,categories,individuals,premium) VALUES ('$user','$name','$first_name','$last_name','$email','','','0');";
             $r = mysql_query($q);
             $lastid = mysql_insert_id();
@@ -238,6 +245,13 @@
         $main = "css/main.css";
         $campstyle = "css/register.css";
         $body = "register.php";
+    }
+
+    if ($_GET["regsuccess"] == "1") {
+        $normalize = "css/normalize.css";
+        $main = "css/main.css";
+        $campstyle = "css/login.css";
+        $body = "login.php";
     }
 
     ///////////////////////////////////////////

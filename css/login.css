@@ -31,6 +31,22 @@ div.login {
     border-bottom: thin solid white;
 }
 
+td {
+    font-size: 14px;
+}
+
+.regsuccess {
+    width: 500px;
+    margin: 130px auto -240px;
+    text-align: center;
+    color: white;
+}
+
+.regsuccess h2 {}
+
+.regsuccess p {}
+
+
 .fbl {
     display: block;
     margin: 31px;
@@ -38,11 +54,14 @@ div.login {
 
 .vfm {
     color: white;
-
     font-family: Georgia, serif;
     font-size: 33px;
     line-height: 1.2em;
     text-transform: uppercase;
+}
+
+.login.reg{
+
 }
 
 .vfm span {

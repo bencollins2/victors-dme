@@ -82,9 +82,9 @@ define("COOKIE_PATH", "/");  //Avaible in whole domain
  * sends to users, and whether to send a
  * welcome email to newly registered users.
  */
-define("EMAIL_FROM_NAME", "YourName");
-define("EMAIL_FROM_ADDR", "youremail@address.com");
-define("EMAIL_WELCOME", false);
+define("EMAIL_FROM_NAME", "Michigan Engineering");
+define("EMAIL_FROM_ADDR", "engcom@engin.umich.edu");
+define("EMAIL_WELCOME", true);
 
 /**
  * This constant forces all users to have

@@ -124,9 +124,9 @@ class Process
 		 
 		 //send confirmation email
 		 
-		 $mailer -> sendWelcome($_POST['first']." ".$_POST['last'], $_POST['email']);
+		 // $mailer -> sendWelcome($_POST['first']." ".$_POST['last'], $_POST['email']);
 		 
-         header("Location: ".$session->referrer);
+         header("Location: index.php?regsuccess=1&login=1");
       }
       /* Error found with form */
       else if($retval == 1){

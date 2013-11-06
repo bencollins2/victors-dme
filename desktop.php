@@ -2,6 +2,7 @@
 
 	<div id="tutorial">
 		<div class="close"><i class="fa fa-times"></i></div>
+        <div class="nav"><a href="#" class="prev">Previous</a><a href="#" class="next">Next</a></div>
 		<img class="slide1" src="img/tutorial/slide1.png">
 		<img class="slide2" src="img/tutorial/slide2.png">
 		<img class="slide3" src="img/tutorial/slide3.png">
@@ -120,7 +121,7 @@
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="water"> Water<br />
-                            <input type="checkbox" value="sustain"> Sustainabiolity<br />
+                            <input type="checkbox" value="sustain"> Sustainability<br />
                             <input type="checkbox" value="eefficiency"> Energy Efficiency<br />
                             <input type="checkbox" value="alternativee"> Alternative Energy<br />
                             <input type="checkbox" value="environment"> Environment<br />
