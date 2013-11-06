@@ -24,10 +24,10 @@ class Mailer
    function sendWelcome($user, $email){
       $subject = "Victors for Engineering - Welcome!";
       $body = $user.",<br /><br />"
-             ."Welcome! You've just registered at Victors for Engineering "
+             ."Welcome! You've just registered at Victors for Engineering"
              ."with the following information:<br /><br />"
              ."Username: ".$user."<br /><br />"
-			 ."Please <a href='http://engcomm.engin.umich.edu/campaign'>log in</a> to view more details.<br /><br />"
+			 ."Please <a href='http://engcomm.engin.umich.edu/campaign/index.php?login=1&regsuccess=1'>log in</a> to view more details.<br /><br />"
              ."If you ever lose or forget your password, a new "
              ."password will be generated for you and sent to this "
              ."email address, if you would like to change your "

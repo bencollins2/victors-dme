@@ -825,23 +825,23 @@ $(document).ready(function(e) {
 	// set the tutorial
 	setTutorial(1);
 	tutorial_slide = 1;
-	$('#tutorial').on('click',function(){
-		if(tutorial_slide == 4){
-			$('#tutorial').hide();
-			setTutorial(1);
-			tutorial_slide = 1;
-			$.ajax({
-				type: "POST",
-				url: "dostuff.php",
-				data: { id: userid, type: "tutorial"}
-			}).done(function( msg ) {
-				console.log("Message: ", msg);
-			});
-		}else{
-			++tutorial_slide;
-			setTutorial(tutorial_slide);
-		}
-	});
+	// $('#tutorial').on('click',function(){
+	// 	if(tutorial_slide == 4){
+	// 		$('#tutorial').hide();
+	// 		setTutorial(1);
+	// 		tutorial_slide = 1;
+	// 		$.ajax({
+	// 			type: "POST",
+	// 			url: "dostuff.php",
+	// 			data: { id: userid, type: "tutorial"}
+	// 		}).done(function( msg ) {
+	// 			console.log("Message: ", msg);
+	// 		});
+	// 	}else{
+	// 		++tutorial_slide;
+	// 		setTutorial(tutorial_slide);
+	// 	}
+	// });
 
 	$('#tutorial li').on('click', function(){
 		// cancel the click event on #tutorial
@@ -853,6 +853,31 @@ $(document).ready(function(e) {
 		}
 		tutorial_slide = $(this).index() + 1;
 		setTutorial(tutorial_slide);
+	});
+
+	$("#tutorial .nav a.next").on('click',function(e){
+		// cancel the click event on #tutorial
+//		debugger;
+		var evnt = window.event?window.event:arg;
+		if(evnt.stopPropagation){
+			evnt.stopPropagation();
+		}else{
+			evnt.cancelBubble=true;
+		}
+		var next = $(this).parent().parent().find("li.selected").index()+2;
+		if (next < 5) setTutorial(next);
+	});
+
+	$("#tutorial .nav a.prev").on('click',function(e){
+		// cancel the click event on #tutorial
+		var evnt = window.event?window.event:arg;
+		if(evnt.stopPropagation){
+			evnt.stopPropagation();
+		}else{
+			evnt.cancelBubble=true;
+		}
+		var next = $(this).parent().parent().find("li.selected").index();
+		if (next > -1) setTutorial(next);
 	});
 	
 	$('#tutorial .close').on('click', function(){
@@ -870,11 +895,22 @@ $(document).ready(function(e) {
 	});
 	
 	$(document).keyup(function(e){
+		console.log(e.keyCode);
 		if (e.keyCode == 27){
 			$('#tutorial').hide();
 			setTutorial(1);
 			setUserTutorial(1);
 			tutorial_slide = 1;
+		}
+		if (e.keyCode == 37){
+			//Left
+			var prev = $("#tutorial ul li.selected").index();
+			if (prev > 0) setTutorial(prev);
+		}
+		if (e.keyCode == 39){
+			//Right
+			var next = $("#tutorial ul li.selected").index()+2;
+			if (next < 5) setTutorial(next);
 		}
 	});
 	

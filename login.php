@@ -18,13 +18,26 @@
             </div> -->
         </header>
 
-    	
-        <div class="login">
-        	<div class="vfm">Victors for <span>Michigan</span></div>
-        	<a class="fbl" href="#"><img src="img/fblogin.png" /></a>
-        </div>
+    	<? if ($_GET["regsuccess"]==1) { ?> 
 
-        <div class="or"><a href="#">Or log into our system directly</a></div>
+        <div class="regsuccess">
+            <h2>You have successfully registered!</h2>
+            <p>You will receive a confirmation email shortly. If you don't see it immediately, you may want to try your spam folder.</p>
+            <p>Please log in below. Thanks!</p>
+        </div>
+        <?}?>
+
+        <div class="login<?= (!$_GET['regsuccess'] == 1) ? '' : ' reg'?>">
+        	<div class="vfm">Victors for <span>Michigan</span></div>
+<? if (!$_GET['regsuccess'] == 1) { ?>        	
+            <a class="fbl" href="#"><img src="img/fblogin.png" /></a>
+ <?}?>
+        </div>
+<? if (!$_GET['regsuccess'] == 1) { ?>          
+        <div class="or">
+            <a href="#">Or log into our system directly</a>
+        </div>
+ <?}?>
             <div class="custom" style="display:none">
                 <?
                     if($form->num_errors > 0){
