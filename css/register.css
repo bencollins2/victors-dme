@@ -21,7 +21,7 @@ body {
     position: relative;
     width: 280px;
     height: 100%;
-    padding: 120px 0 0;
+    padding: 80px 0 0;
     background: #333;
     box-shadow: 0 0 6px black;
 }
@@ -38,27 +38,26 @@ body {
 }
 
 .sticky ul li.login {
-    font-family: Georgia, times, serif;
     margin: 11px;
     font-size: 20px;
+    font-weight: 100;
 }
 
 .sticky ul li.login a {
-    font-size: 20px;
+    font-size: 16px;
 }
 
-.learnmore {
+body #register p.learnmore {
     color: white;
-    
     text-decoration: none;
     font-family: Georgia, times,serif;
     display: block;
-    padding: 37px 0 40px 134px;
-    width: 440px;
-    font-size: 30px;
-    margin: 20px 0;
-    background: url(../img/qmark.png) no-repeat top left;
+    padding: inherit;
+    width: 443px;
+    font-size: 25px;
+    margin: 0px 0;
 }
+
 
 .info h2 {}
 
@@ -66,57 +65,73 @@ body {
 
 #register .right {
     float: left;
-    margin: 90px 0 90px 50px;
-    width: 810px;
+    margin: 75px 0 90px 50px;
+    width: 70%;
     text-align: left;
     font-size: 16px;
     font-weight: 100;
+    clear: none;
 }
 
-#register .right p {
+.right p {
     margin: 0 0 20px;
     font-size: 16px;
     font-family: Georgia, times, serif;
-    font-size: 28px;
-    width: 370px;
+    font-size: 18px;
+    width: 280px;
     font-weight: lighter;
-    text-shadow: 0 0 10px rgba(0,0,0,.2);
-}
-
-#register .right p:nth-child(2) {
-    font-family: Helvetica, arial, serif;
-    font-size: 45px;
-    line-height: 1.1;
-    margin-left: auto;
-}
-
-#register .right p:nth-child(4) {
-    font-family: Helvetica, arial, serif;
-    font-size: 76px;
-    line-height: 1.1;
-    color: #84C0D7;
-    margin: 0px 0 9px 0px;
     text-shadow: 0 0 10px black;
 }
 
+#register .right p:nth-child(2) {
+    margin: 0;
+}
+
+#register .right p:nth-child(3) {
+    font-family: "league-gothic";
+    font-size: 59px;
+    line-height: 1.1;
+    color: #FCD038;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: left;
+}
+
+#register .right p:nth-child(4) {
+    margin-top: -6px;
+}
+
 #register .play {
-    display: block;
-    background: url(../img/play_120.png) no-repeat;
-    margin: 0px 0;
-    padding: 35px 0 37px 134px;
+    margin: 0px 0 10px;
+    padding: 20px 0 25px 0px;
     cursor: pointer;
     -webkit-transition: all 2s ease;
     -moz-transition: all 2s ease;
     -o-transition: all 2s ease;
     -ms-transition: all 2s ease;
     transition: all 2s ease;
-    font-size: 34px;
+    width: 268px;
+}
+
+#register .play a img, #register .learnmore a img {
+    margin: 0 10px 0 0;
+}
+
+.play a, .learnmore a {
+    font-size: 25px;
     text-decoration: none;
     color: white;
     font-family: Georgia, times, serif;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
 }
 
-#register p.play:hover {
+
+
+#register p.play a:hover, #register p.learnmore a:hover {
     text-shadow: 0 0 20px white;
 }
 
@@ -152,17 +167,19 @@ body {
 
 #register h2 {
     margin: 0;
-    font-size: 16px;
+    font-family: "league-gothic";
+    font-size: 39px;
     font-weight: 100;
-    color: white;
+    color: #FCD038;
+    margin: 50px 0 0;
+    text-transform: uppercase;
 }
 
 .sticky {
 }
 
 .sticky ul li.home {
-    background: url(../img/smallm.png) no-repeat top left;
-    padding: 2px 0 3px 40px;
+    padding: 2px 0 3px 0px;
     height: 32px;
 }
 
@@ -191,7 +208,7 @@ form div.table div.submit {
 
 .fbl {
     display: inline-block;
-    margin: auto;
+    margin: -13px auto 0;
 }
 
 h3.error {
@@ -210,7 +227,7 @@ h3.error {
     line-height: 1.2em;
     text-transform: uppercase;
     background: url(../img/m_180.png) no-repeat center top;
-    padding: 165px 0 0;
+    padding: 143px 0 0;
 }
 
 .vfm span {
@@ -222,11 +239,11 @@ h3.error {
 #customlogin, #forgot, #register {
     display: block;
     color: white;
-    overflow: hidden;
     height: 100%;
     margin: auto;
     font-weight: 100;
     text-align: center;
+    overflow: hidden;
 }
 
 #customlogin a, #forgot a, #register a {
@@ -239,7 +256,6 @@ h3.error {
 
 .or {
     width: 228px;
-    color: #D9DBE2;
     font-weight: 100;
     font-size: 12px;
     border-top: thin solid white;
@@ -341,4 +357,13 @@ h3.error {
 	div.login {
 		margin-top: 100px;
 	}
+}
+
+@media only screen and (max-height: 700px) {
+    .right p {
+        font-size: 16px;
+    }
+    #register .play, #register .learnmore {
+    
+}
 }

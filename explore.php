@@ -81,7 +81,7 @@
 
 	$count = count($arr);
 
-	if ($count < 6) {
+	if ($count < 6 && $_REQUEST["exp"] != 1) {
 		$limit = 7 - $count;
 		$query3 = "SELECT * FROM `features` WHERE `public` = 1 ORDER BY `id` DESC LIMIT 0,$limit;";
 		$result3 = mysql_query($query3);

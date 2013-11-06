@@ -4,8 +4,8 @@
 
 window.fbAsyncInit = function() {
       FB.init({
-        // appId      : '345879355542024', // App ID
-        appId      : '1381727122059014', // App ID
+        // appId      : '345879355542024', // Remote App ID
+        appId      : '1381727122059014', // Local App ID
 
         // channelUrl : 'http://localhost:8888/htdocs/DME/campaign/channel.php', // Channel File
         // status     : true, // check login status
@@ -61,9 +61,20 @@ window.fbAsyncInit = function() {
       	FB.login();
       }
       function logoutFb() {
-        FB.logout(function(){
-          window.location.assign("index.php?login=1");
+        FB.getLoginStatus(function(ret) {
+            /// are they currently logged into Facebook?
+            if(ret.authResponse) {
+                //they were authed so do the logout
+                FB.logout(function(){
+                  window.location.assign("index.php?login=1");
+                });
+            } else {
+               ///do something if they aren't logged in
+               //or just get rid of this if you don't need to do something if they weren't logged in
+                window.location.assign("index.php");
+            }
         });
+
       }
 
       // Here we run a very simple test of the Graph API after login is successful. 

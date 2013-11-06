@@ -13,7 +13,7 @@
 
         <header class="sticky" id="nav">
             <ul>
-                <li class="home"><a href="http://engin.umich.edu"><img src="img/mighigan_engineering_25.png" alt="Michigan Engineering" /></a></li>
+                <li class="home"><a href="http://engin.umich.edu"><img src="img/CoE-horiz-rev.png" alt="Michigan Engineering" /></a></li>
             </ul>
           <!--   <div id="go-back" class="navi_item">
                 <span>Home</span>
@@ -167,8 +167,18 @@
                 </form>
             </div>
             <div class="readytogive">
-                <img src="img/gift_box_50.png" />
-                <a>Ready to Give</a>
+                <ul>
+                    <li>
+                        <a href="http://engcomm.engin.umich.edu/campaign/article.php?id=115">Why be a victor?</a>
+                    </li>
+                    <li>
+                        <a href="http://engin.umich.edu/giving">Ready to Give</a>
+                    </li>
+                 <!--    <li>
+                        <a href="http://engin.umich.edu/giving">Tutorial</a>
+                    </li> -->
+                </ul>
+                <!-- <img src="img/gift_box_50.png" /> -->
             </div>
 			
 			<div id="tutoicon">
