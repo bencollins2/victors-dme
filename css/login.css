@@ -9,8 +9,7 @@ body {
 }
 
 .sticky ul li.home {
-    background: url(../img/smallm.png) no-repeat top left;
-    padding: 2px 0 3px 40px;
+    padding: 2px 0 3px 2px;
     height: 32px;
 }
 

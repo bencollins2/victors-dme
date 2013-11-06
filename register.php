@@ -15,16 +15,14 @@ $linked = false;
 if ($userInfo["first"] != "") {
   $linked = true;
   $firstName = $userInfo["first"];
-
-
-
 }
+
 ?>
 
 <body>
 <header class="sticky" id="nav">
     <ul>
-        <li class="home"><a href="http://engin.umich.edu">Michigan Engineering</a></li>
+        <li class="home"><a href="http://engin.umich.edu"><img src="img/CoE-horiz-rev.png" alt="logo"/></a></li>
         <li class="login"><a href="index.php?login=1">Login</a></li>
     </ul>
     <!-- <div id="go-back">Go back to full screen</div>
@@ -108,8 +106,10 @@ else{
 <div id='register'>
     <div class="left">
       <div class="vfm">Victors for <span>Michigan</span></div>
+              <h2>Explore the site</h2>
+
       <a class="fbl" href="#">
-        <?= ($linked) ? "<h2>We've selected some content we think you'll like.</h2>" : ""?>
+        <?= ($linked) ? "<!--h2>We've selected some content we think you'll like.</h2-->" : ""?>
         <img src="img/signupwithfb_220.png" />
       </a>
       <div class="or">
@@ -135,15 +135,17 @@ else{
         </form>
       </div>
       <div class="info">
-        <h2>Explore the site</h2>
-        <p>This customizable "Victors Experience" website will allow you to filter through all the amazing work being done by Michigan Engineers on campus and around the world. Use the navigation above (or to the left, depending on where you put it) to get started and create your own custom experience.</p>
+        <p>This customizable "Victors Experience" website will allow you to filter through all the amazing work being done by Michigan Engineers on campus and around the world. Use the navigation above to get started and create your own custom experience.</p>
       </div>
 
     </div>
     <div class="right">
-      <p>Discover why you should be a victor for engineering</p>
-      <a href="http://www.youtube.com/embed/g5J9tcRuX9U?rel=0&amp;wmode=transparent" class="play youtube cboxElement" alt="Watch the video">Watch the video.</a>
-      <a href="http://engcomm.engin.umich.edu/campaign/article.php?id=115" class="learnmore" alt="Why be a victor">Learn more about the campaign</a>
+      <p>The world is facing challenges, the likes of which it has never faced before. Problems that only engineers can solve.</p> 
+      <p>Because we are Michigan Engineering, </p>
+      <p>we are stepping up</p>
+      <p>to tackle these great challenges and make breakthrough solutions. </p>
+      <p class="play"><a href="http://www.youtube.com/embed/g5J9tcRuX9U?rel=0&amp;wmode=transparent" class="youtube cboxElement" alt="Watch the video"><img src="./img/play_80.png" />Watch the video</a></p>
+      <p class="learnmore"><a href="http://engcomm.engin.umich.edu/campaign/article.php?id=115" class="" alt="Why be a victor"><img src="./img/qmark_80.png" />Learn more about the campaign</a></p>
     </div>
   <?
   }
@@ -161,7 +163,11 @@ $(document).ready(function(){
 $(".fbl").on("click",function(e){
   e.preventDefault();
   FB.login(function(response) {
+    <? if ($linked) { ?>
       window.location.assign("index.php?register=1&link=<?= $_GET['link']?>&add=1");
+    <? } else { ?>
+      window.location.assign("index.php");
+      <? } ?>
     }, {scope: 'read_stream'});;
   });
 
@@ -177,13 +183,14 @@ $(".fbl").on("click",function(e){
         $(".create").on("click", function(e){
           e.preventDefault();
           $(this).parent().parent().parent().find(".createacct").fadeToggle(500);
+          $("div.info").fadeToggle(500);
         });
 
-        $("#register a").on("mouseover", function(e){
+        $(".learnmore a, .play a").on("mouseover", function(e){
           e.preventDefault();
           $(".bg.one").stop().fadeOut(400);
         });
-        $("#register a").on("mouseleave", function(e){
+        $(".learnmore a, .play a").on("mouseleave", function(e){
           e.preventDefault();
           $(".bg.one").stop().fadeIn(400);
         });

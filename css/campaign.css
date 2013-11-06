@@ -110,6 +110,8 @@ body.slicesOne, body.exploreOne {
 #tutorial .close:hover{
 	color:#FEC33A;
 }
+
+
 #tutoicon{
 	width:auto;
 	height:auto;
@@ -139,10 +141,10 @@ body.slicesOne, body.exploreOne {
     top: 51px;
     height: 100%;
     width: 270px;
-    overflow: auto;
     background: #FEC33A;
     min-height: 503px;
     box-shadow: 0 0 30px black;
+    overflow: hidden;
 }
 
 .left .leftlogo {
@@ -246,10 +248,17 @@ body.slicesOne, body.exploreOne {
 
 .left .readytogive {
     position: absolute;
-    bottom: 10px;
+    bottom: 70px;
     left: 50%;
     margin: 0 0 0 -95px;
-    display:none;
+    display: block;
+    border: thin solid #FFECBE;
+    width: 180px;
+    background-color: #FFD26B;
+}
+
+.left .readytogive ul {
+    margin: 30px;
 }
 
 .left .readytogive img {
@@ -262,7 +271,8 @@ body.slicesOne, body.exploreOne {
     margin: 9px 0;
     width: 180px;
     font-weight: 100;
-    text-decoration: underline;
+    text-decoration: none;
+    color: #032B55;
 }
 
 .navi_item {

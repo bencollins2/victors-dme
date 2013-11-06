@@ -200,7 +200,7 @@ function loadFeature(that, item_id) {
 		}
 	}
 
-	debugger;
+	// debugger;
 
 	stWidget.addEntry({
 		"service":"facebook",
@@ -486,7 +486,9 @@ function loadFavorites(){
 		$("ul.slides li").remove();
 		setTimeout(function(){
 			$.getJSON(url, function(data){
-				var len = data.length;
+
+				var len = 0;
+				$.each(data,function(k,v){len++});
 				$.each(data, function(key, val) {
 					console.log("Data: ", data);
 					if (data[key] != false) {
@@ -507,7 +509,7 @@ function loadFavorites(){
 							<div class="item-content"></div>\
 							'}).appendTo("ul.slides").delay(200);
 					}
-
+					// debugger;
 					if (key == len - 1) {
 						doMasonry();
 						fader($(".hidestart:first"));
@@ -570,14 +572,15 @@ function loadExplore(cats) {
 	var url;
 	
 	if (cats) {
-		url = 'explore.php?cats='+cats;
+		url = 'explore.php?exp=1&cats='+cats;
 	}
-	else url = 'explore.php';
+	else url = 'explore.php?exp=1';
 
 	console.log("URL: ", url);
 	$("body").addClass("explore").removeClass("slices");	
 	$.getJSON(url, function(data) {
-		var len = data.length; 
+		var len = 0;
+		$.each(data,function(k,v){len++});
 		console.log("LENGTH: ", data.length);
 		$.each(data, function(key, val) {
 			console.log("Data: ", data);
@@ -592,7 +595,7 @@ function loadExplore(cats) {
 						break;
 					}
 				}
-				debugger;
+
 				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'\
 					<img class="fav-star" src="'+fav_img+'" faved = '+faved+'>\
 					<div class="img-cover">\
@@ -611,7 +614,7 @@ function loadExplore(cats) {
 					<div class="item-content"></div>\
 					'}).appendTo("ul.slides").delay(200);
 			}
-
+			//debugger;
 			if (key == len - 1) {
 				doMasonry();
 				fader($(".hidestart:first"));
@@ -951,7 +954,7 @@ $(document).ready(function(e) {
 
 	$("form input").on("click", function(){
 		var checked = {};
-		
+		// debugger;
 		if($(this).parent().find('input:checked').length == $(this).parent().find('input').length){
 			console.log("yes");
 			$(this).parent().find('a.selectall').attr('status','false');

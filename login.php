@@ -4,7 +4,7 @@
 
         <header class="sticky" id="nav">
             <ul>
-                <li class="home"><a href="http://engin.umich.edu">Michigan Engineering</a></li>
+                <li class="home"><a href="http://engin.umich.edu"><img src="img/CoE-horiz-rev.png" alt="logo"/></a></li>
             </ul>
             <!-- <div id="go-back">Go back to full screen</div>
             <div id="switch">
@@ -56,7 +56,7 @@
 					e.preventDefault();
 					FB.login(function(response) {
 						window.location.assign("index.php");
-					}, {scope: 'read_stream'});;
+					}, {scope: 'user_status'});;
 				});
 
                 if (<?= $open?> == 1) {
