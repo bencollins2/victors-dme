@@ -175,7 +175,7 @@
             <div class="readytogive">
                 <ul>
                     <li>
-                        <a href="http://engcomm.engin.umich.edu/campaign/article.php?id=115">Why be a victor?</a>
+                        <a href="article.php?id=115">Why be a victor?</a>
                     </li>
                     <li>
                         <a href="http://engin.umich.edu/giving">Ready to Give</a>

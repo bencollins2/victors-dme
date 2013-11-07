@@ -71,8 +71,16 @@
 	if($_GET['intro'] == 1) {
 		$getintro = "SELECT * FROM features WHERE id = 115";
 		$result = mysql_query($getintro) or die ("Get Feature Error: " . $getintro);
-		$intro = recordToArray($result);
-		array_splice($arr, 0, 0, $intro);
+
+		$inarr = false;
+		foreach($arr as $k=>$v) {
+			if($v['id'] == 115) $inarr = true;
+		}
+		if (!$inarr) {
+			$intro = recordToArray($result);
+			array_splice($arr, 0, 0, $intro);
+		}
+
 	}
 
 	//////////////////////////////////////////////////
@@ -81,9 +89,8 @@
 
 	$count = count($arr);
 
-	if ($count < 6 && $_REQUEST["exp"] != 1) {
-		$limit = 7 - $count;
-		$query3 = "SELECT * FROM `features` WHERE `public` = 1 ORDER BY `id` DESC LIMIT 0,$limit;";
+	if ($count <= ($_GET['slices']+1) && $_REQUEST["exp"] != 1) {
+		$query3 = "SELECT * FROM `features` WHERE `public` = 1 ORDER BY `id` DESC";
 		$result3 = mysql_query($query3);
 		$temp = recordToArray($result3);
 		array_pop($temp);

@@ -12,10 +12,7 @@
 require_once("include/session.php");
 $userInfo = $session->linkInfo($_GET["link"]);
 $linked = false;
-if ($userInfo["first"] != "") {
-  $linked = true;
-  $firstName = $userInfo["first"];
-}
+if ($_REQUEST["link"]>0) $linked = true;
 
 ?>
 
@@ -23,7 +20,11 @@ if ($userInfo["first"] != "") {
 <header class="sticky" id="nav">
     <ul>
         <li class="home"><a href="http://engin.umich.edu"><img src="img/CoE-horiz-rev.png" alt="logo"/></a></li>
+
+        <? if (!$_REQUEST["link"]) {?>
+
         <li class="login"><a href="index.php?login=1">Login</a></li>
+         <? }?>
     </ul>
     <!-- <div id="go-back">Go back to full screen</div>
     <div id="switch">
@@ -106,7 +107,7 @@ else{
 <div id='register'>
     <div class="left">
       <div class="vfm">Victors for <span>Michigan</span></div>
-              <h2>Explore the site</h2>
+              <h2>Sign Up and <br />Get Started</h2>
 
       <a class="fbl" href="#">
         <?= ($linked) ? "<!--h2>We've selected some content we think you'll like.</h2-->" : ""?>
@@ -126,7 +127,7 @@ else{
             <div class="submit"><span colspan="2" align="right">
             <input type="hidden" name="subjoin" value="1">
             <?php if ($_GET["link"] > 0) { 
-              $lnk = (int) $_GET["link"];
+              $lnk = mysql_real_escape_string($_GET["link"]);
             ?> 
             <input type="hidden" name="link" value="<?= $lnk?>">
             <? }?>
@@ -135,7 +136,15 @@ else{
         </form>
       </div>
       <div class="info">
+
+        <?php if ($_GET["link"] > 0) { 
+              $lnk = mysql_real_escape_string($_GET["link"]);
+            ?> 
+        <p>This customized "Victors Experience" website will allow you to filter through all the amazing work being done by Michigan Engineers on campus and around the world. Use the navigation above to get started.</p>
+            <? } else { ?>
+
         <p>This customizable "Victors Experience" website will allow you to filter through all the amazing work being done by Michigan Engineers on campus and around the world. Use the navigation above to get started and create your own custom experience.</p>
+        <? }?>
       </div>
 
     </div>
@@ -145,7 +154,7 @@ else{
       <p>we are stepping up</p>
       <p>to tackle these great challenges and make breakthrough solutions. </p>
       <p class="play"><a href="http://www.youtube.com/embed/g5J9tcRuX9U?rel=0&amp;wmode=transparent" class="youtube cboxElement" alt="Watch the video"><img src="./img/play_80.png" />Watch the video</a></p>
-      <p class="learnmore"><a href="http://engcomm.engin.umich.edu/campaign/article.php?id=115" class="" alt="Why be a victor"><img src="./img/qmark_80.png" />Learn more about the campaign</a></p>
+      <p class="learnmore"><a href="http://victors.engin.umich.edu/article.php?id=115" class="" alt="Why be a victor"><img src="./img/qmark_80.png" />Learn more about the campaign</a></p>
     </div>
   <?
   }

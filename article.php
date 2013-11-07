@@ -41,16 +41,30 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			$row['html'] = $newHTML;
 
 		}
-		$feature_content = <<<html
-			<style type="text/css">{$row["customStyle"]}</style><div class="content-image-div"><!--<img class="content-image" src="img/big/{$row["img_large"]}.jpg" alt="item image" />--></div>
-			<div class="content-info"><div class="left-stuff">
-			<span id="fb" class='facebook st' displayText='Facebook'></span>
-			<span id="tw" class='twitter st' displayText='Tweet'></span>
-			<span id="gp" class='googleplus st' displayText='Google +'></span>
-			<span id="pn" class='pinterest st' displayText='Pinterest'></span>
-			<span id="rd" class='reddit st' displayText='Reddit'></span>
-			</div><h2 class="fadewithme">{$row["title"]}</h2><span class="byline">{$row["byline"]}</span><div class="body">{$row["html"]}</div></div>
-html;
+
+		if ($row["titletop"] == 1) {
+			$feature_content = "
+			<style type=\"text/css\">".$row["customStyle"]."</style><div class=\"content-image-div\"><h2 class=\"fadewithme\">".$row["title"]."</h2><img class=\"content-image\" src=\"img/big/".$row["img_large"].".jpg\" alt=\"item image\" /></div>
+			<div class=\"content-info\"><div class=\"left-stuff\">
+			<span id=\"fb\" class='facebook st' displayText='Facebook'></span>
+			<span id=\"tw\" class='twitter st' displayText='Tweet'></span>
+			<span id=\"gp\" class='googleplus st' displayText='Google +'></span>
+			<span id=\"pn\" class='pinterest st' displayText='Pinterest'></span>
+			<span id=\"rd\" class='reddit st' displayText='Reddit'></span>
+			</div><span class=\"byline\">".$row["byline"]."</span><div class=\"body\">".$row["html"]."</div></div>";		}
+		else {
+			$feature_content = "
+			<style type=\"text/css\">".$row["customStyle"]."</style><div class=\"content-image-div\"><img class=\"content-image\" src=\"img/big/".$row["img_large"].".jpg\" alt=\"item image\" /></div>
+			<div class=\"content-info\"><div class=\"left-stuff\">
+			<span id=\"fb\" class='facebook st' displayText='Facebook'></span>
+			<span id=\"tw\" class='twitter st' displayText='Tweet'></span>
+			<span id=\"gp\" class='googleplus st' displayText='Google +'></span>
+			<span id=\"pn\" class='pinterest st' displayText='Pinterest'></span>
+			<span id=\"rd\" class='reddit st' displayText='Reddit'></span>
+			</div><h2 class=\"fadewithme\">".$row["title"]."</h2><span class=\"byline\">".$row["byline"]."</span><div class=\"body\">".$row["html"]."</div></div>";
+		}
+
+		
 		
 	}else{
 		header("Location: index.php");
@@ -116,7 +130,7 @@ html;
 			</div> -->
         </header>
 
-        <div class="items bgimg" style="background-image:url(<?php echo "img/big/".$row["img_large"].".jpg"?>)">
+        <div class="items bgimg" style="">
         	<div class="itemcontainer flexslider">
             	<ul class="slides">
 					<li><div class="item-content"><?php echo($feature_content)?></div></li>

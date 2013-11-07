@@ -1,3 +1,4 @@
+
 <?
 /**
  * Database.php
@@ -167,7 +168,13 @@ class MySQLDB
       $q = "INSERT INTO ".TBL_USERS."(first, last, password, id, userlevel, email, username, timestamp) VALUES ('$first', '$last', '$password', '0', $ulevel, '$email', '$email', $time)";
 
       $ret = mysql_query($q, $this->connection);
-      $this->recent_insert = mysql_insert_id();
+      
+      $query = "SELECT * FROM `".TBL_USERS."` ORDER BY id DESC LIMIT 0,1;";
+
+      $result = mysql_query($query);
+      $line = mysql_fetch_array($result);
+
+      $this->recent_insert = $line["id"];
 
       return $ret;
    }
@@ -178,31 +185,44 @@ class MySQLDB
    function copyFromLink($lnk,$copyto){
       $time = time();
       /* If admin sign up, give admin user level */
-      
-      $q = "SELECT * FROM `users` WHERE `id` = '$lnk' LIMIT 0,1;";
+      $q = "SELECT * FROM `users` WHERE `id` = '$lnk' AND `todelete` IS NULL LIMIT 0,1;";
       $r = mysql_query($q);
+// echo $q."<br /><br />";
       $l = mysql_fetch_array($r);
-      
-      $q = "UPDATE `users` SET `name` = '".$l['first'] . ' ' . $l['last']."', `categories` = '".$l['categories']."', `individuals` = '".$l['individuals']."', `sidebar` = '".$l['sidebar']."', `first` = '".$l['first']."', `last` = '".$l['last']."', `mailimg` = '".$l['mailimg']."', `fromlink` = '".$lnk."', `showasnew` = '1' WHERE `id` = '".$copyto."'";
-      $r = mysql_query($q);
-      $lastid = mysql_insert_id();
+      $q = "UPDATE `users` SET `name` = '".$l['first'] . ' ' . $l['last']."', `categories` = '".$l['categories']."', `individuals` = '".$l['individuals']."', `sidebar` = '".$l['sidebar']."', `first` = '".$l['first']."', `last` = '".$l['last']."', `mailimg` = '".$l['mailimg']."', `fromlink` = '".$lnk."', `showasnew` = '1', `firsttime` = '0' WHERE `id` = '".$copyto."'";
+      echo $q;
+// echo $q."<br /><br />";
+      $r = mysql_query($q) or die("Couldn't copy");
+
+      $query = "SELECT * FROM `users` ORDER BY id DESC LIMIT 0,1;";
+      $result = mysql_query($query);
+      $line = mysql_fetch_array($result);
+
+      $lastid = $line['id'];
+
+
+
       if ($lastid > 0) {}
       else $regerror = 1;
 
       $q = "UPDATE `users` SET `todelete` = '1' WHERE `id` = '$lnk'";
       $r = mysql_query($q) or die("Failure.");
-
+// echo $q."<br /><br />";
       $q = "SELECT * FROM `adminusers` WHERE `uids` LIKE '%$lnk%' LIMIT 0,1;";
       $r = mysql_query($q) or die("Failure.");
       $l = mysql_fetch_array($r);
       $aid = $l["id"];
       $uids = $l["uids"];
-
+// echo $q."<br /><br />";
       $newuids = preg_replace("/(,?)".$lnk."/", "", $uids);
-      $newuids = $user.",".$newuids;
+      $newuids = $lastid.",".$newuids;
 
       $q = "UPDATE `adminusers` SET `uids` = '$newuids' WHERE `id` = '$aid'";
       $r = mysql_query($q) or die("Couldn't update admin record.");
+// echo $q."<br /><br />";
+      $q = "UPDATE `messages` SET `to` = 'u".$lastid."' WHERE `to` = 'u".$lnk."'";
+// echo $q."<br /><br />";
+      $r = mysql_query($q) or die("Couldn't get messages.");
 
       return true;
    }

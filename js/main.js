@@ -5,40 +5,64 @@ function isFunction(functionToCheck) {
 	return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 }
 
-function checkHash() {
-	/////////////////////////////////////////////////////////////
-	//  Open the corresponding page if there is a hash in url  //
-	/////////////////////////////////////////////////////////////
-	if (window.location.hash) {
-		// console.log("Has hash: ", window.location.hash + " .img-cover");
-		// $(window.location.hash + " .img-cover").click();
-		// console.log("Item id: ", window.location.hash.substring(1));
-		//loadFeature($(window.location.hash + " .img-cover")[0], window.location.hash.substring(1), "500px");
-	}
-	else {
-		// console.log("Homepage");
-		// $("#go-back").click();
-		// leaveStory();
-	}
-}
-
 function fader(elm) {
 	/////////////////////////////////////////////
 	// Fade elements in sequence, recursively  //
 	/////////////////////////////////////////////
 	setTimeout(function(){
-		if (elm.next().length > 0) fader(elm.next());
+		if (elm.next().length > 0) {
+			fader(elm.next());
+		}
 		else {
 			resizeWindow();
 			// $("#switch").on("click", switcher);
-		};
+		}
 	},100);
 
-	elm.animate({"opacity":"1"}, 1000, function(){});
+	elm.animate({"opacity":"1"}, 700, function(){});
 }
 
-function imageLoaded(id) {
+function imageLoadedSame(id) {
+	// debugger;
 
+	$(".current .content-info, .current .content-image-div").fadeIn(1000);
+	$(this).parent().fadeIn(1000);
+
+	// var imgcontainerheight = $(".content-image-div").height();
+	var imgcontainerheight = 450;
+	var bodymargin = imgcontainerheight+"px";
+	$(".content-info").css({"margin-top":bodymargin});
+
+
+	// Expand the selected item to full screen, and make all other cover images 0 so they will disappear
+	$(".explore-item, .one-item").each(function(index, element) {
+		if (!$(this).hasClass("current")) {
+			$(this).css({"width" : "0px"});
+			var thatitem = $(this);
+			thatitem.css({"height" : "0px"});
+		} else {
+			$(this).css({"width" : width+"px", "overflow" : "visible", "height": "auto"});
+			$(window).off("scroll").on("scroll", function(e) {
+
+				if (!($("body").hasClass("explore"))) {
+					var opac = (imgcontainerheight - $("body").scrollTop())/imgcontainerheight;
+					console.log(opac);
+					if (opac >= 0.01 && opac <= 1) {
+						$("#" + current + " .fadewithme").css({"opacity" : opac});
+					}
+					else if (opac < 0.01) {
+						$("#" + current + " .fadewithme").css({"opacity" : "0"});
+					}
+				}
+			});
+		}
+	});
+	// debugger;
+	window.location.hash="item-"+id;
+}	
+
+function imageLoaded(id) {
+	// debugger;
 	var item_id = "item-"+id;
 
 	$("#"+item_id+" .content-info, #"+item_id+" .content-image-div").fadeIn(1000);
@@ -68,14 +92,157 @@ function imageLoaded(id) {
 					if (opac >= 0.01 && opac <= 1) {
 						$("#" + current + " .fadewithme").css({"opacity" : opac});
 					}
-					else if (opac < .01) {
+					else if (opac < 0.01) {
 						$("#" + current + " .fadewithme").css({"opacity" : "0"});
 					}
 				}
 			});
 		}
 	});
+	$("#"+item_id).scrollTop();
 }	
+
+function loadInSame(id) {
+	$("ul.slides li .item-content").html("");
+	var itemheight, $itemcontent = $(".current").find(".item-content");
+
+	var request = $.ajax({
+			type: "POST",
+			url: "dostuff.php",
+			data: { id: id, type: "getstory" }
+		});
+		request.done(function(msg) {
+
+			var json = $.parseJSON(msg);
+			// console.log(json);
+			if (json.titletop == 1) {
+				$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><h2 class="fadewithme">'+json['title']+'</h2><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+					<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+					<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+					</div><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
+			}
+			else {
+					$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+					<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+					<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+					</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
+			}
+			
+			$(".big"+json.id).imagesLoaded(imageLoadedSame(json.id));
+
+			stWidget.addEntry({
+				"service":"facebook",
+				"element":document.getElementById('fb'),
+				"url":"http://victors.engin.umich.edu/article.php?id="+id,
+				"title":"facebook",
+				"type":"large",
+				"text":"Share on facebook",
+				"summary":"Share on facebook"
+			});
+
+			stWidget.addEntry({
+				"service":"twitter",
+				"element":document.getElementById('tw'),
+				"url":"http://victors.engin.umich.edu/article.php?id="+id,
+				"title":"twitter",
+				"type":"large",
+				"text":"Share on twitter",
+				"summary":"Share on twitter"   
+			});
+
+			stWidget.addEntry({
+				"service":"googleplus",
+				"element":document.getElementById('gp'),
+				"url":"http://victors.engin.umich.edu/article.php?id="+id,
+				"title":"googleplus",
+				"type":"large",
+				"text":"Share on googleplus",
+				"summary":"Share on googleplus"   
+			});
+
+			stWidget.addEntry({
+				"service":"pinterest",
+				"element":document.getElementById('pn'),
+				"url":"http://victors.engin.umich.edu/article.php?id="+id,
+				"title":"pinterest",
+				"type":"large",
+				"text":"Share on pinterest",
+				"summary":"Share on pinterest"   
+			});
+
+			stWidget.addEntry({
+				"service":"reddit",
+				"element":document.getElementById('rd'),
+				"url":"http://victors.engin.umich.edu/article.php?id="+id,
+				"title":"reddit",
+				"type":"large",
+				"text":"Share on reddit",
+				"summary":"Share on reddit"   
+			});
+			/////////////////////////////////
+			// Scroll body back to the top //
+			/////////////////////////////////
+			$(".explore, body, html").scrollTop(0);
+			$(".items").scrollLeft(0);
+
+			///////////////////////////////
+			// Check the favorite status of current feature //
+			///////////////////////////////
+			
+			is_faved = false;
+			
+			for (var i=0; i<fav_array.length; i++){
+				if (id){
+					is_faved = true;
+					break;
+				}
+			}
+			
+			if(is_faved == false){
+				$('a#fav').html('Favorite');
+				$('a#fav').removeClass("unfav").addClass("fav");
+			}else{
+				$('a#fav').html('Unfavorite');
+				$('a#fav').removeClass("fav").addClass("unfav");
+			}
+			
+			$('a#fav').click(function(){
+				if(is_faved ==false){
+					is_faved=true;
+					$('a#fav').html('Unfavorite');
+					$('a#fav').removeClass("fav").addClass("unfav");
+					fav_array.push(item_id.slice(5));
+					// console.log(fav_array);
+				}else{
+					is_faved=false;
+					$('a#fav').html('Favorite');
+					$('a#fav').removeClass("unfav").addClass("fav");
+					fav_array.splice(fav_array.indexOf(item_id.slice(5)),1);
+					// console.log(fav_array);
+				}
+				// send the new favorites to database
+				// console.log(fav_array.join());
+				$.ajax({
+					type: "POST",
+					url: "dostuff.php",
+					data: { id: userid, type: "newfav", favs: fav_array.join()}
+				}).done(function( msg ) {
+					// console.log("Message: ", msg);
+				});
+			});
+			$("#loading").fadeOut(500);
+
+		});
+		request.fail(function(jqXHR, textStatus) {
+			// console.log( " Failed: " + textStatus );
+		});	
+}
 
 //lloadfeature
 function loadFeature(id) {
@@ -83,6 +250,9 @@ function loadFeature(id) {
 	///////////////////////////////
 	// Load an individual story  //
 	///////////////////////////////
+	// debugger;
+	// reset..
+
 
 	var itemheight, item_id = "item-"+id, $that = $("#"+item_id), $itemcontent = $("#" + item_id + " .item-content");
 	numLoads++;
@@ -170,6 +340,7 @@ function loadFeature(id) {
 
 			$(".sendmessage input[type='submit']").on("click", function(e){
 				e.preventDefault();
+				
 				// console.log("Clicked the button");
 				$this = $(this), $that = $this.parent(), msg = tinymce.activeEditor.getContent(), ta = $($that.find("textarea")[0]).val(), to = $this.data("to");
 				///////////////////////
@@ -239,7 +410,7 @@ function loadFeature(id) {
 			stWidget.addEntry({
 				"service":"facebook",
 				"element":document.getElementById('fb'),
-				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
 				"title":"facebook",
 				"type":"large",
 				"text":"Share on facebook",
@@ -249,7 +420,7 @@ function loadFeature(id) {
 			stWidget.addEntry({
 				"service":"twitter",
 				"element":document.getElementById('tw'),
-				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
 				"title":"twitter",
 				"type":"large",
 				"text":"Share on twitter",
@@ -259,7 +430,7 @@ function loadFeature(id) {
 			stWidget.addEntry({
 				"service":"googleplus",
 				"element":document.getElementById('gp'),
-				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
 				"title":"googleplus",
 				"type":"large",
 				"text":"Share on googleplus",
@@ -269,7 +440,7 @@ function loadFeature(id) {
 			stWidget.addEntry({
 				"service":"pinterest",
 				"element":document.getElementById('pn'),
-				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
 				"title":"pinterest",
 				"type":"large",
 				"text":"Share on pinterest",
@@ -279,7 +450,7 @@ function loadFeature(id) {
 			stWidget.addEntry({
 				"service":"reddit",
 				"element":document.getElementById('rd'),
-				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
 				"title":"reddit",
 				"type":"large",
 				"text":"Share on reddit",
@@ -288,8 +459,9 @@ function loadFeature(id) {
 			/////////////////////////////////
 			// Scroll body back to the top //
 			/////////////////////////////////
-			$(".explore, body").scrollTop(0);
+			$(".explore, body, html").scrollTop(0);
 			$(".items").scrollLeft(0);
+			$("#item-"+id).scrollTop();
 
 			///////////////////////////////
 			// Check the favorite status of current feature //
@@ -347,42 +519,82 @@ function loadFeature(id) {
 	
 }
 
+function checkHash() {
+	/////////////////////////////////////////////////////////////
+	//  Open the corresponding page if there is a hash in url  //
+	/////////////////////////////////////////////////////////////
+	if (window.location.hash) {
+		// console.log("Has hash: ", window.location.hash + " .img-cover");
+		// $(window.location.hash + " .img-cover").click();
+		// console.log("Item id: ", window.location.hash.substring(1));
+		//loadFeature($(window.location.hash + " .img-cover")[0], window.location.hash.substring(1), "500px");
+		// debugger;
+		if (window.location.hash != "#explore" && window.location.hash!= "#favorites") {
+			if ($("body").hasClass("one")) {
+				loadInSame(window.location.hash.split("-")[1]);
+			}
+			else {
+				loadFeature(window.location.hash.split("-")[1]);
+			}
+		}
+		else if (window.location.hash == "#explore") {
+			// $("#nav_exp").trigger("click");
+		}
+		
 
-function switcher() {
-	///////////////////////////////////////////////////
-	// Switch from explore to slices and vice versa  //
-	///////////////////////////////////////////////////
 
-	$("#switch").off("click");
-	if ($(this).find("span")[0].innerHTML == "Explore") {
-		hideSlices();
-		$(this).find("span")[0].innerHTML = "Home";
-		$("#switch .square p").css({"height":"35px", "width":"7px"});
-		$(".filter").fadeIn(500);
-		$(".lefttext, .leftlogo").hide();
+		// var nextid = window.location.hash.split("-")[1];
 	}
 	else {
-		hideExplore();
-		$(this).find("span")[0].innerHTML = "Explore";
-		$("#switch .square p").css({"height":"", "width":""});
-		$(".filter").hide();
-		$(".lefttext, .leftlogo").fadeIn(500);
+		if (window.location.hash != "#explore" && window.location.hash!= "#favorites") {
+
+		}
+		else {
+			$("#nav_home").trigger("click");
+		}
+		// $("#go-back").click();
+		// leaveStory();
 	}
 }
+
+
+// function switcher() {
+// 	///////////////////////////////////////////////////
+// 	// Switch from explore to slices and vice versa  //
+// 	///////////////////////////////////////////////////
+
+// 	$("#switch").off("click");
+// 	if ($(this).find("span")[0].innerHTML == "Explore") {
+// 		hideSlices();
+// 		$(this).find("span")[0].innerHTML = "Home";
+// 		$("#switch .square p").css({"height":"35px", "width":"7px"});
+// 		$(".filter").fadeIn(500);
+// 		$(".lefttext, .leftlogo").hide();
+// 	}
+// 	else {
+// 		hideExplore();
+// 		$(this).find("span")[0].innerHTML = "Explore";
+// 		$("#switch .square p").css({"height":"", "width":""});
+// 		$(".filter").hide();
+// 		$(".lefttext, .leftlogo").fadeIn(500);
+// 	}
+// }
 
 function doMasonry() {
 	////////////////////////
 	// jQuery masonry //
 	////////////////////////
 
-	var container = document.querySelector('ul.slides');
-	msnry = new Masonry( container, {
-	  // options
-	  columnWidth: 260,
-	  itemSelector: 'li.explore-item'
-	});
-	msnry.layout();
-	$(window).resize();
+	if (!$("body").hasClass("lt-ie9")){
+		var container = document.querySelector('ul.slides');
+		msnry = new Masonry( container, {
+		  // options
+		  columnWidth: 260,
+		  itemSelector: 'li.explore-item'
+		});
+		msnry.layout();
+		$(window).resize();
+	}
 }
 
 function loadSlices() {
@@ -392,10 +604,11 @@ function loadSlices() {
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
-	var url = 'explore.php?slices=7&cats='+usercats+"&inds="+userinds;
+	var url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
+	console.log(url);
 	if (msgslice == '0' || firstmsgfrom == "") url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
 	if (firsttime != 1){
-		url = 'explore.php?slices=7&cats='+usercats+"&inds="+userinds+"&intro=1";
+		url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds+"&intro=1";
 	}
 	
 	// console.log("URL: ", url);
@@ -549,7 +762,7 @@ function loadFavorites(){
 							// Click event: when click on an image, load the image and append it into the HTML //
 							////////////////////////////////////////////////////////////////////////////////////////
 							$(this).click(function(){
-								debugger;
+								// debugger;
 								loadFeature($(this).parent().data("id"));
 							});
 						});
@@ -575,9 +788,9 @@ function hideSlices() {
 	$(".img-cover").off("click");
 	$("ul.slides li").remove();
 
-	setTimeout(function(){
+	// setTimeout(function(){
 			loadExplore();
-		}, 400);
+		// }, 400);
 	
 	$("body").removeClass().addClass("explore");
 	$(window).resize();
@@ -605,9 +818,8 @@ function loadExplore(cats) {
 	$.getJSON(url, function(data) {
 		var len = 0;
 		$.each(data,function(k,v){len++});
-		// console.log("LENGTH: ", data.length);
 		$.each(data, function(key, val) {
-			// console.log("Data: ", data);
+
 			if (data[key] != false) {
 				
 				var fav_img = "img/storyFav.png";
@@ -631,7 +843,7 @@ function loadExplore(cats) {
 					</div>\
 					<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
 					<div class="item-content"></div>\
-					'}).appendTo("ul.slides").delay(200);
+					'}).appendTo("ul.slides");
 			}
 
 			if (key == len - 1) {
@@ -697,8 +909,6 @@ function hideExplore() {
 			loadSlices();
 		};
 	});
-
-	$("body").removeClass().addClass("slices");
 	$(window).resize();
 }
 
@@ -793,6 +1003,7 @@ function resizeWindow() {
 var current, bodymargin, imagemargin;
 
 function switch_view(){
+	// debugger;
 	window.location.hash="";
 	switch ($(this).attr('id')) {
 	case 'nav_home':
@@ -800,6 +1011,7 @@ function switch_view(){
 		$(".favtext").hide();
 		$(".left").show();
 		$(".lefttext").fadeIn(500);
+		$("body").removeClass().addClass("slices");
 		hideExplore();
 		break;
 	case 'nav_exp':
@@ -807,6 +1019,8 @@ function switch_view(){
 		$(".favtext").hide();
 		$(".lefttext").hide();
 		$(".filter").fadeIn(500);
+		$("body").removeClass().addClass("explore");
+		window.location.hash="explore";
 		hideSlices();
 		break;
 	case 'nav_fav':
@@ -814,6 +1028,7 @@ function switch_view(){
 		$(".lefttext").hide();
 		$(".left").show();
 		$(".favtext").fadeIn(500);
+		window.location.hash="favorites";
 		hidetest();
 		break;
 	default:
@@ -836,7 +1051,7 @@ function setUserTutorial(val) {
 		data: { id: userid, type: "setUserTutorial", val: val }
 	});
 	request.done(function(msg) {
-		// console.log(msg);
+		console.log(msg);
 	});
 	request.fail(function(jqXHR, textStatus) {
 		// console.log( " Failed: " + textStatus );
@@ -868,48 +1083,53 @@ $(document).ready(function(e) {
 
 	$('#tutorial li').on('click', function(){
 		// cancel the click event on #tutorial
-		var evnt = window.event?window.event:arg;
-		if(evnt.stopPropagation){
-			evnt.stopPropagation();
-		}else{
-			evnt.cancelBubble=true;
-		}
+		// var evnt = window.event?window.event:arg;
+		// if(evnt.stopPropagation){
+		// 	evnt.stopPropagation();
+		// }else{
+		// 	evnt.cancelBubble=true;
+		// }
+		e.preventDefault();
 		tutorial_slide = $(this).index() + 1;
 		setTutorial(tutorial_slide);
 	});
 
 	$("#tutorial .nav a.next").on('click',function(e){
 		// cancel the click event on #tutorial
-		var evnt = window.event?window.event:arg;
-		if(evnt.stopPropagation){
-			evnt.stopPropagation();
-		}else{
-			evnt.cancelBubble=true;
-		}
+		// var evnt = window.event?window.event:arg;
+		// if(evnt.stopPropagation){
+		// 	evnt.stopPropagation();
+		// }else{
+		// 	evnt.cancelBubble=true;
+		// }
+		// 
+		e.preventDefault();
 		var next = $(this).parent().parent().find("li.selected").index()+2;
 		if (next < 5) setTutorial(next);
 	});
 
 	$("#tutorial .nav a.prev").on('click',function(e){
 		// cancel the click event on #tutorial
-		var evnt = window.event?window.event:arg;
-		if(evnt.stopPropagation){
-			evnt.stopPropagation();
-		}else{
-			evnt.cancelBubble=true;
-		}
+		// var evnt = window.event?window.event:arg;
+		// if(evnt.stopPropagation){
+		// 	evnt.stopPropagation();
+		// }else{
+		// 	evnt.cancelBubble=true;
+		// }
+		e.preventDefault();
 		var next = $(this).parent().parent().find("li.selected").index();
 		if (next > -1) setTutorial(next);
 	});
 	
-	$('#tutorial .close').on('click', function(){
+	$('#tutorial .close').on('click', function(e){
 		// cancel the click event on #tutorial
-		var evnt = window.event?window.event:arg;
-		if(evnt.stopPropagation){
-			evnt.stopPropagation();
-		}else{
-			evnt.cancelBubble=true;
-		}
+		// var evnt = window.event?window.event:arg;
+		// if(evnt.stopPropagation){
+		// 	evnt.stopPropagation();
+		// }else{
+		// 	evnt.cancelBubble=true;
+		// }
+		e.preventDefault();
 		$('#tutorial').hide();
 		setTutorial(1);
 		setUserTutorial(1);
@@ -1063,7 +1283,12 @@ $(document).ready(function(e) {
 	});
 });
 
+$("*").on("scroll",function(e){
+	console.log(e);
+});
+
 $(window).load(function(){
+	if (window.location.hash != "")	checkHash();
 	$(window).hashchange(function(){
 		checkHash();
 	});

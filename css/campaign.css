@@ -305,6 +305,12 @@ body.slicesOne, body.exploreOne {
     background-color: #FFD26B;
 }
 
+.explore .left .readytogive, .fav .left .readytogive {
+    display:none;
+}
+
+
+
 .left .readytogive ul {
     margin: 30px;
 }
@@ -482,11 +488,18 @@ ul.slides {
     margin: 0;
     background: transparent;
     -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
 }
 
 li.current {
-    transition: none !important;
     -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    -ms-transition: none !important;
+    transition: none !important;
     background: transparent;
     float: none;
     left: 0 !important;
@@ -645,6 +658,10 @@ li.current {
 .st_facebook_large {
 }
 
+.one img.fav-star {
+    display: none;
+}
+
 .one-item:hover .info {
     border-top: 6px solid #FEC33A;
     border-bottom: 6px solid #FEC33A;
@@ -670,15 +687,25 @@ li.current {
 }
 
 .one-item .img-cover {
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
     opacity: 1;
     background-color: black;
     -webkit-transition: opacity .2s ease;
+    -moz-transition: opacity .2s ease;
+    -o-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    transition: opacity .2s ease;
 }
 
 .one-item .img-cover img {
-	width: 180px;
-	min-height: 800px;
-	-webkit-transition: opacity .2s ease;
+    width: 180px;
+    min-height: 800px;
+    -webkit-transition: opacity .2s ease;
+    -moz-transition: opacity .2s ease;
+    -o-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    transition: opacity .2s ease;
 }
 
 .one-item .img-cover:hover {
@@ -699,6 +726,7 @@ li.current {
 
 .one .explore-item {
     border-top: none;
+    margin: 0;
 }
 
 .favorite .explore-item{
@@ -729,6 +757,9 @@ li.current {
     background: white;
     font-size: 14px;
     -webkit-transition: border .3s ease, top .5s ease, width .5s ease, box-shadow .3s ease;
+    -moz-transition: border .3s ease, top .5s ease, width .5s ease, box-shadow .3s ease;
+    -o-transition: border .3s ease, top .5s ease, width .5s ease, box-shadow .3s ease;
+    -ms-transition: border .3s ease, top .5s ease, width .5s ease, box-shadow .3s ease;
     transition: border .3s ease, top .5s ease, width .5s ease, box-shadow .3s ease;
     z-index: 200;
     cursor: pointer;
@@ -754,7 +785,10 @@ li.current {
     font-weight: 100;
     line-height: 28px;
     cursor: text;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
     -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
     transition: all .5s ease;
 }
 
@@ -765,14 +799,24 @@ li.current {
 
 .explore-item .img-cover {
     position: relative;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
     opacity: 1;
     background-color: black;
     -webkit-transition: opacity .2s ease;
+    -moz-transition: opacity .2s ease;
+    -o-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    transition: opacity .2s ease;
 }
 
 .explore-item .img-cover img {
     width: 240px;
     -webkit-transition: opacity .2s ease;
+    -moz-transition: opacity .2s ease;
+    -o-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    transition: opacity .2s ease;
 }
 
 .explore-item .img-cover:hover {
@@ -967,7 +1011,7 @@ li.current {
     margin: 0 0 0 65px;
 }
 
-.content-info div.body p {
+.content-info div.body p, .content-info div.body ul {
     max-width: 570px;
     font-weight: 100;
     line-height: 1.6em;
@@ -1069,11 +1113,14 @@ a#circle {
 }
 
 .sticky ul li a {
-	color: #ddd;
-	text-decoration: none;
-	font-size: 13px;
-	font-weight: 100;
+    color: #ddd;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 100;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
     -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
     transition: all 1s ease;
 }
 
