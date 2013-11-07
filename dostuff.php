@@ -1,5 +1,5 @@
 <?php
-	require("../db_campaign.php");
+	require("php.php");
 
 	if (!extension_loaded('json')) {
             dl('json.so');  
@@ -10,39 +10,6 @@
 	$username = mysql_real_escape_string($_REQUEST["name"]);
 	$cats = mysql_real_escape_string($_REQUEST["cats"]);
 	$favs = mysql_real_escape_string($_REQUEST["favs"]);
-
-	///////////////////////////////
-	// Checking if user exists  //
-	///////////////////////////////
-	// if ($type == "exists") {
-	// 	$query = "SELECT * FROM users WHERE `id` LIKE '".$id."' LIMIT 0,1";
-	// 	$result = mysql_query($query);
-	// 	$answer = "does not exist";
-	// 	while($line = mysql_fetch_array($result)){
-	// 		$answer = "exists";
-	// 	}
-	// 	///////////////////////////////////////////////////////////////////
-	// 	// If they do not exist, let's create their ID automatically.  //
-	// 	///////////////////////////////////////////////////////////////////
-	// 	if ($answer == "does not exist") {
-	// 		$query = "INSERT INTO users (ID) VALUES ('$id');";
-	// 		$result = mysql_query($query) or die("Sorry: " . $query);
-	// 	}
-	// 	$query = "SELECT * FROM users WHERE `id` LIKE '".$id."' LIMIT 0,1";
-	// 	$result = mysql_query($query);
-	// 	while($line = mysql_fetch_array($result)){
-	// 		$cats = $line["categories"];
-	// 		$ind = $line["individuals"];
-			
-	// 		if ($cats == "" && $ind == "") {
-	// 			$answer = "no cats";
-	// 		}
-	// 	}
-	// 	/////////////////////////////////////////////////////////////
-	// 	// Logically should only respond 'exists' or 'no cats.'  //
-	// 	/////////////////////////////////////////////////////////////
-	// 	echo $answer;
-	// }
 
 	if ($type == "newcats") {
 		if ($cats != "") {
@@ -178,7 +145,6 @@
 			<a href=\"#\" class=\"slidesjs-next slidesjs-navigation\"><i class=\"icon-chevron-right icon-large\"></i></a></div>";
 
 			}
-
 			$ts = date("F j, Y", strtotime($line["timestamp"]));
 			$html .= "<div class=\"message\">";
 			if ($line["avatar_sm"] != "") $html .= "<p class='avatar'><img class=\"avatar\" src=\"./img/avatars/".$line["avatar_sm"]."\" /></p>";
@@ -196,11 +162,8 @@
 		$json["query"] = $query;
 		$json["html"] = $html;
 		$json["id"] = $imgids;
-
-
 		$query2 = "SELECT * FROM `messages` WHERE `to` LIKE 'u".$userid."' LIMIT 0,1000";
 		$result2 = mysql_query($query2);
-
 		if (mysql_num_rows($result2) > 0) {
 			$query3 = "SELECT * FROM `adminusers` WHERE `uids` LIKE '%$userid%' LIMIT 0,1000";
 			$result3 = mysql_query($query3);
@@ -214,15 +177,16 @@
 				mail($email,$subject,$message,$headers);
 			}
 		}
-
-	
-
-
 		$query2 = "UPDATE `users` SET `showviewed` = '1' WHERE `id` = '$userid'";
 		$result2 = mysql_query($query2) or die("Couldn't change view value");
-
 		echo json_encode($json);
+	}
 
+	if ($type == "getstory") {
+		$query = "SELECT * FROM `features` WHERE id = $userid";
+		$result = mysql_query($query);
+		$json = recordToArray($result);
+		echo json_encode($json[0]);
 	}
 	
 

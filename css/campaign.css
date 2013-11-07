@@ -14,6 +14,25 @@ body.favorites{
     overflow: hidden;
 }
 
+#loading {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    z-index: 1000;
+    display: none;
+}
+
+#loading img {
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    margin-top: 0px;
+    margin-left: -25px;
+}
+
 a.fav {
     font-size: 12px;
     display: block;
@@ -470,6 +489,7 @@ li.current {
     -webkit-transition: none !important;
     background: transparent;
     float: none;
+    left: 0 !important;
 }
 
 .explore .fav-star{
@@ -673,15 +693,18 @@ li.current {
     width: 240px;
     overflow: hidden;
     height: 370px;
-    background: #fff;
     opacity: 1;
-    background: black;
     border-top: 2px solid #FDC53F;
+}
+
+.one .explore-item {
+    border-top: none;
 }
 
 .favorite .explore-item{
 	height:auto;
 	overflow:auto;
+	min-height: 343px;
 }
 
 
@@ -824,11 +847,10 @@ li.current {
 }
 
 #item-mail .content-image-div {
-    max-height: 210px;
 }
 
 .content-image-div {
-    display: block;
+    display: none;
     opacity: 1;
     top: 51px;
     left: 0;
@@ -1079,7 +1101,7 @@ a#circle {
     display: block;
 }
 
-#item-mail div.body, #item-mail h2, #item-mail h3, #item-mail span.byline {
+#item-mail div.body, #item-mail h3, #item-mail span.byline {
     margin: 0;
 }
 

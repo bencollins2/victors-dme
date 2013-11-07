@@ -61,12 +61,15 @@
     /////////////////////
     // Facebook stuff  //
     /////////////////////
+
     require("facebook.php");
 
+
     $facebook = new Facebook($config);
+
     // See if there is a user from a cookie
     $user = $facebook->getUser();
-
+    echo "<!--$user-->";
     if ($_GET["link"] > 0) {
         $session->logout();
         
@@ -127,11 +130,15 @@
         // for automatically generating facebook users in our DB, but our custom
         // users should have manually signed up (thus creating the ID).
         include("../db_campaign.php");
+
+
+         // If they're logged into facebook, and there's a link ID 
+        
+
         $q = "SELECT * FROM `users` WHERE `id` LIKE '$user' LIMIT 0,1;";
         $r = mysql_query($q);
         $u=0;
         $c=0;
-        $lnk = (int)$_GET['link'];
 
         while($line = mysql_fetch_array($r)){
             $u++;
@@ -151,9 +158,7 @@
 
         // $qq = "SELECT * FROM `adminusers` WHERE "
 
-
-        // If they're logged into facebook, and there's a link ID 
-
+        $lnk = (int)$_GET['link'];
         if ($lnk > 0 && $user > 0 && $_GET['add'] == 1) {
             $q = "SELECT * FROM `users` WHERE `id` = '$lnk' LIMIT 0,1;";
             $r = mysql_query($q);
@@ -181,6 +186,7 @@
             $r = mysql_query($q) or die("Couldn't update admin record.");
 
         }
+       
 
         /////////////////////////////////////////////////////////////////
         // If they're logged into facebook, but we don't have their ID //
@@ -253,6 +259,14 @@
         $campstyle = "css/login.css";
         $body = "login.php";
     }
+
+    if ($_GET["add"] == "1") {
+        $normalize = "css/normalize.css";
+        $main = "css/main.css";
+        $campstyle = "css/campaign.css";
+        $body = "desktop.php";
+    }
+
 
     ///////////////////////////////////////////
     // Stuff to pull most recent message...  //

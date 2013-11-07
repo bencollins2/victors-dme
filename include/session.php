@@ -311,7 +311,7 @@ class Session
          }
          /* Check if password is not alphanumeric */
          else if(!eregi("^([0-9a-z])+$", ($subpass = trim($subpass)))){
-            $form->setError($field, "* Password not alphanumeric");
+            // $form->setError($field, "* Password not alphanumeric");
          }
          /**
           * Note: I trimmed the password only after I checked the length

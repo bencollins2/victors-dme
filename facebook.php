@@ -163,6 +163,7 @@ class Facebook extends BaseFacebook
 $config = array();
 $config['appId'] = '1381727122059014';
 $config['secret'] = '5d0c729127c077fbac2fe3decec0357f';
+$config['cookie'] = true;
 
 // $config['appId'] = '345879355542024';
 // $config['secret'] = '584301cc6805d51704746e45d0459d19';

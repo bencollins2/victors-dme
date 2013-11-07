@@ -1,5 +1,10 @@
 <body class="slices">
 
+    <div id="loading">
+        <img src="img/loader.gif" />
+
+    </div>
+
 	<div id="tutorial">
 		<div class="close"><i class="fa fa-times"></i></div>
         <div class="nav"><a href="#" class="prev">Previous</a><a href="#" class="next">Next</a></div>
@@ -85,10 +90,10 @@
                         <div class="seemore">
                             <a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="vautonomous"> Autonomous Vehicles<br />
-                            <input type="checkbox" value="invehicle"> In-Vehicle Technology<br />
-                            <input type="checkbox" value="vefficciency"> Vehicle Efficiency<br />
-                            <input type="checkbox" value="vsafety"> Vehicle Safety<br />
-                            <input type="checkbox" value="vpowersources"> Power Sources<br />
+                            <input type="checkbox" value="invehicletech"> In-Vehicle Technology<br />
+                            <input type="checkbox" value="fuelefficiency"> Vehicle Efficiency<br />
+                            <input type="checkbox" value="vehiclesafety"> Vehicle Safety<br />
+                            <input type="checkbox" value="batteries"> Power Sources<br />
                         </div>
                     </div>
 
@@ -96,10 +101,10 @@
                         <h3>Economics & Entrepreneurship</h3>
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
-                            <input type="checkbox" value="startups"> Startups<br />
-                            <input type="checkbox" value="highrisk"> High-Risk Research<br />
-                            <input type="checkbox" value="entreco"> Entrepreneurial Ecosystem<br />
-                            <input type="checkbox" value="ecoimpact"> Economic Impact<br />
+                            <input type="checkbox" value="studentstart,facultystart"> Startups<br />
+                            <input type="checkbox" value="mcubed"> High-Risk Research<br />
+                            <input type="checkbox" value="cfe,me"> Entrepreneurial Ecosystem<br />
+                            <input type="checkbox" value="economy"> Economic Impact<br />
                         </div>
                     </div>
 
@@ -107,12 +112,12 @@
                         <h3>Wolverine Experience</h3>
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
-                            <input type="checkbox" value="handson"> Hands-On Engineering<br />
-                            <input type="checkbox" value="leadersbest"> Academic Leaders & Best<br />
-                            <input type="checkbox" value="world"> Wolverines Around the World<br />
-                            <input type="checkbox" value="innovations"> Innovations at Michigan<br />
-                            <input type="checkbox" value="stories"> Victor Stories<br />
-                            <input type="checkbox" value="life"> Life in Ann Arbor<br />
+                            <input type="checkbox" value="hoexperience"> Hands-On Engineering<br />
+                            <input type="checkbox" value="extracurr,highlevstudentprojects"> Academic Leaders & Best<br />
+                            <input type="checkbox" value="commoutreach"> Wolverines Around the World<br />
+                            <input type="checkbox" value="classfuture"> Innovations at Michigan<br />
+                            <input type="checkbox" value="nostalgia,lifeinaa"> Victor Stories<br />
+                            <input type="checkbox" value="lifeinaa"> Life in Ann Arbor<br />
                         </div>
                     </div>
 
@@ -120,7 +125,7 @@
                         <h3>Global Resources</h3>
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
-                            <input type="checkbox" value="water"> Water<br />
+                            <input type="checkbox" value="cleanwater,watershortage,waterpurification,hydropower"> Water<br />
                             <input type="checkbox" value="sustain"> Sustainability<br />
                             <input type="checkbox" value="eefficiency"> Energy Efficiency<br />
                             <input type="checkbox" value="alternativee"> Alternative Energy<br />
@@ -215,6 +220,7 @@
         <script src="js/masonry.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/tinymce/tinymce.min.js"></script>
+        <script src="js/imagesloaded.js"></script>
         <script src="js/main.js"></script>
         <script src="js/fb.js"></script>
 
