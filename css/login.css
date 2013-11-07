@@ -24,7 +24,7 @@ div.login {
     padding: 198px 0 0px;
     width: 228px;
     height: 92px;
-    margin: 270px auto 0;
+    margin: 170px auto 0;
     background: url(../img/m.png) no-repeat center 30px;
     text-align: center;
     overflow: visible;
@@ -61,7 +61,7 @@ td {
 }
 
 .login.reg{
-
+    margin-top:230px;
 }
 
 .vfm span {
@@ -145,13 +145,13 @@ td {
 
 @media only screen and (max-height: 750px) {
 	div.login {
-		margin-top: 150px;
+		/*margin-top: 150px;*/
 	}
 }
 
 
 @media only screen and (max-height: 600px) {
 	div.login {
-		margin-top: 100px;
+		/*margin-top: 100px;*/
 	}
 }

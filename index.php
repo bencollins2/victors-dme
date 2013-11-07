@@ -69,7 +69,7 @@
 
     // See if there is a user from a cookie
     $user = $facebook->getUser();
-    echo "<!--$user-->";
+
     if ($_GET["link"] > 0) {
         $session->logout();
         
@@ -94,11 +94,11 @@
         ///////////////////////////////////////////////////////////////
         // ...there is NO facebook user, but there is a custom user..  //
         ///////////////////////////////////////////////////////////////
-        if ($user == 0 && $session->logged_in) {
+        if ($session->logged_in) {
             $user = $session->userinfo[0];
             $type = "custom";
             $logout = "href=\"process.php\"";
-            echo "<!--".$user."-->";
+        
         }
 
         ////////////////////////////////////
@@ -115,7 +115,6 @@
                 // echo "Facebook: ";
                 // print_r($name);
                 $type = "facebook";
-                echo "<!--".$user."-->";
             } catch (FacebookApiException $e) {
                 // echo '<pre>'.htmlspecialchars(print_r($e, true)).'</pre>';
                 // $user = null;
@@ -158,32 +157,43 @@
 
         // $qq = "SELECT * FROM `adminusers` WHERE "
 
-        $lnk = (int)$_GET['link'];
+        $lnk = mysql_real_escape_string($_REQUEST['link']);
+// echo "<!--Info: user $user, u $u, lnk $lnk-->";        
         if ($lnk > 0 && $user > 0 && $_GET['add'] == 1) {
-            $q = "SELECT * FROM `users` WHERE `id` = '$lnk' LIMIT 0,1;";
+            $q = "SELECT * FROM `users` WHERE `id` = '$lnk' AND `todelete` IS NULL LIMIT 0,1;";
             $r = mysql_query($q);
             $l = mysql_fetch_array($r);
+ // echo $q."<br /><br/>";
+            if (!mysql_error()){
+                 $q = "INSERT INTO users (id,name,first,last,email,categories,individuals,sidebar,mailimg,fromlink,showasnew,show_message_slice) VALUES ('$user','$name','$first_name','$last_name','$email','".$l['categories']."','".$l['individuals']."','".$l['sidebar']."','".$l['mailimg']."','".$lnk."','1','1');";
+                $r = mysql_query($q);
+                $lastid = mysql_insert_id();
+                if ($lastid > 0) $_GET['register'] = 0;
+                else $regerror = 1;
 
-            $q = "INSERT INTO users (id,name,first,last,email,categories,individuals,sidebar,mailimg,fromlink,showasnew) VALUES ('$user','$name','$first_name','$last_name','$email','".$l['categories']."','".$l['individuals']."','".$l['sidebar']."','".$l['mailimg']."','".$lnk."','1');";
-            $r = mysql_query($q);
-            $lastid = mysql_insert_id();
-            if ($lastid > 0) $_GET['register'] = 0;
-            else $regerror = 1;
+                $q = "UPDATE `users` SET `todelete` = '1' WHERE `id` = '$lnk'";
+                $r = mysql_query($q) or die("Failure to update temp user.");
+ // echo $q."<br /><br/>";
+                $q = "SELECT * FROM `adminusers` WHERE `uids` LIKE '%$lnk%' LIMIT 0,1;";
+                $r = mysql_query($q) or die("Failure to select current admin user IDs.");
+                $l = mysql_fetch_array($r);
+                $aid = $l["id"];
+                $uids = $l["uids"];
+ // echo $q."<br /><br/>";
+                $newuids = preg_replace("/(,?)".$lnk."/", "", $uids);
+                $newuids = $user.",".$newuids;
 
-            $q = "UPDATE `users` SET `todelete` = '1' WHERE `id` = '$lnk'";
-            $r = mysql_query($q) or die("Failure to update temp user.");
+                $q = "UPDATE `adminusers` SET `uids` = '$newuids' WHERE `id` = '$aid'";
+                $r = mysql_query($q) or die("Couldn't update admin record.");
+ // echo $q."<br /><br/>";
+                $q = "UPDATE `messages` SET `to` = 'u".$user."' WHERE `to` = 'u".$lnk."'";
+ // echo $q."<br /><br/>";
+                $r = mysql_query($q) or die("Couldn't get messages.");
+                $c++;
+                // die;
+            }
 
-            $q = "SELECT * FROM `adminusers` WHERE `uids` LIKE '%$lnk%' LIMIT 0,1;";
-            $r = mysql_query($q) or die("Failure to select current admin user IDs.");
-            $l = mysql_fetch_array($r);
-            $aid = $l["id"];
-            $uids = $l["uids"];
-
-            $newuids = preg_replace("/(,?)".$lnk."/", "", $uids);
-            $newuids = $user.",".$newuids;
-
-            $q = "UPDATE `adminusers` SET `uids` = '$newuids' WHERE `id` = '$aid'";
-            $r = mysql_query($q) or die("Couldn't update admin record.");
+           
 
         }
        
@@ -191,15 +201,20 @@
         /////////////////////////////////////////////////////////////////
         // If they're logged into facebook, but we don't have their ID //
         /////////////////////////////////////////////////////////////////
-        else if ($u == 0 && $user > 0 && $lnk == 0) {
+        
+        else if ($u == 0 && $user > 0 && $email != "" && $lnk == 0) {
             $q = "INSERT INTO users (id,name,first,last,email,categories,individuals,premium) VALUES ('$user','$name','$first_name','$last_name','$email','','','0');";
             $r = mysql_query($q);
             $lastid = mysql_insert_id();
             if ($lastid > 0) $_GET['register'] = 0;
             else $regerror = 1;
+            if (mysql_error()) {
+                // echo "<!--$q-->";
+            }
+            $u++;
         }
         // They have a user account but no categories
-        if ($u > 0 && $c == 0) {
+        if ($u > 0 && $c == 0 && !$lnk) {
             $normalize = "css/normalize.css";
             $main = "css/main.css";
             $campstyle = "css/quiz.css";
@@ -271,18 +286,17 @@
     ///////////////////////////////////////////
     // Stuff to pull most recent message...  //
     ///////////////////////////////////////////
-    $q = 'SELECT m.message, CONCAT(a.first, " ", a.last) as name, m.timestamp as ts FROM messages as m INNER JOIN adminusers as a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(`to`, 2) LIKE '.$user.' ORDER BY ts DESC LIMIT 0,1';
+    $q = 'SELECT m.message, CONCAT(a.first, " ", a.last) as name, m.timestamp as ts FROM messages as m LEFT JOIN adminusers as a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(`to`, 2) LIKE '.$user.' ORDER BY ts DESC LIMIT 0,1';
     $r = mysql_query($q) OR DIE("Sorry, couldn't select recent message.");
     $l = mysql_fetch_array($r);
     $firstmsgfrom = $l["name"];
     $firstmsg = strip_tags(preg_replace('/\n/i', '', $l["message"]));
     $firstmsg = implode(' ', array_slice(explode(' ', $firstmsg), 0, 10));
     $firstmsg .= "...";
-
-    echo "<!--$body-->";
-
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -294,7 +308,7 @@
 
         <meta property="og:title" content="Campaign"/>
         <meta property="og:type" content="website"/>
-        <meta property="og:url" content="http://engcomm.engin.umich.edu/campaign"/>
+        <meta property="og:url" content="http://victors.engin.umich.edu/"/>
         <meta property="og:image" content="http://www.engin.umich.edu/college/about/news/dme/fracktopia/img/large/one.jpg"/>
         <meta property="og:site_name" content="Campaign"/>
         <meta property="fb:admins" content="2206222" />

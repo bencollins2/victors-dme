@@ -6,7 +6,7 @@
     }
 
 	$type = $_REQUEST["type"];
-	$userid = (int)$_REQUEST["id"];
+	$userid = mysql_real_escape_string($_REQUEST["id"]);
 	$username = mysql_real_escape_string($_REQUEST["name"]);
 	$cats = mysql_real_escape_string($_REQUEST["cats"]);
 	$favs = mysql_real_escape_string($_REQUEST["favs"]);
@@ -25,7 +25,7 @@
 			$val = (int)$_REQUEST["val"];
 			$query = "UPDATE users SET `firsttime` = '$val' WHERE `id` LIKE '$userid'";
 			$result = mysql_query($query) or die("Sorry: " . $query);
-			echo "Changed tutorial val to $val.";
+			echo "Changed tutorial val to $val for id $userid";
 			// echo $query;
 		}
 	}
@@ -47,13 +47,16 @@
 		$msg = nl2br($_REQUEST["msg"]);
 		$msg = preg_replace('/\n/i', '', $msg);
 		$msg = mysql_real_escape_string($msg);
-		$to = (int)$_REQUEST["to"];
+		$to = $_REQUEST["to"];
 
 		if ($msg != "" && $to != "") {
 			// $msg = "<p>" . implode( "</p>\n\n<p>", preg_split( '/\n(?:\s*\n)+/', $msg ) ) . "</p>";
 			$query = "INSERT INTO `messages` (`id`, `from`, `to`, `message`, `timestamp`, `img1`, `img2`, `img3`, `img4`, `img5`, `img6`, `img7`, `img8`, `img9`, `img10`, `img1_para`, `img2_para`, `img3_para`, `img4_para`, `img5_para`, `img6_para`, `img7_para`, `img8_para`, `img9_para`, `img10_para`, `published`, `viewed`) VALUES (NULL, 'u$userid', 'a$to', '$msg', CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '1')";
 			$result = mysql_query($query) or die("Sorry: " . $query);
 			$json["message"] = "Message added.";
+			
+
+
 			$insertid = mysql_insert_id();
 			$query = "SELECT * FROM messages WHERE id LIKE $insertid LIMIT 0,1";
 			$result = mysql_query($query);
@@ -90,7 +93,7 @@
 
 	if ($type == "getmessages") {
 		header('Content-type: application/json');
-		$query = "SELECT m.id AS 'mid', SUBSTR(m.from, 2) AS 'from', SUBSTR(m.to, 2) AS 'to', m.message, m.timestamp, u.id, CONCAT(a.first, ' ', a.last) AS fromName, CONCAT(u.first, ' ', u.last) AS toName, m.img1, m.img2, m.img3, m.img4, m.img5, m.img6, m.img7, m.img8, m.img9, m.img10, a.avatar_sm FROM `messages` AS m INNER JOIN `users` AS u ON SUBSTR(m.to, 2) = u.id INNER JOIN `adminusers` AS a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(m.to, 2) LIKE '$userid' UNION SELECT m.id, SUBSTR(m.from, 2) AS 'from', SUBSTR(m.to, 2), m.message, m.timestamp, u.id, CONCAT(u.first, ' ', u.last), CONCAT(a.first, ' ', a.last), m.img1, m.img2, m.img3, m.img4, m.img5, m.img6, m.img7, m.img8, m.img9, m.img10, u.avatar_sm FROM `messages` AS m INNER JOIN `users` AS u ON SUBSTR(m.from, 2) = u.id INNER JOIN `adminusers` AS a ON SUBSTR(m.to, 2) = a.id WHERE SUBSTR(m.from, 2) LIKE '$userid' ORDER BY `timestamp` ASC";
+		$query = "SELECT m.id AS 'mid', SUBSTR(m.from, 2) AS 'from', SUBSTR(m.to, 2) AS 'to', m.message, m.timestamp, u.id, CONCAT(a.first, ' ', a.last) AS fromName, CONCAT(u.first, ' ', u.last) AS toName, m.img1, m.img2, m.img3, m.img4, m.img5, m.img6, m.img7, m.img8, m.img9, m.img10, a.avatar_sm FROM `messages` AS m LEFT JOIN `users` AS u ON SUBSTR(m.to, 2) = u.id LEFT JOIN `adminusers` AS a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(m.to, 2) LIKE '$userid' UNION SELECT m.id, SUBSTR(m.from, 2) AS 'from', SUBSTR(m.to, 2), m.message, m.timestamp, u.id, CONCAT(u.first, ' ', u.last), CONCAT(a.first, ' ', a.last), m.img1, m.img2, m.img3, m.img4, m.img5, m.img6, m.img7, m.img8, m.img9, m.img10, u.avatar_sm FROM `messages` AS m LEFT JOIN `users` AS u ON SUBSTR(m.from, 2) = u.id LEFT JOIN `adminusers` AS a ON SUBSTR(m.to, 2) = a.id WHERE SUBSTR(m.from, 2) LIKE '$userid' ORDER BY `timestamp` ASC";
 		$result = mysql_query($query);
 		$html = "<div class=\"messages\">";
 		if (mysql_num_rows($result) == 0) {

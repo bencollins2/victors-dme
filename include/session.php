@@ -343,12 +343,14 @@ class Session
       }
       /* No errors, add the new account to the */
       else{
+        echo $lnk;
          if($database->addNewUser($subfirst, $sublast, md5($subpass), $subemail)){
             if(EMAIL_WELCOME){
                $mailer->sendWelcome($subfirst,$subemail,$subpass);
             }
             if ($lnk > 0) {
-              $database->copyFromLink($lnk,$database->recent_insert);
+              // echo $database->recent_insert;
+             $database->copyFromLink($lnk,$database->recent_insert);
             }
             return 0;  //New user added succesfully
          }else{
@@ -451,7 +453,7 @@ class Session
    //////////////////////////////////////////////////////////////
    function linkInfo($id){
       global $database;
-      $id = (int)$id;
+      $id = mysql_real_escape_string($id);
       return $database->getUserInfoById($id);
    }
    
