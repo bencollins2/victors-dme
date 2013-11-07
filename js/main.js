@@ -10,13 +10,13 @@ function checkHash() {
 	//  Open the corresponding page if there is a hash in url  //
 	/////////////////////////////////////////////////////////////
 	if (window.location.hash) {
-		console.log("Has hash: ", window.location.hash + " .img-cover");
+		// console.log("Has hash: ", window.location.hash + " .img-cover");
 		// $(window.location.hash + " .img-cover").click();
-		console.log("Item id: ", window.location.hash.substring(1));
+		// console.log("Item id: ", window.location.hash.substring(1));
 		//loadFeature($(window.location.hash + " .img-cover")[0], window.location.hash.substring(1), "500px");
 	}
 	else {
-		console.log("Homepage");
+		// console.log("Homepage");
 		// $("#go-back").click();
 		// leaveStory();
 	}
@@ -29,6 +29,7 @@ function fader(elm) {
 	setTimeout(function(){
 		if (elm.next().length > 0) fader(elm.next());
 		else {
+			resizeWindow();
 			// $("#switch").on("click", switcher);
 		};
 	},100);
@@ -36,30 +37,64 @@ function fader(elm) {
 	elm.animate({"opacity":"1"}, 1000, function(){});
 }
 
-function imageLoaded(e) {
-	// debugger;
-	$(window).resize();
-	$(".content-info").fadeIn(1000);
-}
+function imageLoaded(id) {
 
-function loadFeature(that, item_id) {
+	var item_id = "item-"+id;
+
+	$("#"+item_id+" .content-info, #"+item_id+" .content-image-div").fadeIn(1000);
+	$(this).parent().fadeIn(1000);
+
+	// var imgcontainerheight = $(".content-image-div").height();
+
+	var imgcontainerheight = 450;
+
+	var bodymargin = imgcontainerheight+"px";
+	$(".content-info").css({"margin-top":bodymargin});
+
+
+	// Expand the selected item to full screen, and make all other cover images 0 so they will disappear
+	$(".explore-item, .one-item").each(function(index, element) {
+		if ($(this).attr("id") != item_id) {
+			$(this).css({"width" : "0px"});
+			var thatitem = $(this);
+			thatitem.css({"height" : "0px"});
+		} else {
+			$(this).css({"width" : width+"px", "overflow" : "visible", "height": "auto"});
+			$(window).off("scroll").on("scroll", function(e) {
+
+				if (!($("body").hasClass("explore"))) {
+					var opac = (imgcontainerheight - $("body").scrollTop())/imgcontainerheight;
+					// console.log(opac);
+					if (opac >= 0.01 && opac <= 1) {
+						$("#" + current + " .fadewithme").css({"opacity" : opac});
+					}
+					else if (opac < .01) {
+						$("#" + current + " .fadewithme").css({"opacity" : "0"});
+					}
+				}
+			});
+		}
+	});
+}	
+
+//lloadfeature
+function loadFeature(id) {
+
 	///////////////////////////////
 	// Load an individual story  //
 	///////////////////////////////
-	var itemheight, $parent = $(that).parent(); 
-	console.log("Be quiet, the children are testing: ", $(that).parent());
+
+	var itemheight, item_id = "item-"+id, $that = $("#"+item_id), $itemcontent = $("#" + item_id + " .item-content");
 	numLoads++;
 	$("#switch").hide();
 
-	//if (msnry !== undefined) msnry.destroy();
+	if (msnry != undefined) msnry.destroy();
 	window.location.hash = item_id;
-	$parent.addClass("current");
-	var title = $(that).children(".meta#title").html(), subtitle = $(that).children(".meta#subtitle").html(), titletop = $(that).children(".meta#title").data().titletop, body = $(that).children(".meta#body").html(), customStyle = $(that).children(".meta#customStyle").html(), author = $(that).children(".meta#byline").html(), $itemcontent = $("#" + item_id + " .item-content");
+	$that.addClass("current");
+	//var title = $that.children(".meta#title").html(), subtitle = $that.children(".meta#subtitle").html(), titletop = $that.children(".meta#title").data().titletop, body = $that.children(".meta#body").html(), customStyle = $that.children(".meta#customStyle").html(), author = $that.children(".meta#byline").html(), $itemcontent = $("#" + item_id + " .item-content");
 
 	current = item_id;
-	if ($("body").hasClass("explore")) $("body").removeClass().addClass("exploreOne");
-	if ($("body").hasClass("slices")) $("body").removeClass().addClass("slicesOne");
-	if ($("body").hasClass("favorite")) $("body").removeClass().addClass("favOne");
+	$("body").removeClass().addClass("one");
 
 	$(".left, .info").hide();
 	$("body").css({"left":"0","width":"100%", "overflow-x" : "hidden", "overflow-y" : "auto"});
@@ -71,31 +106,24 @@ function loadFeature(that, item_id) {
 	// Clear all content in all items
 	$("#" + item_id + " .img-cover").hide();
 
+	$("#loading").fadeIn(500);
+
 	///////////////////////////////
 	// Body of the opened window //
 	///////////////////////////////
 
-	console.log("Be quiet, the adults are testing: ", $(that).parent()[0]);
-	if ($parent[0].dataset && typeof($parent[0].dataset.video) == "string") {
-		var vid = $parent[0].dataset.video;
-		if ($(that).find("#title")[0].dataset.position == "top") {
-			$itemcontent.html('<div class="content-image-div"><h2>'+title+'</h2><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><div class="left-stuff"></div><div class="body">'+body+'</div>');
-		}
-		else {
-			$itemcontent.html('<div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info"><div class="left-stuff"></div><h2>'+title+'</h2><div class="body"><iframe width="560" height="315" src="http://www.youtube.com/embed/'+vid+'" frameborder="0" allowfullscreen></iframe>'+body+'</div>');
-		}
+	// console.log("Be quiet, the adults are testing: ", $that.parent()[0]);
 
-	}
-	else if ($parent.hasClass("map")) {
+	if ($that.hasClass("map")) {
 		$itemcontent.html('<div class="content-image-div iframe"><iframe class="content-iframe" src="http://www.engin.umich.edu/college/admissions/visit/nc-live-map/"></iframe></div><!--div class="content-info"><h2>'+title+'</h2><div class="body">'+body+'</div-->');
 	}
 
-	else if ($parent.hasClass("mail")) {
+	else if ($that.hasClass("mail")) {
 
 		////////////////
 		// Mail img  //
 		//////////////
-		console.log("Parent has class mail");
+		// console.log("Parent has class mail");
 		if (mailimg == null) {
 			mailimg = "mail.jpg";
 		}
@@ -105,10 +133,11 @@ function loadFeature(that, item_id) {
 			data: { type: "getmessages", id: userid, name: username }
 		});
 		request.done(function(msg) {
-			console.log("MSG: ", msg);
-			$itemcontent.html('<div class="content-image-div"><img class="content-image" src="img/big/' + mailimg + '" alt="item image" /></div><div class="content-info"><h2 class="fadewithme">Read your messages</h2><div class="body">' + msg.html + '</div></div>');
-			
-			console.log("About to init tinyMCE");
+
+			// console.log("MSG: ", msg);
+			$itemcontent.html('<div class="content-image-div"><h2 class="fadewithme">Read your messages</h2><img class="content-image bigmail" src="img/big/' + mailimg + '" alt="item image" /></div><div class="content-info"><div class="body">' + msg.html + '</div></div>');
+			$(".bigmail").imagesLoaded(imageLoaded("mail"));
+			// console.log("About to init tinyMCE");
 			//////////////////
 			// Init tinyMCE //
 			//////////////////
@@ -126,7 +155,8 @@ function loadFeature(that, item_id) {
 			  statusbar: false
 			 });
 
-			console.log("ID: ", msg.id);
+			// console.log("ID: ", msg.id);
+			$("#loading").fadeOut(1000);
 
 			if (msg.id != null) {
 				$.each(msg.id, function(k,v){
@@ -140,8 +170,8 @@ function loadFeature(that, item_id) {
 
 			$(".sendmessage input[type='submit']").on("click", function(e){
 				e.preventDefault();
-				console.log("Clicked the button");
-				$this = $(this), $parent = $this.parent(), msg = tinymce.activeEditor.getContent(), ta = $($parent.find("textarea")[0]).val(), to = $this.data("to");
+				// console.log("Clicked the button");
+				$this = $(this), $that = $this.parent(), msg = tinymce.activeEditor.getContent(), ta = $($that.find("textarea")[0]).val(), to = $this.data("to");
 				///////////////////////
 				// Send the message  //
 				///////////////////////
@@ -152,23 +182,23 @@ function loadFeature(that, item_id) {
 					data: { id: userid, type: "putmessage", msg: msg, to: to, name: username }
 				});
 				request.done(function(msg) {
-					console.log(msg);
+					// console.log(msg);
 					$("div.message:last").before(msg.msg.replace("\n", ""));
-					$($parent.find("textarea")[0]).val("");
+					$($that.find("textarea")[0]).val("");
 					tinymce.activeEditor.setContent('');	
 				});
 				request.fail(function(jqXHR, textStatus) {
-					console.log( " Failed: " + textStatus );
+					// console.log( " Failed: " + textStatus );
 				});
+
 
 				////////////////////////
 				// / Send the message //
 				////////////////////////
 			});
-
 		});
 		request.fail(function(jqXHR, textStatus) {
-			console.log( " Failed: " + textStatus );
+			// console.log( " Failed: " + textStatus );
 		});	
 	}
 
@@ -176,172 +206,145 @@ function loadFeature(that, item_id) {
 	// For now, this is the only thing that matters.  //
 	////////////////////////////////////////////////////
 	else {
-		if (titletop == 1) {
-			$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><h2 class="fadewithme">'+title+'</h2><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
-			<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
-			<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
-			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
-			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
-			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-			</div><h3 class="subtitle">'+subtitle+'</h3><span class="byline">'+author+'</span><div class="body"><a href="#" id="fav"></a>'+body+'</div></div>');
-			$("img.content-image").on("load",imageLoaded);
-			// debugger;
-		}
-		else {
-			$itemcontent.html('<style type="text/css">'+customStyle+'</style><div class="content-image-div"><img class="content-image" src="img/big/' + item_id_img + '" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
-			<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
-			<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
-			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
-			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
-			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-			</div><h2>'+title+'</h2><h3 class="subtitle">'+subtitle+'</h3><span class="byline">'+author+'</span><div class="body"><a href="#" id="fav"></a>'+body+'</div></div>');
-			$("img.content-image").on("load",imageLoaded);
-		}
-	}
 
-	// debugger;
-
-	stWidget.addEntry({
-		"service":"facebook",
-		"element":document.getElementById('fb'),
-		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
-		"title":"facebook",
-		"type":"large",
-		"text":"Share on facebook",
-		"summary":"Share on facebook",
-	});
-
-	stWidget.addEntry({
-		"service":"twitter",
-		"element":document.getElementById('tw'),
-		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
-		"title":"twitter",
-		"type":"large",
-		"text":"Share on twitter",
-		"summary":"Share on twitter"   
-	});
-
-	stWidget.addEntry({
-		"service":"googleplus",
-		"element":document.getElementById('gp'),
-		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
-		"title":"googleplus",
-		"type":"large",
-		"text":"Share on googleplus",
-		"summary":"Share on googleplus"   
-	});
-
-	stWidget.addEntry({
-		"service":"pinterest",
-		"element":document.getElementById('pn'),
-		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
-		"title":"pinterest",
-		"type":"large",
-		"text":"Share on pinterest",
-		"summary":"Share on pinterest"   
-	});
-
-	stWidget.addEntry({
-		"service":"reddit",
-		"element":document.getElementById('rd'),
-		"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
-		"title":"reddit",
-		"type":"large",
-		"text":"Share on reddit",
-		"summary":"Share on reddit"   
-	});
-
-	/////////////////////////////////
-	// Scroll body back to the top //
-	/////////////////////////////////
-	$(".explore, body").scrollTop(0);
-	$(".items").scrollLeft(0);
-
-	///////////////////////////////
-	// Check the favorite status of current feature //
-	///////////////////////////////
-	
-	is_faved = false;
-	
-	for (var i=0; i<fav_array.length; i++){
-		if (item_id.slice(5) == fav_array[i]){
-			is_faved = true;
-			break;
-		}
-	}
-	
-	if(is_faved == false){
-		$('a#fav').html('Favorite');
-		$('a#fav').removeClass("unfav").addClass("fav");
-	}else{
-		$('a#fav').html('Unfavorite');
-		$('a#fav').removeClass("fav").addClass("unfav");
-	}
-	
-	$('a#fav').click(function(){
-		if(is_faved ==false){
-			is_faved=true;
-			$('a#fav').html('Unfavorite');
-			$('a#fav').removeClass("fav").addClass("unfav");
-			fav_array.push(item_id.slice(5));
-			console.log(fav_array);
-		}else{
-			is_faved=false;
-			$('a#fav').html('Favorite');
-			$('a#fav').removeClass("unfav").addClass("fav");
-			fav_array.splice(fav_array.indexOf(item_id.slice(5)),1);
-			console.log(fav_array);
-		}
-		// send the new favorites to database
-		console.log(fav_array.join());
-		$.ajax({
+		var request = $.ajax({
 			type: "POST",
 			url: "dostuff.php",
-			data: { id: userid, type: "newfav", favs: fav_array.join()}
-		}).done(function( msg ) {
-			console.log("Message: ", msg);
+			data: { id: id, type: "getstory" }
 		});
-	});
-	
+		request.done(function(msg) {
+			var json = $.parseJSON(msg);
+			// console.log(json);
+			if (json.titletop == 1) {
+				$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><h2 class="fadewithme">'+json['title']+'</h2><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+					<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+					<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+					</div><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
+			}
+			else {
+					$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+					<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+					<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+					</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
+			}
+			
+			$(".big"+json.id).imagesLoaded(imageLoaded(json.id));
 
-	///////////////////////////
-	// Get height of img div //
-	///////////////////////////
-	// $(".content-image").load(function(){
-		// bodymargin = $(".content-image-div").height()+"px";
-		// $(".content-info").css({"margin-top":bodymargin});
-	// });
-	itemheight = $(".content-image-div").height();
-	var margintop = $(".content-info .body").height()/-3;
-	margintop = String(margintop) + "px";
-	var itemwidth = $(window).width() - ($(window).width()/3);
-	var marginleft = String(itemwidth/-2)+"px";
-	//$(".content-info").css({"margin-top" : margintop,"margin-left":marginleft,"width":itemwidth});
-
-	// Expand the selected item to full screen, and make all other cover images 0 so they will disappear
-	$(".explore-item, .one-item").each(function(index, element) {
-		if ($(this).attr("id") != item_id) {
-			$(this).css({"width" : "0px"});
-			var thatitem = $(this);
-			setTimeout(function(){
-				thatitem.css({"height" : "0px"});
-			}, 500);
-		} else {
-			$(this).css({"width" : width+"px", "overflow" : "visible", "height": "auto"});
-			$(window).scroll(function(e) {
-				// debugger;
-				if (!($("body").hasClass("explore"))) {
-					var opac = (itemheight - $("body").scrollTop())/itemheight;
-					if (opac >= 0.01 && opac <= 1) {
-						$("#" + current + " .fadewithme").css({"opacity" : opac});
-					}
-					else if (opac < .01) {
-						$("#" + current + " .fadewithme").css({"opacity" : "0"});
-					}
-				}
+			stWidget.addEntry({
+				"service":"facebook",
+				"element":document.getElementById('fb'),
+				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"title":"facebook",
+				"type":"large",
+				"text":"Share on facebook",
+				"summary":"Share on facebook",
 			});
-		}
-	});
+
+			stWidget.addEntry({
+				"service":"twitter",
+				"element":document.getElementById('tw'),
+				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"title":"twitter",
+				"type":"large",
+				"text":"Share on twitter",
+				"summary":"Share on twitter"   
+			});
+
+			stWidget.addEntry({
+				"service":"googleplus",
+				"element":document.getElementById('gp'),
+				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"title":"googleplus",
+				"type":"large",
+				"text":"Share on googleplus",
+				"summary":"Share on googleplus"   
+			});
+
+			stWidget.addEntry({
+				"service":"pinterest",
+				"element":document.getElementById('pn'),
+				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"title":"pinterest",
+				"type":"large",
+				"text":"Share on pinterest",
+				"summary":"Share on pinterest"   
+			});
+
+			stWidget.addEntry({
+				"service":"reddit",
+				"element":document.getElementById('rd'),
+				"url":"http://engcomm.engin.umich.edu/campaign/article.php?id="+item_id.split("-")[1],
+				"title":"reddit",
+				"type":"large",
+				"text":"Share on reddit",
+				"summary":"Share on reddit"   
+			});
+			/////////////////////////////////
+			// Scroll body back to the top //
+			/////////////////////////////////
+			$(".explore, body").scrollTop(0);
+			$(".items").scrollLeft(0);
+
+			///////////////////////////////
+			// Check the favorite status of current feature //
+			///////////////////////////////
+			
+			is_faved = false;
+			
+			for (var i=0; i<fav_array.length; i++){
+				if (item_id.slice(5) == fav_array[i]){
+					is_faved = true;
+					break;
+				}
+			}
+			
+			if(is_faved == false){
+				$('a#fav').html('Favorite');
+				$('a#fav').removeClass("unfav").addClass("fav");
+			}else{
+				$('a#fav').html('Unfavorite');
+				$('a#fav').removeClass("fav").addClass("unfav");
+			}
+			
+			$('a#fav').click(function(){
+				if(is_faved ==false){
+					is_faved=true;
+					$('a#fav').html('Unfavorite');
+					$('a#fav').removeClass("fav").addClass("unfav");
+					fav_array.push(item_id.slice(5));
+					// console.log(fav_array);
+				}else{
+					is_faved=false;
+					$('a#fav').html('Favorite');
+					$('a#fav').removeClass("unfav").addClass("fav");
+					fav_array.splice(fav_array.indexOf(item_id.slice(5)),1);
+					// console.log(fav_array);
+				}
+				// send the new favorites to database
+				// console.log(fav_array.join());
+				$.ajax({
+					type: "POST",
+					url: "dostuff.php",
+					data: { id: userid, type: "newfav", favs: fav_array.join()}
+				}).done(function( msg ) {
+					// console.log("Message: ", msg);
+				});
+			});
+			$("#loading").fadeOut(500);
+
+		});
+		request.fail(function(jqXHR, textStatus) {
+			// console.log( " Failed: " + textStatus );
+		});	
+
+	}
+	
 }
 
 
@@ -383,24 +386,25 @@ function doMasonry() {
 }
 
 function loadSlices() {
-	console.log("Load slices");
+	// console.log("Load slices");
 	$("ul.slides li").remove();
 	
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
-	var url = 'explore.php?slices=1&cats='+usercats+"&inds="+userinds;
+	var url = 'explore.php?slices=7&cats='+usercats+"&inds="+userinds;
+	if (msgslice == '0' || firstmsgfrom == "") url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
 	if (firsttime != 1){
-		url = 'explore.php?slices=1&cats='+usercats+"&inds="+userinds+"&intro=1";
+		url = 'explore.php?slices=7&cats='+usercats+"&inds="+userinds+"&intro=1";
 	}
 	
-	console.log("URL: ", url);
+	// console.log("URL: ", url);
 	$.getJSON(url, function(data) {
-		console.log(data);
+		// console.log(data);
 		$.each(data, function(key, val) {
 			if (data[key] != false) {
 				var html = val["html"];
-				$newLi = $("<li />", {'class': 'one-item hidestart', 'id': 'item-'+val["id"], 'html':'\
+				$newLi = $("<li />", {'class': 'one-item hidestart', 'data-id' : val["id"], 'id': 'item-'+val["id"], 'html':'\
 					<div class="info">\
 						<h2>'+val["title"]+'</h2>\
 						<div class="description">\
@@ -409,11 +413,6 @@ function loadSlices() {
 					</div>\
 					<div class="img-cover">\
 						<img class="cover" src="img/'+val["img_large"]+'_cover.jpg" alt="mail cover" />\
-						<div class="meta" id="customStyle">'+val["customStyle"]+'</div>\
-						<div class="meta" id="title" data-titletop="'+val["titletop"]+'">'+val["title"]+'</div>\
-						<div class="meta" id="subtitle">'+val["description"]+'</div>\
-						<div class="meta" id="byline">'+val["byline"]+'</div>\
-						<div class="meta" id="body">'+html+'</div>\
 					</div>\
 					<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
 					<div class="item-content"></div>'}).appendTo("ul.slides");
@@ -425,13 +424,41 @@ function loadSlices() {
 				//////////////////
 
 				var mimg = mailimg.substring(0, mailimg.length - 4) + "_cover.jpg";
-				$newLi = $("<li />", {'class': 'one-item hidestart mail', 'id': 'item-mail', 'html':'<div class="info"><h2>From: '+firstmsgfrom+'</h2><div class="description">'+firstmsg+'</div></div><div class="img-cover"><img class="cover" src="img/'+mimg+'" alt="mail cover" /><div class="meta" id="title">'+val["title"]+'</div><div class="meta" id="body">Message</div></div><a href="'+val["img_large"]+'.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
-				if(msgslice == '0'){
+
+				if (firstmsgfrom != "") {
+					$newLi = $("<li />", {'class': 'one-item hidestart mail','data-id' : "mail", 'id': 'item-mail', 'html':'\
+					<div class="info">\
+						<h2>From: '+firstmsgfrom+'</h2>\
+						<div class="description">'+firstmsg+'</div>\
+					</div>\
+					<div class="img-cover">\
+						<img class="cover" src="img/'+mimg+'" alt="mail cover" />\
+					</div>\
+					<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
+					<div class="item-content"></div>\
+					'}).appendTo("ul.slides");
+				}
+				else {
 					$('#item-mail').hide();
 				}
+
+				
+				if(msgslice == '0'){
+				}
 			}
-			if (key == 5) {
-				$newLi = $("<li />", {'class': 'one-item hidestart map', 'id': 'item-map', 'html':'<div class="info"><h2>Campus Map</h2><div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div></div><div class="img-cover"><img class="cover" src="img/map_cover.jpg" alt="map cover" /></div><div class="meta" id="title">New Messages</div><div class="meta" id="body">stuff</div></div><a href="mail.jpg" class="img-src"></a><div class="item-content"></div>'}).appendTo("ul.slides");
+			if (key == 7) {
+				// $newLi = $("<li />", {'class': 'one-item hidestart map','data-id' : "map", 'id': 'item-map', 'html':'\
+				// 	<div class="info">\
+				// 		<h2>Campus Map</h2>\
+				// 		<div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>\
+				// 	</div>\
+				// 	<div class="img-cover">\
+				// 		<img class="cover" src="img/map_cover.jpg" alt="map cover" />\
+				// 	</div>\
+				// 	<div class="meta" id="title">New Messages</div>\
+				// 	<div class="meta" id="body">stuff</div>\
+				// 	<a href="mail.jpg" class="img-src"></a>\
+				// 	<div class="item-content"></div>'}).appendTo("ul.slides");
 				fader($(".hidestart:first"));
 
 				///////////////////////////////////
@@ -444,8 +471,8 @@ function loadSlices() {
 					// Click event: when click on an image, load the image and append it into the HTML //
 					////////////////////////////////////////////////////////////////////////////////////////
 					$(this).click(function(e) {
-						console.log("This looks like ", this);
-						loadFeature(this, item_id);
+						// console.log("This looks like ", this);
+						loadFeature($(this).parent().data("id"));
 						window.location.hash = item_id;
 
 					});
@@ -457,11 +484,13 @@ function loadSlices() {
 					// Click event: when click on an image, load the image and append it into the HTML //
 					////////////////////////////////////////////////////////////////////////////////////////
 					$(this).click(function(e) {
-						console.log("This looks like ", this);
-						loadFeature(that, item_id);
+						// console.log("This looks like ", this);
+
+						loadFeature($(this).parent().data("id"));
+						window.location.hash = item_id;
 					});
 				});
-				checkHash();
+				// checkHash();
 			}
 			$(window).resize();
 			// $(".items").css({"overflow-x" : "scroll", "overflow-y" : "hidden"});
@@ -474,13 +503,12 @@ function loadSlices() {
 }
 
 function loadFavorites(){
-	console.log(fav_array);
-	
+	// console.log(fav_array);
 	var url;
 	if (fav_array.length > 0){
 		favs = fav_array.join();
 		url = 'explore.php?favs=' + favs;
-		console.log(url);
+		// console.log(url);
 		$("body").removeClass().addClass("favorite");
 		$("ul.slides li").remove();
 		setTimeout(function(){
@@ -489,16 +517,12 @@ function loadFavorites(){
 				var len = 0;
 				$.each(data,function(k,v){len++});
 				$.each(data, function(key, val) {
-					console.log("Data: ", data);
+
+					// console.log("Data: ", data);
 					if (data[key] != false) {
-						$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'\
+						$newLi = $("<li />", {'class': 'explore-item hidestart', 'data-id' : val["id"], 'id': 'item-'+val["id"], 'html':'\
 							<div class="img-cover">\
 								<img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" />\
-								<div class="meta" id="customStyle">'+val["customStyle"]+'</div>\
-								<div class="meta" id="title" data-titletop="'+val["titletop"]+'">'+val["title"]+'</div>\
-								<div class="meta" id="subtitle">'+val["description"]+'</div>\
-								<div class="meta" id="byline">'+val["byline"]+'</div>\
-								<div class="meta" id="body">'+val["html"]+'</div>\
 							</div>\
 							<div class="info">\
 								<h2>'+val["title"]+'</h2>\
@@ -508,7 +532,7 @@ function loadFavorites(){
 							<div class="item-content"></div>\
 							'}).appendTo("ul.slides").delay(200);
 					}
-					// debugger;
+
 					if (key == len - 1) {
 						doMasonry();
 						fader($(".hidestart:first"));
@@ -525,7 +549,8 @@ function loadFavorites(){
 							// Click event: when click on an image, load the image and append it into the HTML //
 							////////////////////////////////////////////////////////////////////////////////////////
 							$(this).click(function(){
-								loadFeature(this, item_id);
+								debugger;
+								loadFeature($(this).parent().data("id"));
 							});
 						});
 					}
@@ -563,7 +588,7 @@ function refresh(cats) {
 	$(".img-cover").off("click");
 	$("ul.slides li").remove();
 	loadExplore(cats);
-	console.log(cats);
+	// console.log(cats);
 }
 
 function loadExplore(cats) {
@@ -574,15 +599,15 @@ function loadExplore(cats) {
 		url = 'explore.php?exp=1&cats='+cats;
 	}
 	else url = 'explore.php?exp=1';
-
-	console.log("URL: ", url);
+	console.log(url);
+	// console.log("URL: ", url);
 	$("body").addClass("explore").removeClass("slices");	
 	$.getJSON(url, function(data) {
 		var len = 0;
 		$.each(data,function(k,v){len++});
-		console.log("LENGTH: ", data.length);
+		// console.log("LENGTH: ", data.length);
 		$.each(data, function(key, val) {
-			console.log("Data: ", data);
+			// console.log("Data: ", data);
 			if (data[key] != false) {
 				
 				var fav_img = "img/storyFav.png";
@@ -595,15 +620,10 @@ function loadExplore(cats) {
 					}
 				}
 
-				$newLi = $("<li />", {'class': 'explore-item hidestart', 'id': 'item-'+val["id"], 'html':'\
+				$newLi = $("<li />", {'class': 'explore-item hidestart', 'data-id' : val["id"], 'id': 'item-'+val["id"], 'html':'\
 					<img class="fav-star" src="'+fav_img+'" faved = '+faved+'>\
 					<div class="img-cover">\
 						<img src="img/tiles/'+val["img_large"]+'.jpg" alt="mail cover" />\
-						<div class="meta" id="customStyle">'+val["customStyle"]+'</div>\
-						<div class="meta" id="title" data-titletop="'+val["titletop"]+'">'+val["title"]+'</div>\
-						<div class="meta" id="subtitle">'+val["description"]+'</div>\
-						<div class="meta" id="byline">'+val["byline"]+'</div>\
-						<div class="meta" id="body">'+val["html"]+'</div>\
 					</div>\
 					<div class="info">\
 						<h2>'+val["title"]+'</h2>\
@@ -613,7 +633,7 @@ function loadExplore(cats) {
 					<div class="item-content"></div>\
 					'}).appendTo("ul.slides").delay(200);
 			}
-			//debugger;
+
 			if (key == len - 1) {
 				doMasonry();
 				fader($(".hidestart:first"));
@@ -630,7 +650,7 @@ function loadExplore(cats) {
 					// Click event: when click on an image, load the image and append it into the HTML //
 					////////////////////////////////////////////////////////////////////////////////////////
 					$(this).click(function(){
-						loadFeature(this, item_id);
+						loadFeature($(this).parent().data("id"));
 					});
 				});
 			}
@@ -655,7 +675,7 @@ function loadExplore(cats) {
 				url: "dostuff.php",
 				data: { id: userid, type: "newfav", favs: fav_array.join()}
 			}).done(function( msg ) {
-				console.log("Message: ", msg);
+				// console.log("Message: ", msg);
 			});
 		});
 	});
@@ -707,6 +727,7 @@ function leaveStory() {
 		}
 
 		else if ($("body").hasClass("explore")) {
+			// debugger;
 			var leftwidth = $(".left").width()+ "px";
 			$("li").removeClass("current");
 			window.location.hash = "";
@@ -730,7 +751,8 @@ function leaveStory() {
 }
 
 function resizeWindow() {
-	console.log("resizing");
+	// console.log("resizing");
+// debugger;
 	height = $(window).height(), width = $(window).width();
 	var leftwidth = $(".left").width(), itemsWidth = width - leftwidth, itemsHeight = height-51;
 	$("body").css({"height" : height+"px"});
@@ -743,7 +765,8 @@ function resizeWindow() {
 	}
 	//Resize large image
 	$(".left").css("height",itemsHeight);
-	$(".exploreOne li.current, .slicesOne li.current").css({"width":width+"px"});
+	$(".one li.current").css({"width":width+"px"});
+	// debugger;
 	$(".slices .items").css({"width":itemsWidth, "height":itemsHeight+"px"});
 	$(".explore .items").css({"width":itemsWidth + "px", "height":itemsHeight});
 	$(".favorite .items").css({"width":itemsWidth + "px", "height":itemsHeight});
@@ -752,7 +775,7 @@ function resizeWindow() {
 
 	}
 	else {
-		$(".exploreOne #" + current + ", .slicesOne #" + current).css({"width":width + "px"});
+		$(".one #" + current).css({"width":width + "px"});
 	}
 	// $(".items").css({"height" : height + "px"});
 	bodymargin = $(".content-image-div").height()+"px";
@@ -813,10 +836,10 @@ function setUserTutorial(val) {
 		data: { id: userid, type: "setUserTutorial", val: val }
 	});
 	request.done(function(msg) {
-		console.log(msg);
+		// console.log(msg);
 	});
 	request.fail(function(jqXHR, textStatus) {
-		console.log( " Failed: " + textStatus );
+		// console.log( " Failed: " + textStatus );
 	});
 }
 
@@ -857,7 +880,6 @@ $(document).ready(function(e) {
 
 	$("#tutorial .nav a.next").on('click',function(e){
 		// cancel the click event on #tutorial
-//		debugger;
 		var evnt = window.event?window.event:arg;
 		if(evnt.stopPropagation){
 			evnt.stopPropagation();
@@ -895,7 +917,7 @@ $(document).ready(function(e) {
 	});
 	
 	$(document).keyup(function(e){
-		console.log(e.keyCode);
+		// console.log(e.keyCode);
 		if (e.keyCode == 27){
 			$('#tutorial').hide();
 			setTutorial(1);
@@ -974,7 +996,7 @@ $(document).ready(function(e) {
 	/////////////////
 	$(".dropdown").each(function(){
 		$(this).find("h3").on("click", function(){
-			console.log($(this).parent());
+			// console.log($(this).parent());
 			if ($(this).parent().hasClass("expanded")) {
 				$(this).parent().removeClass("expanded");
 				$(this).parent().find(".seemore").slideUp(500);
@@ -989,9 +1011,8 @@ $(document).ready(function(e) {
 
 	$("form input").on("click", function(){
 		var checked = {};
-		// debugger;
 		if($(this).parent().find('input:checked').length == $(this).parent().find('input').length){
-			console.log("yes");
+			// console.log("yes");
 			$(this).parent().find('a.selectall').attr('status','false');
 			$(this).parent().find('a.selectall').html('Deselect all');
 		}

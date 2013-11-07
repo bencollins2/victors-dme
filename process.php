@@ -134,7 +134,7 @@ class Process
          $_SESSION['error_array'] = $form->getErrorArray();
          // echo "Error: ";
          // print_r($form->getErrorArray());
-         header("Location: ".$session->referrer);
+         header("Location: ".$session->referrer."&err=1");
       }
       /* Registration attempt failed */
       else if($retval == 2){

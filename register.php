@@ -158,17 +158,28 @@ else{
 <script src="./js/colorbox-master/jquery.colorbox-min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="js/fb.js"></script>
+<script src="js/fb.js"></script>
 <script type="text/javascript">
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
 $(document).ready(function(){
 $(".fbl").on("click",function(e){
   e.preventDefault();
   FB.login(function(response) {
+    
     <? if ($linked) { ?>
       window.location.assign("index.php?register=1&link=<?= $_GET['link']?>&add=1");
     <? } else { ?>
       window.location.assign("index.php");
       <? } ?>
-    }, {scope: 'read_stream'});;
+
+    }, {scope: 'user_status,email'});;
   });
 
         if (<?= $open?> == 1) {
@@ -195,6 +206,8 @@ $(".fbl").on("click",function(e){
           $(".bg.one").stop().fadeIn(400);
         });
         $(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390, opacity:.85});
+
+        if (getUrlVars()["err"] == 1) $(".create").trigger("click");
 });
 </script>
 

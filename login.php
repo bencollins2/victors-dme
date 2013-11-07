@@ -69,7 +69,7 @@
 					e.preventDefault();
 					FB.login(function(response) {
 						window.location.assign("index.php");
-					}, {scope: 'user_status'});;
+					}, {scope: 'user_status,email'});;
 				});
 
                 if (<?= $open?> == 1) {

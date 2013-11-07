@@ -228,8 +228,8 @@
 	///////////////////////////////////////////////
 	// Split first six off array if slices = 1  //
 	///////////////////////////////////////////////
-	if ($_GET['slices'] == 1) {
-		$arr = array_slice($arr, 0, 6);
+	if ($_GET['slices'] > 0) {
+		$arr = array_slice($arr, 0, $_GET["slices"]);
 	}
 	// print_r($arr);
 
