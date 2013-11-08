@@ -873,6 +873,7 @@ li.current {
     height: auto;
     min-width: 370px;
     width: 100%;
+    margin: 0 0 20px;
 }
 
 
@@ -1029,8 +1030,19 @@ li.current {
     line-height: 40px;
     color: #333;
     background: url(../img/bluequote.png) no-repeat top left;
-    padding: 10px 0 0 33px;
+    padding: 10px 0 10px 33px;
 }
+
+.content-info div.body p span.pullquote span.attr {
+    display: block;
+    margin-top: 15px;
+    font-family: sans-serif;
+    border-left: thin solid #B2B2B2;
+    padding-left: 10px;
+    font-size: 16px;
+    line-height: 16px;
+}
+
 
 .content-info div.body iframe {
     min-width: 400px;

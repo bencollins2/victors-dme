@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_GET["id"]) && $_GET["id"]!=""){
-	$item_id = $_GET["id"];
+	$item_id = (int)$_GET["id"];
 	require("../db_campaign.php");
 	if (!extension_loaded('json')) {
 			dl('json.so');  
@@ -17,10 +17,14 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			$img_json = $row['story_images'];
 			$img_arr = json_decode($img_json);
 			// Remove parent <p> tags, split result by paragraph
-			$split0 = preg_split("/^<p>/", $row['html']);
-			$split1 = preg_split("/<\/p>\Z/", $split0[1]);
-			$split = preg_split("/(<\/p>*.<p>)|(<br*\s\/>)/", $split1[0]);
+			$row['html'] = str_replace('</p>', '', trim($row['html']));
+			$split0 = explode('<p>', $row['html']);
 
+			foreach($split0 as $kk => $vv) {
+				if($vv == "") unset($split0[$kk]);
+			}
+			$split = array_values($split0);
+			$newHTML="";
 			// Loop each paragraph in the array
 			foreach($split as $kk => $vv) {
 				$newHTML .= "<p>";
@@ -39,7 +43,34 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 				$newHTML .= $vv . "</p>\n\n";
 			}
 			$row['html'] = $newHTML;
+		}
+		if($row["pullquotes"] == ""){
 
+		}else{
+			$img_json = $row['pullquotes'];
+			$img_arr = json_decode($img_json);
+			// Remove parent <p> tags, split result by paragraph
+			$row['html'] = str_replace('</p>', '', trim($row['html']));
+			$split0 = explode('<p>', $row['html']);
+
+			foreach($split0 as $kk => $vv) {
+				if($vv == "") unset($split0[$kk]);
+			}
+			$split = array_values($split0);
+			$newHTML = "";
+			// Loop each paragraph in the array
+			foreach($split as $kk => $vv) {
+				$newHTML .= "<p>";
+				// Loop pullquotes
+				foreach ($img_arr as $kkk => $vvv) {
+					// If we're currently in the paragraph for this pullquote..
+					if ($vvv->para == $kk) {
+						$newHTML .= "<span class='pullquote'>".$vvv->quote."<span class='attr'>".$vvv->attr."</span></span>";
+					}
+				}
+				$newHTML .= $vv . "</p>\n\n";
+			}
+			$row['html'] = $newHTML;
 		}
 
 		if ($row["titletop"] == 1) {
@@ -51,7 +82,7 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			<span id=\"gp\" class='googleplus st' displayText='Google +'></span>
 			<span id=\"pn\" class='pinterest st' displayText='Pinterest'></span>
 			<span id=\"rd\" class='reddit st' displayText='Reddit'></span>
-			</div><span class=\"byline\">".$row["byline"]."</span><div class=\"body\">".$row["html"]."</div></div>";		}
+			</div><h3 class='subtitle'>".$row["description"]."</h3><span class=\"byline\">".$row["byline"]."</span><div class=\"body\">".$row["html"]."</div></div>";		}
 		else {
 			$feature_content = "
 			<style type=\"text/css\">".$row["customStyle"]."</style><div class=\"content-image-div\"><img class=\"content-image\" src=\"img/big/".$row["img_large"].".jpg\" alt=\"item image\" /></div>
@@ -61,7 +92,7 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			<span id=\"gp\" class='googleplus st' displayText='Google +'></span>
 			<span id=\"pn\" class='pinterest st' displayText='Pinterest'></span>
 			<span id=\"rd\" class='reddit st' displayText='Reddit'></span>
-			</div><h2 class=\"fadewithme\">".$row["title"]."</h2><span class=\"byline\">".$row["byline"]."</span><div class=\"body\">".$row["html"]."</div></div>";
+			</div><h2 class=\"fadewithme\">".$row["title"]."</h2><h3 class='subtitle'>".$row["description"]."</h3><span class=\"byline\">".$row["byline"]."</span><div class=\"body\">".$row["html"]."</div></div>";
 		}
 
 		
@@ -137,7 +168,8 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
                 </ul>
             </div>
         </div>
-		
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
         <script type="text/javascript" src="//use.typekit.net/zsu8wmg.js"></script>
         <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
         <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
@@ -192,5 +224,14 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			"text":"Share on reddit",
 			"summary":"Share on reddit"   
 		});
+
+		$(window).on("scroll", function(e){
+			var opacity = 1-($("html").scrollTop()/450);
+			console.log(opacity);
+			if (opacity < 0.01) opacity = 0;
+			if (opacity > 0.99) opacity = 1;
+			$(".fadewithme").css({"opacity":opacity});
+		});
+
 		</script>
 </body>

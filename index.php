@@ -44,10 +44,10 @@
     }
 
     if ($device == "iPhone" || $device == "androidPhone" || $_GET["t"] == "mobile") {
-            $normalize = "css/normalize_mobile.css";
-            $main = "css/main_mobile.css";
-            $campstyle = "css/camp_mobile.css";
-            $body = "mobile.php";
+            // $normalize = "css/normalize_mobile.css";
+            // $main = "css/main_mobile.css";
+            // $campstyle = "css/camp_mobile.css";
+            // $body = "mobile.php";
     }
     else if ($device == "iPad" || $device == "androidTablet" || $_GET["t"] == "tablet") {
             $normalize = "css/normalize.css";
