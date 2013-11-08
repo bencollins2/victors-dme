@@ -411,7 +411,7 @@ function loadFeature(id) {
 				"service":"facebook",
 				"element":document.getElementById('fb'),
 				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
-				"title":"facebook",
+				"title":json['title'],
 				"type":"large",
 				"text":"Share on facebook",
 				"summary":"Share on facebook",
@@ -421,7 +421,7 @@ function loadFeature(id) {
 				"service":"twitter",
 				"element":document.getElementById('tw'),
 				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
-				"title":"twitter",
+				"title":json['title'],
 				"type":"large",
 				"text":"Share on twitter",
 				"summary":"Share on twitter"   
@@ -431,7 +431,7 @@ function loadFeature(id) {
 				"service":"googleplus",
 				"element":document.getElementById('gp'),
 				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
-				"title":"googleplus",
+				"title":json['title'],
 				"type":"large",
 				"text":"Share on googleplus",
 				"summary":"Share on googleplus"   
@@ -441,7 +441,7 @@ function loadFeature(id) {
 				"service":"pinterest",
 				"element":document.getElementById('pn'),
 				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
-				"title":"pinterest",
+				"title":json['title'],
 				"type":"large",
 				"text":"Share on pinterest",
 				"summary":"Share on pinterest"   
@@ -451,7 +451,7 @@ function loadFeature(id) {
 				"service":"reddit",
 				"element":document.getElementById('rd'),
 				"url":"http://victors.engin.umich.edu/article.php?id="+item_id.split("-")[1],
-				"title":"reddit",
+				"title":json['title'],
 				"type":"large",
 				"text":"Share on reddit",
 				"summary":"Share on reddit"   
@@ -604,6 +604,9 @@ function loadSlices() {
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
+	
+	// IF there's a preview URL, cats = 
+
 	var url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
 	console.log(url);
 	if (msgslice == '0' || firstmsgfrom == "") url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;

@@ -27,17 +27,32 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			$newHTML="";
 			// Loop each paragraph in the array
 			foreach($split as $kk => $vv) {
+				$currentpara = $kk + 1;
 				$newHTML .= "<p>";
 				// Loop images
 				foreach ($img_arr as $kkk => $vvv) {
 					// If we're currently in the paragraph for this image..
-					if ($vvv->para == $kk) {
+					if ($vvv->para == $currentpara) {
 						$style = " style='";
 						foreach ($vvv->style as $kkkk => $vvvv) {
 							$style .= $kkkk . ": ". $vvvv . "; ";
 						}
+						//set image position
+						if($vvv->position !=null && $vvv->position == 'center'){
+							$style .= "display:block; margin:0 auto 10px;";
+						}elseif($vvv->position !=null && $vvv->position == 'right'){
+							$style .= "float:right; margin:0 0 10px 10px;";
+						}else{
+							$style .= "float:left; margin:0 10px 10px 0;"; 
+						}
+						//set image size
+						if($vvv->width !=null){
+							$width = " width='".$vvv->width."'";
+						}else{
+							$width = "";
+						}
 						$style .= "'";
-						$newHTML .= "<img".$style." src = '".$vvv->src."' alt='alt' />";
+						$newHTML .= "<img".$style." src = '".$vvv->src."' alt='alt' ".$width."/>";
 					}
 				}
 				$newHTML .= $vv . "</p>\n\n";
@@ -94,6 +109,8 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			<span id=\"rd\" class='reddit st' displayText='Reddit'></span>
 			</div><h2 class=\"fadewithme\">".$row["title"]."</h2><h3 class='subtitle'>".$row["description"]."</h3><span class=\"byline\">".$row["byline"]."</span><div class=\"body\">".$row["html"]."</div></div>";
 		}
+
+		$title = $row["title"];
 
 		
 		
@@ -178,8 +195,8 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 		stWidget.addEntry({
 			"service":"facebook",
 			"element":document.getElementById('fb'),
-			"url":"article.php?item=<?= $item_id ?>",
-			"title":"facebook",
+			"url":"http://victors.engin.umich.edu/article.php?id=<?= $item_id ?>",
+			"title":"<?= $title?>",
 			"type":"large",
 			"text":"Share on facebook",
 			"summary":"Share on facebook"   
@@ -188,8 +205,8 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 		stWidget.addEntry({
 			"service":"twitter",
 			"element":document.getElementById('tw'),
-			"url":"http://twitter.com",
-			"title":"twitter",
+			"url":"http://victors.engin.umich.edu/article.php?id=<?= $item_id ?>",
+			"title":"<?= $title?>",
 			"type":"large",
 			"text":"Share on twitter",
 			"summary":"Share on twitter"   
@@ -198,8 +215,8 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 		stWidget.addEntry({
 			"service":"googleplus",
 			"element":document.getElementById('gp'),
-			"url":"http://googleplus.com",
-			"title":"googleplus",
+			"url":"http://victors.engin.umich.edu/article.php?id=<?= $item_id ?>",
+			"title":"<?= $title?>",
 			"type":"large",
 			"text":"Share on googleplus",
 			"summary":"Share on googleplus"   
@@ -208,8 +225,8 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 		stWidget.addEntry({
 			"service":"pinterest",
 			"element":document.getElementById('pn'),
-			"url":"http://pinterest.com",
-			"title":"pinterest",
+			"url":"http://victors.engin.umich.edu/article.php?id=<?= $item_id ?>",
+			"title":"<?= $title?>",
 			"type":"large",
 			"text":"Share on pinterest",
 			"summary":"Share on pinterest"   
@@ -218,8 +235,8 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 		stWidget.addEntry({
 			"service":"reddit",
 			"element":document.getElementById('rd'),
-			"url":"http://reddit.com",
-			"title":"reddit",
+			"url":"http://victors.engin.umich.edu/article.php?id=<?= $item_id ?>",
+			"title":"<?= $title?>",
 			"type":"large",
 			"text":"Share on reddit",
 			"summary":"Share on reddit"   
@@ -234,4 +251,14 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 		});
 
 		</script>
+		<script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-45546416-1', 'umich.edu');
+          ga('send', 'pageview');
+
+        </script>
 </body>
