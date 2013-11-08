@@ -225,6 +225,7 @@ ul.slides {
     height: auto;
     min-width: 370px;
     width: 100%;
+    margin: 0 0 20px;
 }
 
 .item-content iframe {
@@ -320,12 +321,16 @@ ul.slides {
 
 .content-info h2, .content-info h3 {
     font-family: "league-gothic",sans-serif;
-    margin: 0 0 9px 65px;
     font-weight: 100;
-    line-height: 50px;
+    line-height: 37px;
     text-transform: uppercase;
-    font-size: 48px;
+    font-size: 32px;
     color: #333;
+    margin-left:0;
+}
+
+.content-info h3.subtitle {
+    margin: 0 0 9px 65px;
 }
 
 .content-info div.body {
@@ -333,7 +338,7 @@ ul.slides {
     margin: 0 0 0 65px;
 }
 
-.content-info div.body p {
+.content-info div.body p, .content-info div.body ul {
     max-width: 570px;
     font-weight: 100;
     line-height: 1.6em;
@@ -443,6 +448,29 @@ a#circle {
 
 .opaque {
     opacity: 1 !important;
+}
+
+.content-info div.body p span.pullquote {
+    display: block;
+    float: right;
+    width: 190px;
+    margin: 0 10px 0px 10px;
+    font-family: "league-gothic";
+    font-size: 35px;
+    line-height: 40px;
+    color: #333;
+    background: url(../img/bluequote.png) no-repeat top left;
+    padding: 10px 0 10px 33px;
+}
+
+.content-info div.body p span.pullquote span.attr {
+    display: block;
+    margin-top: 15px;
+    font-family: sans-serif;
+    border-left: thin solid #B2B2B2;
+    padding-left: 10px;
+    font-size: 16px;
+    line-height: 16px;
 }
 
 

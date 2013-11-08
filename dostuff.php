@@ -188,8 +188,107 @@
 	if ($type == "getstory") {
 		$query = "SELECT * FROM `features` WHERE id = $userid";
 		$result = mysql_query($query);
-		$json = recordToArray($result);
-		echo json_encode($json[0]);
+		$arr = recordToArray($result);
+
+		foreach($arr as $k=>$v) {
+			//////////////////////////////////////
+			// Ignore records without images  //
+			//////////////////////////////////////
+			if ( $v[story_images] == "" || $v[story_images] == "{}") {
+				// Do nothing
+			}
+			else {
+				$newHTML = "";
+				
+				$img_json = $arr[$k]['story_images'];
+				$img_arr = json_decode($img_json);
+
+				// Remove parent <p> tags, split result by paragraph
+				$arr[$k]['html'] = str_replace('</p>', '', trim($arr[$k]['html']));
+				$split0 = explode('<p>', $arr[$k]['html']);
+
+				foreach($split0 as $kk => $vv) {
+					if($vv == "") unset($split0[$kk]);
+				}
+				$split = array_values($split0);
+
+				// Loop each paragraph in the array
+				foreach($split as $kk => $vv) {
+					$currentpara = $kk + 1;
+					$newHTML .= "<p>";
+					// Loop images
+					foreach ($img_arr as $kkk => $vvv) {
+						// If we're currently in the paragraph for this image..
+						if ($vvv->para == $currentpara) {
+							$style = " style='";
+							foreach ($vvv->style as $kkkk => $vvvv) {
+								$style .= $kkkk . ": ". $vvvv . "; ";
+							}
+							//set image position
+							if($vvv->position !=null && $vvv->position == 'center'){
+								$style .= "display:block; margin:0 auto 10px;";
+							}elseif($vvv->position !=null && $vvv->position == 'right'){
+								$style .= "float:right; margin:0 0 10px 10px;";
+							}else{
+								$style .= "float:left; margin:0 10px 10px 0;"; 
+							}
+							//set image size
+							if($vvv->width !=null){
+								$width = " width='".$vvv->width."'";
+							}else{
+								$width = "";
+							}
+							$style .= "'";
+							$newHTML .= "<img".$style." src = '".$vvv->src."' alt='alt' ".$width."/>";
+						}
+					}
+					$newHTML .= $vv . "</p>\n\n";
+				}
+				$arr[$k]['html'] = $newHTML;
+				// echo $newHTML;
+			}
+
+			/////////////////////////////////////////
+			// Ignore records without pullquotes //
+			/////////////////////////////////////////
+			if ( $v[pullquotes] == "" || $v[pullquotes] == "{}") {
+				// Do nothing
+			}
+			else {
+				$newHTML = "";
+				
+				$pq_json = $arr[$k]['pullquotes'];
+				$pq_array = json_decode($pq_json);
+
+				// Remove parent <p> tags, split result by paragraph
+				$arr[$k]['html'] = str_replace('</p>', '', trim($arr[$k]['html']));
+				$split0 = explode('<p>', $arr[$k]['html']);
+
+
+				foreach($split0 as $kk => $vv) {
+					if($vv == "") unset($split0[$kk]);
+				}
+				$split = array_values($split0);
+				
+				// Loop each paragraph in the array
+				foreach($split as $kk => $vv) {
+					$currentpara = $kk + 1;
+					$newHTML .= "<p>";
+					// Loop images
+					foreach ($pq_array as $kkk => $vvv) {
+						$thi = $vvv;
+						// If we're currently in the paragraph for this image..
+						if ($vvv->para == $currentpara) {
+							$newHTML .= "<span class='pullquote'>".$vvv->quote."<span class='attr'>".$vvv->attr."</span></span>";
+						}
+					}
+					$newHTML .= $vv . "</p>\n\n";
+				}
+				$arr[$k]['html'] = $newHTML;
+			}
+		}
+
+		echo json_encode($arr[0]);
 	}
 	
 
