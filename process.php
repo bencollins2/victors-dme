@@ -73,9 +73,9 @@ class Process
       
       /* Login successful */
       if($retval){
-         //header("Location: ".$session->referrer);
-		 header("location: index.php");
-         // exit;
+        header("Location: ".$session->referrer);
+		    header("Location: index.php");
+        // exit;
       }
       /* Login failed */
       else{
