@@ -58,69 +58,43 @@
 
 
 
-    /////////////////////
-    // Facebook stuff  //
-    /////////////////////
-
-    require("facebook.php");
-
-
-    $facebook = new Facebook($config);
-
-    // See if there is a user from a cookie
-    $user = $facebook->getUser();
-
-    if ($_GET["link"] > 0) {
-        $session->logout();
-        
-    }
-
-
-    //////////////////////////////////////
-    // If there's no logged in user...  //
-    //////////////////////////////////////
-    if ($user == 0 && !$session->logged_in) {
-        $normalize = "css/normalize.css";
-        $main = "css/main.css";
-        $campstyle = "css/register.css";
-        $body = "register.php";
-    }
-
-    ////////////////////////////////
-    // If there is a user and...  //
-    ////////////////////////////////
-    else {
-
-        ///////////////////////////////////////////////////////////////
-        // ...there is NO facebook user, but there is a custom user..  //
-        ///////////////////////////////////////////////////////////////
-        if ($session->logged_in) {
-            $user = $session->userinfo[0];
-            $type = "custom";
-            $logout = "href=\"process.php\"";
-        
-        }
-
-        ////////////////////////////////////
-        // ..or there IS a facebook user  //
-        ////////////////////////////////////
-        else {
-            try {
-                // Proceed knowing you have a logged in user who's authenticated.
-                $user_profile = $facebook->api('/me');
-                $name = $user_profile["name"];
-                $first_name = $user_profile["first_name"];
-                $last_name = $user_profile["last_name"];
-                $email = $user_profile["email"];
-                // echo "Facebook: ";
-                // print_r($name);
-                $type = "facebook";
-            } catch (FacebookApiException $e) {
-                // echo '<pre>'.htmlspecialchars(print_r($e, true)).'</pre>';
-                // $user = null;
-            }
-            $logout = "onClick=\"logoutFb()\" href=\"#\"";
-        }
+        // ///////////////////////////////////////////////////////////////
+        // // ...there is NO facebook user, but there is a custom user..  //
+        // ///////////////////////////////////////////////////////////////
+        // if ($session->logged_in) {
+        //     $user = $session->userinfo[0];
+        // 
+        //     $type = "custom";
+        //     $logout = "href=\"process.php\"";
+        // 
+        // }
+        // 
+        // ////////////////////////////////////
+        // // ..or there IS a facebook user  //
+        // ////////////////////////////////////
+        // else {
+        //     try {
+        //         // Proceed knowing you have a logged in user who's authenticated.
+        //         $user_profile = $facebook->api('/me');
+        //         $name = $user_profile["name"];
+        //         $first_name = $user_profile["first_name"];
+        //         $last_name = $user_profile["last_name"];
+        //         $email = $user_profile["email"];
+        //         // echo "Facebook: ";
+        //         // print_r($name);
+        //         $type = "facebook";
+        //     } catch (FacebookApiException $e) {
+        //         // echo '<pre>'.htmlspecialchars(print_r($e, true)).'</pre>';
+        //         // $user = null;
+        //     }
+        //     $logout = "onClick=\"logoutFb()\" href=\"#\"";
+        // }
+		
+		if(isset($_GET["user"])){
+			$user = mysql_real_escape_string($_GET["user"]);
+		}else{
+			header("Location: index.php");
+		}
 
         // From this point out, we need $user to definitively reflect our user,
         // whether or not that user is on facebook. At this point it should not matter.
@@ -134,11 +108,11 @@
          // If they're logged into facebook, and there's a link ID 
         
 
-        $q = "SELECT * FROM `users` WHERE `id` LIKE '$user' LIMIT 0,1;";
+        $q = "SELECT * FROM `users` WHERE `id` = '$user' LIMIT 0,1;";
         $r = mysql_query($q);
         $u=0;
         $c=0;
-
+		
         while($line = mysql_fetch_array($r)){
             $u++;
             if ($line["categories"] != "") {
@@ -152,7 +126,7 @@
             $mailimg = $line["mailimg"];
 			$favorites = $line["favorites"];
 			$msgslice = $line["show_message_slice"];
-			$firsttime = $line["firsttime"];
+			$firsttime = 1;
         }
 
         // $qq = "SELECT * FROM `adminusers` WHERE "
@@ -213,6 +187,7 @@
             }
             $u++;
         }
+		
         // They have a user account but no categories
         if ($u > 0 && $c == 0 && !$lnk) {
             $normalize = "css/normalize.css";
@@ -221,7 +196,7 @@
             $body = "quiz.php";
         }
 
-    } // End "if there's a user"
+
 
     if ($_GET["t"] == "desktop") {
         $normalize = "css/normalize.css";
@@ -287,7 +262,7 @@
     // Stuff to pull most recent message...  //
     ///////////////////////////////////////////
     $q = 'SELECT m.message, CONCAT(a.first, " ", a.last) as name, m.timestamp as ts FROM messages as m LEFT JOIN adminusers as a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(`to`, 2) LIKE '.$user.' ORDER BY ts DESC LIMIT 0,1';
-    $r = mysql_query($q) OR DIE("Sorry, couldn't select recent message.");
+    $r = mysql_query($q) OR DIE("Invalid User Id.");
     $l = mysql_fetch_array($r);
     $firstmsgfrom = $l["name"];
     $firstmsg = strip_tags(preg_replace('/\n/i', '', $l["message"]));
@@ -306,11 +281,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Campaign</title>
 
-        <meta property="og:title" content="Victors for Michigan"/>
+        <meta property="og:title" content="Campaign"/>
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="http://victors.engin.umich.edu/"/>
-        <meta property="og:image" content="http://victors.engin.umich.edu/img/big/victors.jpg"/>
-        <meta property="og:site_name" content="Victors for Michigan"/>
+        <meta property="og:image" content="http://www.engin.umich.edu/college/about/news/dme/fracktopia/img/large/one.jpg"/>
+        <meta property="og:site_name" content="Campaign"/>
         <meta property="fb:admins" content="2206222" />
         <meta property="og:description"
           content=""/>
@@ -335,9 +310,9 @@
         <script type="text/javascript">stLight.options({publisher: "ur-56eaa73e-f333-782-e2af-e4f274ea562f"});</script>
 
     </head>
-
     <? include($body); ?>
     
     <script type="text/javascript">
+	console.log("<?=$user?>");
     </script>
 </html>
