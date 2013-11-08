@@ -539,21 +539,31 @@ function checkHash() {
 		}
 		else if (window.location.hash == "#explore") {
 			// $("#nav_exp").trigger("click");
+			$(".left").show();
+			$(".favtext").hide();
+			$(".lefttext").hide();
+			$(".filter").fadeIn(500);
+			$("body").removeClass().addClass("explore");
+			hideSlices();
 		}
-		
-
+		else if(window.location.hash == "#favorites"){
+			$(".filter").hide();
+			$(".lefttext").hide();
+			$(".left").show();
+			$(".favtext").fadeIn(500);
+			hidetest();	
+		}
 
 		// var nextid = window.location.hash.split("-")[1];
 	}
 	else {
-		if (window.location.hash != "#explore" && window.location.hash!= "#favorites") {
-
-		}
-		else {
-			$("#nav_home").trigger("click");
-		}
-		// $("#go-back").click();
-		// leaveStory();
+		//window.location.assign("index.php");
+		$(".filter").hide();
+		$(".favtext").hide();
+		$(".left").show();
+		$(".lefttext").fadeIn(500);
+		$("body").removeClass().addClass("slices");
+		hideExplore();
 	}
 }
 
@@ -791,9 +801,9 @@ function hideSlices() {
 	$(".img-cover").off("click");
 	$("ul.slides li").remove();
 
-	// setTimeout(function(){
+	setTimeout(function(){
 			loadExplore();
-		// }, 400);
+	}, 400);
 	
 	$("body").removeClass().addClass("explore");
 	$(window).resize();
@@ -915,7 +925,6 @@ function hideExplore() {
 	$(window).resize();
 }
 
-
 function leaveStory() {
 	/////////////////////////////////////////////////////////////////
 	// Close the current story and go back to slices or explore.  //
@@ -1007,32 +1016,32 @@ var current, bodymargin, imagemargin;
 
 function switch_view(){
 	// debugger;
-	window.location.hash="";
 	switch ($(this).attr('id')) {
 	case 'nav_home':
-		$(".filter").hide();
-		$(".favtext").hide();
-		$(".left").show();
-		$(".lefttext").fadeIn(500);
-		$("body").removeClass().addClass("slices");
-		hideExplore();
+		// $(".filter").hide();
+		// $(".favtext").hide();
+		// $(".left").show();
+		// $(".lefttext").fadeIn(500);
+		// $("body").removeClass().addClass("slices");
+		// hideExplore();
+		window.location.hash="";
 		break;
 	case 'nav_exp':
-		$(".left").show();
-		$(".favtext").hide();
-		$(".lefttext").hide();
-		$(".filter").fadeIn(500);
-		$("body").removeClass().addClass("explore");
+		// $(".left").show();
+		// $(".favtext").hide();
+		// $(".lefttext").hide();
+		// $(".filter").fadeIn(500);
+		// $("body").removeClass().addClass("explore");
 		window.location.hash="explore";
-		hideSlices();
+		//hideSlices();
 		break;
 	case 'nav_fav':
-		$(".filter").hide();
-		$(".lefttext").hide();
-		$(".left").show();
-		$(".favtext").fadeIn(500);
+		// $(".filter").hide();
+		// $(".lefttext").hide();
+		// $(".left").show();
+		// $(".favtext").fadeIn(500);
 		window.location.hash="favorites";
-		hidetest();
+		// hidetest();
 		break;
 	default:
 		break;

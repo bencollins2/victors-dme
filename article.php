@@ -26,6 +26,23 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			$split = array_values($split0);
 			$newHTML="";
 			// Loop each paragraph in the array
+			// foreach($split as $kk => $vv) {
+			// 	$newHTML .= "<p>";
+			// 	// Loop images
+			// 	foreach ($img_arr as $kkk => $vvv) {
+			// 		// If we're currently in the paragraph for this image..
+			// 		if ($vvv->para == $kk) {
+			// 			$style = " style='";
+			// 			foreach ($vvv->style as $kkkk => $vvvv) {
+			// 				$style .= $kkkk . ": ". $vvvv . "; ";
+			// 			}
+			// 			$style .= "'";
+			// 			$newHTML .= "<img".$style." src = '".$vvv->src."' alt='alt' />";
+			// 		}
+			// 	}
+			// 	$newHTML .= $vv . "</p>\n\n";
+			// }
+			// Loop each paragraph in the array
 			foreach($split as $kk => $vv) {
 				$currentpara = $kk + 1;
 				$newHTML .= "<p>";
@@ -135,11 +152,11 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/dme.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/article.css">
+    <link rel="stylesheet" href="css/campaign.css">
 	
 </head>
 
-<body>
+<body class="article">
     <div id="fb-root"></div>
 
         <header class="sticky" id="nav">
@@ -178,7 +195,7 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			</div> -->
         </header>
 
-        <div class="items bgimg" style="">
+        <div class="items" style="">
         	<div class="itemcontainer flexslider">
             	<ul class="slides">
 					<li><div class="item-content"><?php echo($feature_content)?></div></li>
@@ -248,6 +265,25 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			if (opacity < 0.01) opacity = 0;
 			if (opacity > 0.99) opacity = 1;
 			$(".fadewithme").css({"opacity":opacity});
+		});
+		
+		$(document).ready(function(){
+			//var bodymargin = $(".content-image-div").height()+"px";
+			var bodymargin = "450px";
+			$(".content-info").css({"margin-top":bodymargin});
+			
+			$(window).off("scroll").on("scroll", function(e) {
+				var imgcontainerheight = 450;
+				var opac = (imgcontainerheight - $("body").scrollTop())/imgcontainerheight;
+				// console.log(opac);
+				if (opac >= 0.01 && opac <= 1) {
+					$(".fadewithme").css({"opacity" : opac});
+				}
+				else if (opac < 0.01) {
+					$(".fadewithme").css({"opacity" : "0"});
+				}
+				
+			});	
 		});
 
 		</script>
