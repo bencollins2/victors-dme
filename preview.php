@@ -2,6 +2,7 @@
     // session_start();
     // ini_set('display_errors','On');
     // error_reporting(E_ALL);
+    $preview = 1;
 
     include("Mobile_Detect.php");
     require_once("include/session.php");

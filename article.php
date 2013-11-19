@@ -161,7 +161,7 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 
         <header class="sticky" id="nav">
             <ul>
-                <li class="home"><a href="http://engin.umich.edu"><img src="img/mighigan_engineering_25.png" alt="Michigan Engineering" /></a></li>
+                <li class="home"><a href="http://engin.umich.edu"><img src="img/CoE-horiz-rev.png" alt="Michigan Engineering" /></a></li>
             </ul>
            <div id="nav_home" class="navi_item" onclick="location.href='index.php'">
                 <span>Home</span>
