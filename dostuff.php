@@ -1,6 +1,5 @@
 <?php
 	require("php.php");
-
 	if (!extension_loaded('json')) {
             dl('json.so');  
     }
@@ -165,23 +164,27 @@
 		$json["query"] = $query;
 		$json["html"] = $html;
 		$json["id"] = $imgids;
-		$query2 = "SELECT * FROM `messages` WHERE `to` LIKE 'u".$userid."' LIMIT 0,1000";
-		$result2 = mysql_query($query2);
-		if (mysql_num_rows($result2) > 0) {
-			$query3 = "SELECT * FROM `adminusers` WHERE `uids` LIKE '%$userid%' LIMIT 0,1000";
-			$result3 = mysql_query($query3);
-			while($line3 = mysql_fetch_array($result3)) {
-			    $email = $line3["email"];
-			    $name = $line3["first"] . " " . $line3["last"];
-			    $message = "Hello $name. \n\n$username has viewed a message on the Michigan Engineering Campaign platform.\n\nThanks!";
-				$subject = "New message for Michigan Engineering Campaign";
-				$from = "engcom@umich.edu";
-				$headers = "From:" . $from;
-				mail($email,$subject,$message,$headers);
+
+		if ($_REQUEST['preview'] != 1) {
+			$query2 = "SELECT * FROM `messages` WHERE `to` LIKE 'u".$userid."' LIMIT 0,1000";
+			$result2 = mysql_query($query2);
+			if (mysql_num_rows($result2) > 0) {
+				$query3 = "SELECT * FROM `adminusers` WHERE `uids` LIKE '%$userid%' LIMIT 0,1000";
+				$result3 = mysql_query($query3);
+				while($line3 = mysql_fetch_array($result3)) {
+				    $email = $line3["email"];
+				    $name = $line3["first"] . " " . $line3["last"];
+				    $message = "Hello $name. \n\n$username has viewed a message on the Michigan Engineering Campaign platform.\n\nThanks!";
+					$subject = "New message for Michigan Engineering Campaign";
+					$from = "engcom@umich.edu";
+					$headers = "From:" . $from;
+					mail($email,$subject,$message,$headers);
+				}
 			}
+			$query2 = "UPDATE `users` SET `showviewed` = '1' WHERE `id` = '$userid'";
+			$result2 = mysql_query($query2) or die("Couldn't change view value");
 		}
-		$query2 = "UPDATE `users` SET `showviewed` = '1' WHERE `id` = '$userid'";
-		$result2 = mysql_query($query2) or die("Couldn't change view value");
+		
 		echo json_encode($json);
 	}
 

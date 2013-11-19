@@ -43,10 +43,8 @@ function imageLoadedSame(id) {
 		} else {
 			$(this).css({"width" : width+"px", "overflow" : "visible", "height": "auto"});
 			$(window).off("scroll").on("scroll", function(e) {
-
 				if (!($("body").hasClass("explore"))) {
-					var opac = (imgcontainerheight - $("body").scrollTop())/imgcontainerheight;
-					console.log(opac);
+					var opac = (imgcontainerheight - $(document).scrollTop())/imgcontainerheight;
 					if (opac >= 0.01 && opac <= 1) {
 						$("#" + current + " .fadewithme").css({"opacity" : opac});
 					}
@@ -87,8 +85,7 @@ function imageLoaded(id) {
 			$(window).off("scroll").on("scroll", function(e) {
 
 				if (!($("body").hasClass("explore"))) {
-					var opac = (imgcontainerheight - $("body").scrollTop())/imgcontainerheight;
-					// console.log(opac);
+					var opac = (imgcontainerheight - $(document).scrollTop())/imgcontainerheight;
 					if (opac >= 0.01 && opac <= 1) {
 						$("#" + current + " .fadewithme").css({"opacity" : opac});
 					}
@@ -300,7 +297,7 @@ function loadFeature(id) {
 		var request = $.ajax({
 			type: "GET",
 			url: "dostuff.php",
-			data: { type: "getmessages", id: userid, name: username }
+			data: { type: "getmessages", id: userid, name: username, preview: preview }
 		});
 		request.done(function(msg) {
 

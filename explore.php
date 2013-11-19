@@ -90,7 +90,7 @@
 	$count = count($arr);
 
 	if ($count <= ($_GET['slices']+1) && $_REQUEST["exp"] != 1) {
-		$query3 = "SELECT * FROM `features` WHERE `public` = 1 ORDER BY `id` DESC";
+		$query3 = "SELECT * FROM `features` WHERE public=1 ORDER BY RAND();";
 		$result3 = mysql_query($query3);
 		$temp = recordToArray($result3);
 		array_pop($temp);

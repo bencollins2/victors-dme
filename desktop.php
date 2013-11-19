@@ -1,3 +1,17 @@
+<? 
+    function removeBreaks($txt) {
+        $txt = str_replace(array("\r\n", "\r"), "\n", $txt);
+        $lines = explode("\n", $txt);
+        $new_lines = array();
+
+        foreach ($lines as $i => $line) {
+            if(!empty($line))
+                $new_lines[] = trim($line);
+        }
+        return implode($new_lines);
+    }
+    echo "<!--Preview: $preview-->";
+?>
 <body class="slices">
 
     <div id="loading">
@@ -89,10 +103,10 @@
                         <h3>Transportation Innovations</h3>
                         <div class="seemore">
                             <a href="#" class="selectall" status="true">Select all</a>
-                            <input type="checkbox" value="vautonomous"> Autonomous Vehicles<br />
-                            <input type="checkbox" value="invehicletech"> In-Vehicle Technology<br />
-                            <input type="checkbox" value="fuelefficiency"> Vehicle Efficiency<br />
-                            <input type="checkbox" value="vehiclesafety"> Vehicle Safety<br />
+                            <input type="checkbox" value="vautonomous,preventingaccidents,ivcommunication,disdriving"> Autonomous Vehicles<br />
+                            <input type="checkbox" value="invehicletech,apps,disdriving"> In-Vehicle Technology<br />
+                            <input type="checkbox" value="fuelefficiency,iwvhicles,aerodynamics"> Vehicle Efficiency<br />
+                            <input type="checkbox" value="vautonomous,disdriving,invehicletech,vehiclesafety,preventingaccidents,ivcommunication"> Vehicle Safety<br />
                             <input type="checkbox" value="batteries"> Power Sources<br />
                         </div>
                     </div>
@@ -101,10 +115,10 @@
                         <h3>Economics & Entrepreneurship</h3>
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
-                            <input type="checkbox" value="studentstart,facultystart"> Startups<br />
-                            <input type="checkbox" value="mcubed"> High-Risk Research<br />
-                            <input type="checkbox" value="cfe,me"> Entrepreneurial Ecosystem<br />
-                            <input type="checkbox" value="economy"> Economic Impact<br />
+                            <input type="checkbox" value="studentstart,techtransfer,facultystart"> Startups<br />
+                            <input type="checkbox" value="mcubed,innovation,indcollab"> High-Risk Research<br />
+                            <input type="checkbox" value="cfe,me,innovation"> Entrepreneurial Ecosystem<br />
+                            <input type="checkbox" value="economy,indcollab"> Economic Impact<br />
                         </div>
                     </div>
 
@@ -112,12 +126,12 @@
                         <h3>Wolverine Experience</h3>
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
-                            <input type="checkbox" value="hoexperience"> Hands-On Engineering<br />
-                            <input type="checkbox" value="extracurr,highlevstudentprojects"> Academic Leaders & Best<br />
-                            <input type="checkbox" value="commoutreach"> Wolverines Around the World<br />
-                            <input type="checkbox" value="classfuture"> Innovations at Michigan<br />
-                            <input type="checkbox" value="nostalgia,lifeinaa"> Victor Stories<br />
-                            <input type="checkbox" value="lifeinaa"> Life in Ann Arbor<br />
+                            <input type="checkbox" value="hoexperience,studentteams,multidisc,studentresearch"> Hands-On Engineering<br />
+                            <input type="checkbox" value="highlevstudentprojects,scholarships,classfuture,honors,onlinelearning,gradexperience,studentresearch"> Academic Leaders & Best<br />
+                            <input type="checkbox" value="commoutreach,globalexp"> Wolverines Around the World<br />
+                            <input type="checkbox" value="classfuture,honors,onlinelearning"> Innovations at Michigan<br />
+                            <input type="checkbox" value="scholarships,studentteams,honors,globalexp,gradexperience,extracurr,studentstories"> Victor Stories<br />
+                            <input type="checkbox" value="studentstories,nostalgia,lifeinaa,extracurr"> Life in Ann Arbor<br />
                         </div>
                     </div>
 
@@ -125,11 +139,11 @@
                         <h3>Global Resources</h3>
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
-                            <input type="checkbox" value="cleanwater,watershortage,waterpurification,hydropower"> Water<br />
-                            <input type="checkbox" value="sustain"> Sustainability<br />
-                            <input type="checkbox" value="eefficiency"> Energy Efficiency<br />
-                            <input type="checkbox" value="alternativee"> Alternative Energy<br />
-                            <input type="checkbox" value="environment"> Environment<br />
+                            <input type="checkbox" value="cleanwater,watershortage,waterpurification"> Water<br />
+                            <input type="checkbox" value="sustainability,resourcemanagement,cleanair,cleanwater,globalenergy"> Sustainability<br />
+                            <input type="checkbox" value="eefficiency,otheresources,resourcemanagement,globalenergy"> Energy Efficiency<br />
+                            <input type="checkbox" value="biofuel,batteries,solarpower,hydropower,windpower,geothermalpower,nuclearpower"> Alternative Energy<br />
+                            <input type="checkbox" value="cleanwater,cleanair,sustainability,climatechange"> Environment<br />
                         </div>
                     </div>
 
@@ -138,10 +152,10 @@
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="nanotech"> Nanotechnology<br />
-                            <input type="checkbox" value="structures"> Structures<br />
-                            <input type="checkbox" value="healthsafety"> Health & Safety<br />
-                            <input type="checkbox" value="eenvironment"> Energy & Environment<br />
-                            <input type="checkbox" value="electronics"> Electronics<br />
+                            <input type="checkbox" value="lightweightmat,othermaterials,memorymetals,composites,gels"> Structures<br />
+                            <input type="checkbox" value="peptides,drugdelivery,gels,safety"> Health & Safety<br />
+                            <input type="checkbox" value="solarcells,electronics,environment,nuclearmaterials"> Energy & Environment<br />
+                            <input type="checkbox" value="polymers,solarcells,electronics,computersfuture"> Electronics<br />
                         </div>
                     </div>
 
@@ -149,11 +163,11 @@
                         <h3>Healthcare</h3>
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
-                            <input type="checkbox" value="disease"> Disease Research<br />
-                            <input type="checkbox" value="diagnostics"> Diagnostics<br />
-                            <input type="checkbox" value="meddev"> Medical Devices<br />
-                            <input type="checkbox" value="treatments"> Treatments<br />
-                            <input type="checkbox" value="globalhealth"> Global Health<br />
+                            <input type="checkbox" value="disresearch,distreatment,drugs,drugdelivery"> Disease Research<br />
+                            <input type="checkbox" value="imaging,diagnostics,affordability"> Diagnostics<br />
+                            <input type="checkbox" value="3dprinting,imaging,meddevices,affordability"> Medical Devices<br />
+                            <input type="checkbox" value="drugs,drugdelivery,3dprinting,distreatment,tissengineering,therapies,patientcare,quality,safety,affordability"> Treatments<br />
+                            <input type="checkbox" value="globalhealth,affordability,safety,quality,patientcare,apptechnologies"> Global Health<br />
                         </div>
                     </div>
 
@@ -161,12 +175,12 @@
                         <h3>Securing our Future</h3>
                         <div class="seemore">
 							<a href="#" class="selectall" status="true">Select all</a>
-                            <input type="checkbox" value="weapons"> Weapons Detection<br />
-                            <input type="checkbox" value="cybersec"> CyberSecurity<br />
-                            <input type="checkbox" value="nuclear"> Nuclear Non-Proliferation<br />
-                            <input type="checkbox" value="natsec"> National Security<br />
-                            <input type="checkbox" value="infrastructure"> Infrastructure<br />
-                            <input type="checkbox" value="natdis"> Natural Disasters<br />
+                            <input type="checkbox" value="weaponsdetection,nuclearnon,drones,autonomous"> Weapons Detection<br />
+                            <input type="checkbox" value="cybersec,surveillance"> CyberSecurity<br />
+                            <input type="checkbox" value="nuclear,nuclearnon,weaponsdetection"> Nuclear Non-Proliferation<br />
+                            <input type="checkbox" value="nuclearnon,weaponsdetection,cybersec,drones,natsec,millitary,surveillance"> National Security<br />
+                            <input type="checkbox" value="cybersec,infrastructure,disaster,weather"> Infrastructure<br />
+                            <input type="checkbox" value="infrastructure,disaster,weather"> Natural Disasters<br />
                         </div>
                     </div>
 
@@ -203,8 +217,8 @@
 		
 		<!-- load data from php into js -->
         <script type="text/javascript">
-            var usercats = "<?= $cats?>", userinds = "<?= $inds?>", sidebar = "<?= $sidebar ?>", mailimg = <? if (!$mailimg) echo "\"mail.jpg\""; else echo "\"" . $mailimg . "\"";?>, firstmsg = "<?= $firstmsg?>", firstmsgfrom = "<?= $firstmsgfrom?>", userid = "<?= $user?>", username="<?= $name?>", favorites="<?= $favorites?>", msgslice="<?= $msgslice?>", firsttime="<?= $firsttime?>";
-	        // var usercats = "<?= $cats?>", userinds = "<?= $inds?>", sidebar = "<?= $sidebar ?>", mailimg = <? if (!$mailimg) echo "\"mail.jpg\""; else echo "\"" . $mailimg . "\"";?>, firstmsg = "<?= $firstmsg?>", userid = "<?= $user?>", username="<?= $name?>", favorites="<?= $favorites?>";
+            var usercats = "<?= $cats?>", userinds = "<?= $inds?>", sidebar = "<?= removeBreaks(nl2br($sidebar)) ?>", mailimg = <? if (!$mailimg) echo "\"mail.jpg\""; else echo "\"" . $mailimg . "\"";?>, firstmsg = "<?= $firstmsg?>", firstmsgfrom = "<?= $firstmsgfrom?>", userid = "<?= $user?>", username="<?= $name?>", favorites="<?= $favorites?>", msgslice="<?= $msgslice?>", firsttime="<?= $firsttime?>", preview="<?= $preview?>";
+	        
 			if(favorites != ''){
 				fav_array = favorites.split(',');
 			}else{
