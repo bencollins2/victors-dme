@@ -102,7 +102,7 @@
                     <div class="dropdown">
                         <h3>Transportation Innovations</h3>
                         <div class="seemore">
-                            <a href="#" class="selectall" status="true">Select all</a>
+                            <a href="javascript:void(0)" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="vautonomous,preventingaccidents,ivcommunication,disdriving"> Autonomous Vehicles<br />
                             <input type="checkbox" value="invehicletech,apps,disdriving"> In-Vehicle Technology<br />
                             <input type="checkbox" value="fuelefficiency,iwvhicles,aerodynamics"> Vehicle Efficiency<br />
@@ -114,7 +114,7 @@
                     <div class="dropdown">
                         <h3>Economics & Entrepreneurship</h3>
                         <div class="seemore">
-							<a href="#" class="selectall" status="true">Select all</a>
+							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="studentstart,techtransfer,facultystart"> Startups<br />
                             <input type="checkbox" value="mcubed,innovation,indcollab"> High-Risk Research<br />
                             <input type="checkbox" value="cfe,me,innovation"> Entrepreneurial Ecosystem<br />
@@ -125,7 +125,7 @@
                     <div class="dropdown">
                         <h3>Wolverine Experience</h3>
                         <div class="seemore">
-							<a href="#" class="selectall" status="true">Select all</a>
+							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="hoexperience,studentteams,multidisc,studentresearch"> Hands-On Engineering<br />
                             <input type="checkbox" value="highlevstudentprojects,scholarships,classfuture,honors,onlinelearning,gradexperience,studentresearch"> Academic Leaders & Best<br />
                             <input type="checkbox" value="commoutreach,globalexp"> Wolverines Around the World<br />
@@ -138,7 +138,7 @@
                     <div class="dropdown">
                         <h3>Global Resources</h3>
                         <div class="seemore">
-							<a href="#" class="selectall" status="true">Select all</a>
+							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="cleanwater,watershortage,waterpurification"> Water<br />
                             <input type="checkbox" value="sustainability,resourcemanagement,cleanair,cleanwater,globalenergy"> Sustainability<br />
                             <input type="checkbox" value="eefficiency,otheresources,resourcemanagement,globalenergy"> Energy Efficiency<br />
@@ -150,7 +150,7 @@
                     <div class="dropdown">
                         <h3>Revolutionary Materials</h3>
                         <div class="seemore">
-							<a href="#" class="selectall" status="true">Select all</a>
+							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="nanotech"> Nanotechnology<br />
                             <input type="checkbox" value="lightweightmat,othermaterials,memorymetals,composites,gels"> Structures<br />
                             <input type="checkbox" value="peptides,drugdelivery,gels,safety"> Health & Safety<br />
@@ -162,7 +162,7 @@
                     <div class="dropdown">
                         <h3>Healthcare</h3>
                         <div class="seemore">
-							<a href="#" class="selectall" status="true">Select all</a>
+							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="disresearch,distreatment,drugs,drugdelivery"> Disease Research<br />
                             <input type="checkbox" value="imaging,diagnostics,affordability"> Diagnostics<br />
                             <input type="checkbox" value="3dprinting,imaging,meddevices,affordability"> Medical Devices<br />
@@ -174,7 +174,7 @@
                     <div class="dropdown">
                         <h3>Securing our Future</h3>
                         <div class="seemore">
-							<a href="#" class="selectall" status="true">Select all</a>
+							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
                             <input type="checkbox" value="weaponsdetection,nuclearnon,drones,autonomous"> Weapons Detection<br />
                             <input type="checkbox" value="cybersec,surveillance"> CyberSecurity<br />
                             <input type="checkbox" value="nuclear,nuclearnon,weaponsdetection"> Nuclear Non-Proliferation<br />
