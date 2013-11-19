@@ -1,49 +1,48 @@
 html {
-    overflow-x:hidden;
-    min-height: 730px;
     height: 100%;
+    min-height: 730px;
+    overflow-x:hidden;
 }
 
 body {
     display: block;
-    overflow-x:hidden;
-    min-width: 1170px;
-    width: 100%;
     height: 100%;
-    background: #222;
+    width: 100%;
+    min-width: 1170px;
+    overflow-x:hidden;
 }
 
 .upper {
     display: none;
 }
 
-#register { }
+#register {}
 
 #register .left {
-    position: relative;
     float: left;
-    padding: 80px 0 0;
+    position: relative;
     width: 280px;
     height: 100%;
+    padding: 80px 0 0;
     background: #333;
     box-shadow: 0 0 6px black;
 }
 
 .info {
-    position: absolute;
-    bottom: 126px;
-    left: 25px;
     width: 230px;
-    color: #D6D6D6;
     text-align: left;
     font-size: 12px;
     line-height: 1.5;
+    position: absolute;
+    bottom: 126px;
+    left: 25px;
+    color: #D6D6D6;
 }
 
 .sticky ul li.login {
     margin: 11px;
-    font-weight: 100;
     font-size: 20px;
+    font-weight: 100;
 }
 
 .sticky ul li.login a {
@@ -51,45 +50,45 @@ body {
 }
 
 body #register p.learnmore {
-    display: block;
-    margin: 0px 0;
-    padding: inherit;
-    width: 443px;
     color: white;
     text-decoration: none;
-    font-size: 25px;
     font-family: Georgia, times,serif;
+    display: block;
+    padding: inherit;
+    width: 443px;
+    font-size: 25px;
+    margin: 0px 0;
 }
 
-.regsuccess { }
+.regsuccess {}
 
-.regsuccess h2 { }
+.regsuccess h2 {}
 
-.regsuccess p { }
+.regsuccess p {}
 
 
-.info h2 { }
+.info h2 {}
 
-.info p { }
+.info p {}
 
 #register .right {
     float: left;
-    clear: none;
     margin: 75px 0 90px 50px;
     width: 70%;
     text-align: left;
-    font-weight: 100;
     font-size: 16px;
+    font-weight: 100;
+    clear: none;
 }
 
 .right p {
     margin: 0 0 20px;
-    width: 280px;
-    text-shadow: 0 0 10px black;
-    font-weight: lighter;
     font-size: 16px;
-    font-size: 18px;
     font-family: Georgia, times, serif;
+    font-size: 18px;
+    width: 280px;
+    font-weight: lighter;
+    text-shadow: 0 0 10px black;
 }
 
 #register .right p:nth-child(2) {
@@ -97,13 +96,13 @@ body #register p.learnmore {
 }
 
 #register .right p:nth-child(3) {
-    margin: 0;
-    color: #FCD038;
-    text-align: left;
-    text-transform: uppercase;
-    font-size: 59px;
     font-family: "league-gothic";
+    font-size: 59px;
     line-height: 1.1;
+    color: #FCD038;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: left;
 }
 
 #register .right p:nth-child(4) {
@@ -113,13 +112,13 @@ body #register p.learnmore {
 #register .play {
     margin: 0px 0 10px;
     padding: 20px 0 25px 0px;
-    width: 298px;
     cursor: pointer;
     -webkit-transition: all 2s ease;
     -moz-transition: all 2s ease;
-    -ms-transition: all 2s ease;
     -o-transition: all 2s ease;
+    -ms-transition: all 2s ease;
     transition: all 2s ease;
+    width: 298px;
 }
 
 #register .play a img, #register .learnmore a img {
@@ -127,78 +126,32 @@ body #register p.learnmore {
 }
 
 .play a, .learnmore a {
-    color: white;
-    text-decoration: none;
     font-size: 25px;
+    text-decoration: none;
+    color: white;
     font-family: Georgia, times, serif;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
-    -ms-transition: all .5s ease;
     -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
     transition: all .5s ease;
 }
 
-#register a.cta {
-   border-top: 1px solid #ffe48a;
-   background: #fcc100;
-   background: -webkit-gradient(linear, left top, left bottom, from(#fcd238), to(#fcc100));
-   background: -webkit-linear-gradient(top, #fcd238, #fcc100);
-   background: -moz-linear-gradient(top, #fcd238, #fcc100);
-   background: -ms-linear-gradient(top, #fcd238, #fcc100);
-   background: -o-linear-gradient(top, #fcd238, #fcc100);
-   padding: 5px 10px;
-   -webkit-border-radius: 8px;
-   -moz-border-radius: 8px;
-   border-radius: 8px;
-   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   box-shadow: rgba(0,0,0,1) 0 1px 0;
-   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-   color: white;
-   font-size: 14px;
-   font-family: Georgia, serif;
-   text-decoration: none;
-   vertical-align: middle;
-   position: absolute;
-   top: 50%;
-   margin-top: -104px;
-   left: 0;
-   font-size: 32px;
-   font-weight: 500;
-   font-family: Helvetica,arial,sans-serif;
-}
-#register a.cta:hover {
-   border-top-color: #c9a11c;
-   background: #c9a11c;
-   color: #ccc;
-   }
-#register a.cta:active {
-   border-top-color: #917517;
-   background: #917517;
-   }
 
-#register p.reg {
-    position: absolute;
-    margin-top: -28px;
-    top: 50%;
-    width: 400px;
-    text-align: left;
-    line-height: 1.8em;
-}
 
 #register p.play a:hover, #register p.learnmore a:hover {
     text-shadow: 0 0 20px white;
 }
 
 .bg {
-    position: absolute;
-    top: 0;
-    right: 50%;
     z-index: -1;
-    margin-right: -1040px;
-    width: 1728px;
+    position: absolute;
     height: 100%;
     background: url(../img/home1.jpg) no-repeat left top;
+    top: 0;
+    right: 50%;
+    width: 1728px;
+    margin-right: -1040px;
 }
 
 .bg.two {
@@ -210,9 +163,9 @@ body #register p.learnmore {
     position: relative;
     top: 0;
     display:none;
+    width: 274px;
     margin: 0;
     padding: 0;
-    width: 274px;
 }
 
 .left.create .createacct {
@@ -222,12 +175,12 @@ body #register p.learnmore {
 
 #register h2 {
     margin: 0;
-    margin: 50px 0 0;
-    color: #FCD038;
-    text-transform: uppercase;
-    font-weight: 100;
-    font-size: 39px;
     font-family: "league-gothic";
+    font-size: 39px;
+    font-weight: 100;
+    color: #FCD038;
+    margin: 50px 0 0;
+    text-transform: uppercase;
         line-height: 37px;
 
 }
@@ -241,21 +194,21 @@ body #register p.learnmore {
 }
 
 .sticky ul li.home a {
-    font-variant: small-caps;
-    font-size: 20px;
     font-family: georgia,serif;
+    font-size: 20px;
+    font-variant: small-caps;
 }
 
 div.login {
     display: block;
-    overflow: visible;
-    margin: 270px auto 0;
     padding: 198px 0 0px;
     width: 228px;
     height: 92px;
-    border-bottom: thin solid white;
+    margin: 270px auto 0;
     background: url(../img/m.png) no-repeat center 30px;
     text-align: center;
+    overflow: visible;
+    border-bottom: thin solid white;
 }
 
 form div.table div.submit {
@@ -269,50 +222,38 @@ form div.table div.submit {
 }
 
 h3.error {
-    margin: 20px 0;
     color: red;
-    text-transform: none;
-    font-size: 16px;
     font-family: sans-serif;
-}
-
-.ve {
-    position: absolute;
-    margin-top: -170px;
-    top: 50%;
-
-    color: white;
-    text-align: left;
-    font-size: 28px;
-    font-family: Georgia, serif;
+    font-size: 16px;
+    text-transform: none;
+    margin: 20px 0;
 }
 
 .vfm {
-    padding: 143px 0 0;
-    background: url(../img/m_180.png) no-repeat center top;
     color: white;
-    text-transform: uppercase;
-    font-size: 27px;
+
     font-family: Georgia, serif;
+    font-size: 27px;
     line-height: 1.2em;
+    text-transform: uppercase;
+    background: url(../img/m_180.png) no-repeat center top;
+    padding: 143px 0 0;
 }
 
 .vfm span {
     display: block;
-    
+	
     font-size: 34px;
 }
 
 #customlogin, #forgot, #register {
-    position: relative;
     display: block;
-    overflow: hidden;
-    margin: auto;
-    width: 960px;
-    height: 100%;
     color: white;
-    text-align: center;
+    height: 100%;
+    margin: auto;
     font-weight: 100;
+    text-align: center;
+    overflow: hidden;
 }
 
 #customlogin a, #forgot a, #register a {
@@ -324,13 +265,13 @@ h3.error {
 }
 
 .or {
-    margin: 0px auto 0;
-    padding: 10px 0;
     width: 228px;
-    border-top: thin solid white;
-    text-align: center;
     font-weight: 100;
     font-size: 12px;
+    border-top: thin solid white;
+    margin: 0px auto 0;
+    text-align: center;
+    padding: 10px 0;
 }
 
 .or a {
@@ -338,11 +279,11 @@ h3.error {
 }
 
 .custom {
-    position: relative;
     display: block;
-    margin: 10px auto;
-    width: 228px;
+    position: relative;
     height: 200px;
+    width: 228px;
+    margin: 10px auto;
     color: white;
     font-weight: 100;
 }
@@ -352,13 +293,13 @@ h3.error {
 }
 
 .semitrans {
-    position: absolute;
-    z-index: 100;
-    display: none;
     width: 100%;
     
     height: 100%;
+    z-index: 100;
+    position: absolute;
     background: rgba(0,0,0,.6);
+    display: none;
 }
 
 .custom a {
@@ -370,17 +311,17 @@ h3.error {
 }
 
 .cboxIframe {
-    width: 100%; height:100%%;
+    width: 100%; height:100%%
 }
 
 #cboxClose {
-    margin: 10px 0;
     height: auto;
+    margin: 10px 0;
 }
 
 .table {
-    overflow: visible;
     width: 272px;
+    overflow: visible;
     font-size: .84em;
 }
 
@@ -412,22 +353,22 @@ h3.error {
 #cboxTitle{margin:0;}
 #cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
 #cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
-.cboxPhoto{ display:block;float:left; margin:auto; max-width:none; border:0; -ms-interpolation-mode:bicubic;}
-.cboxIframe{ display:block;width:100%; height:100%; border:0;}
-#colorbox, #cboxContent, #cboxLoadedContent{ -webkit-box-sizing:content-box; -moz-box-sizing:content-box;box-sizing:content-box; -moz- -webkit-}
+.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.cboxIframe{width:100%; height:100%; display:block; border:0;}
+#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
 
 
 @media only screen and (max-height: 750px) {
-    div.login {
-        margin-top: 150px;
-    }
+	div.login {
+		margin-top: 150px;
+	}
 }
 
 
 @media only screen and (max-height: 600px) {
-    div.login {
-        margin-top: 100px;
-    }
+	div.login {
+		margin-top: 100px;
+	}
 }
 
 @media only screen and (max-height: 700px) {
