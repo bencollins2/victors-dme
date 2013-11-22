@@ -117,6 +117,7 @@ li.current {
 	position: relative;
 	display: block;
 	opacity: 1;
+	overflow:auto;
 }
 
 .one-item:hover {
@@ -184,6 +185,7 @@ li.current {
 	position: absolute;
 	left: 50%;
 	min-height: 380px;
+	width:100%;
 }
 
 .one-item .img-cover:hover {

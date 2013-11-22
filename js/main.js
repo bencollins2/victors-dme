@@ -624,7 +624,7 @@ function loadSlices() {
 	
 	// console.log("URL: ", url);
 	$.getJSON(url, function(data) {
-		// console.log(data);
+		console.log(data);
 		$.each(data, function(key, val) {
 			if (data[key] != false) {
 				var html = val["html"];
