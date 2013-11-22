@@ -98,41 +98,27 @@ function imageLoaded(id) {
 		}
 	});
 	$("#"+item_id).scrollTop();
+}
+
+function loadTumblr(){
+	console.log("will load data from tumblrblog.php");
 }	
 
 function loadInSame(id) {
 	$("ul.slides li .item-content").html("");
 	var itemheight, $itemcontent = $(".current").find(".item-content");
-
-	var request = $.ajax({
-			type: "POST",
-			url: "dostuff.php",
-			data: { id: id, type: "getstory" }
-		});
-		request.done(function(msg) {
-
-			var json = $.parseJSON(msg);
-			// console.log(json);
-			if (json.titletop == 1) {
-				$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><h2 class="fadewithme">'+json['title']+'</h2><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
-					<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
-					<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
-					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
-					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
-					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-					</div><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
-			}
-			else {
-					$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
-					<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
-					<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
-					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
-					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
-					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-					</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
-			}
+	
+	if(id == "tumblr"){
+		loadTumblr();
+		$itemcontent.html('<style type="text/css"></style><div class="content-image-div"><h2 class="fadewithme">Notes from our Victors Blog</h2><img class="content-image big'+id+'" src="img/big/tumblr.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+			<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+			<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+			</div><h3 class="subtitle">Hottest Blogs</h3><span class="byline">Michigan Victors</span><div class="body"></div></div>');
 			
-			$(".big"+json.id).imagesLoaded(imageLoadedSame(json.id));
+			$(".big"+id).imagesLoaded(imageLoadedSame(id));
 
 			stWidget.addEntry({
 				"service":"facebook",
@@ -188,58 +174,146 @@ function loadInSame(id) {
 			/////////////////////////////////
 			$(".explore, body, html").scrollTop(0);
 			$(".items").scrollLeft(0);
+			$("#loading").fadeOut(500);
+	}
+	else{
+		var request = $.ajax({
+				type: "POST",
+				url: "dostuff.php",
+				data: { id: id, type: "getstory" }
+			});
+			request.done(function(msg) {
 
-			///////////////////////////////
-			// Check the favorite status of current feature //
-			///////////////////////////////
-			
-			is_faved = false;
-			
-			for (var i=0; i<fav_array.length; i++){
-				if (id){
-					is_faved = true;
-					break;
+				var json = $.parseJSON(msg);
+				// console.log(json);
+				if (json.titletop == 1) {
+					$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><h2 class="fadewithme">'+json['title']+'</h2><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+						<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+						<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+						<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+						<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+						<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+						</div><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
 				}
-			}
+				else {
+						$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+						<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+						<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+						<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+						<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+						<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+						</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
+				}
 			
-			if(is_faved == false){
-				$('a#fav').html('Favorite');
-				$('a#fav').removeClass("unfav").addClass("fav");
-			}else{
-				$('a#fav').html('Unfavorite');
-				$('a#fav').removeClass("fav").addClass("unfav");
-			}
+				$(".big"+json.id).imagesLoaded(imageLoadedSame(json.id));
+
+				stWidget.addEntry({
+					"service":"facebook",
+					"element":document.getElementById('fb'),
+					"url":"http://victors.engin.umich.edu/article.php?id="+id,
+					"title":"facebook",
+					"type":"large",
+					"text":"Share on facebook",
+					"summary":"Share on facebook"
+				});
+
+				stWidget.addEntry({
+					"service":"twitter",
+					"element":document.getElementById('tw'),
+					"url":"http://victors.engin.umich.edu/article.php?id="+id,
+					"title":"twitter",
+					"type":"large",
+					"text":"Share on twitter",
+					"summary":"Share on twitter"   
+				});
+
+				stWidget.addEntry({
+					"service":"googleplus",
+					"element":document.getElementById('gp'),
+					"url":"http://victors.engin.umich.edu/article.php?id="+id,
+					"title":"googleplus",
+					"type":"large",
+					"text":"Share on googleplus",
+					"summary":"Share on googleplus"   
+				});
+
+				stWidget.addEntry({
+					"service":"pinterest",
+					"element":document.getElementById('pn'),
+					"url":"http://victors.engin.umich.edu/article.php?id="+id,
+					"title":"pinterest",
+					"type":"large",
+					"text":"Share on pinterest",
+					"summary":"Share on pinterest"   
+				});
+
+				stWidget.addEntry({
+					"service":"reddit",
+					"element":document.getElementById('rd'),
+					"url":"http://victors.engin.umich.edu/article.php?id="+id,
+					"title":"reddit",
+					"type":"large",
+					"text":"Share on reddit",
+					"summary":"Share on reddit"   
+				});
+				/////////////////////////////////
+				// Scroll body back to the top //
+				/////////////////////////////////
+				$(".explore, body, html").scrollTop(0);
+				$(".items").scrollLeft(0);
+
+				///////////////////////////////
+				// Check the favorite status of current feature //
+				///////////////////////////////
 			
-			$('a#fav').click(function(){
-				if(is_faved ==false){
-					is_faved=true;
-					$('a#fav').html('Unfavorite');
-					$('a#fav').removeClass("fav").addClass("unfav");
-					fav_array.push(item_id.slice(5));
-					// console.log(fav_array);
-				}else{
-					is_faved=false;
+				is_faved = false;
+			
+				for (var i=0; i<fav_array.length; i++){
+					if (id){
+						is_faved = true;
+						break;
+					}
+				}
+			
+				if(is_faved == false){
 					$('a#fav').html('Favorite');
 					$('a#fav').removeClass("unfav").addClass("fav");
-					fav_array.splice(fav_array.indexOf(item_id.slice(5)),1);
-					// console.log(fav_array);
+				}else{
+					$('a#fav').html('Unfavorite');
+					$('a#fav').removeClass("fav").addClass("unfav");
 				}
-				// send the new favorites to database
-				// console.log(fav_array.join());
-				$.ajax({
-					type: "POST",
-					url: "dostuff.php",
-					data: { id: userid, type: "newfav", favs: fav_array.join()}
-				}).done(function( msg ) {
-					// console.log("Message: ", msg);
+			
+				$('a#fav').click(function(){
+					if(is_faved ==false){
+						is_faved=true;
+						$('a#fav').html('Unfavorite');
+						$('a#fav').removeClass("fav").addClass("unfav");
+						fav_array.push(item_id.slice(5));
+						// console.log(fav_array);
+					}else{
+						is_faved=false;
+						$('a#fav').html('Favorite');
+						$('a#fav').removeClass("unfav").addClass("fav");
+						fav_array.splice(fav_array.indexOf(item_id.slice(5)),1);
+						// console.log(fav_array);
+					}
+					// send the new favorites to database
+					// console.log(fav_array.join());
+					$.ajax({
+						type: "POST",
+						url: "dostuff.php",
+						data: { id: userid, type: "newfav", favs: fav_array.join()}
+					}).done(function( msg ) {
+						// console.log("Message: ", msg);
+					});
 				});
-			});
-			$("#loading").fadeOut(500);
+				$("#loading").fadeOut(500);
 
-		});
-		request.fail(function(jqXHR, textStatus) {
-			// console.log( " Failed: " + textStatus );
-		});	
+			});
+			request.fail(function(jqXHR, textStatus) {
+				// console.log( " Failed: " + textStatus );
+			});
+	}	
 }
 
 //lloadfeature
@@ -369,6 +443,10 @@ function loadFeature(id) {
 		request.fail(function(jqXHR, textStatus) {
 			// console.log( " Failed: " + textStatus );
 		});	
+	}
+	
+	else if($that.hasClass("tumblr")){
+		console.log("yes,tumblr");
 	}
 
 	////////////////////////////////////////////////////
@@ -642,7 +720,7 @@ function loadSlices() {
 					<div class="item-content"></div>'}).appendTo("ul.slides");
 				
 			}
-			if (key == 2) {
+			if (key == 0) {
 				////////////////////
 				// Message area  //
 				//////////////////
@@ -670,6 +748,26 @@ function loadSlices() {
 				if(msgslice == '0'){
 				}
 			}
+			
+			if (key == 2){
+				////////////////////
+				// Tumblr area  //
+				//////////////////
+				console.log("tumblr");
+				$newLi = $("<li />", {'class': 'one-item hidestart tumblr', 'data-id' : 'tumblr', 'id': 'item-tumblr', 'html':'\
+					<div class="info">\
+						<h2>Notes from our Victors Blog</h2>\
+						<div class="description">\
+							Because the world needs breakthrough engineering.\
+						</div>\
+					</div>\
+					<div class="img-cover">\
+						<img class="cover" src="img/tumblr_cover.jpg" alt="mail cover" />\
+					</div>\
+					<a href="tumblr.jpg" class="img-src"></a>\
+					<div class="item-content"></div>'}).appendTo("ul.slides");
+			}
+			
 			if (key == 7) {
 				// $newLi = $("<li />", {'class': 'one-item hidestart map','data-id' : "map", 'id': 'item-map', 'html':'\
 				// 	<div class="info">\
