@@ -1,13 +1,13 @@
 html {
     overflow-x:hidden;
-    min-height: 730px;
+    min-height: 560px;
     height: 100%;
 }
 
 body {
     display: block;
     overflow-x:hidden;
-    min-width: 1170px;
+    min-width: 980px;
     width: 100%;
     height: 100%;
     background: #222;
@@ -50,11 +50,42 @@ body {
     font-size: 16px;
 }
 
-body #register p.learnmore {
+p.learnmore {
     display: block;
-    margin: 0px 0;
+    margin: -22px 0;
+    width: 375px;
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: Georgia, times,serif;
+    position: absolute;
+    top: 50%;
+    left: 380px;
+}
+
+#signup {
+    background: #eee;
+    height: 100%;
+    position: relative;
+    margin: 0;
+    padding: 20px;
+    overflow: hidden;
+}
+
+#signup h2 {
+    margin: 0;
+ 
+    text-align: center;
+}
+
+p.play {
+    display: inline-block;
+    position: absolute;
+    margin-top: -22px;
+    top: 50%;
+    left: 220px;
     padding: inherit;
-    width: 443px;
+    width: 162px;
     color: white;
     text-decoration: none;
     font-size: 25px;
@@ -110,7 +141,7 @@ body #register p.learnmore {
     margin-top: -6px;
 }
 
-#register .play {
+.play {
     margin: 0px 0 10px;
     padding: 20px 0 25px 0px;
     width: 298px;
@@ -129,7 +160,7 @@ body #register p.learnmore {
 .play a, .learnmore a {
     color: white;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 20px;
     font-family: Georgia, times, serif;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
@@ -146,7 +177,7 @@ body #register p.learnmore {
    background: -moz-linear-gradient(top, #fcd238, #fcc100);
    background: -ms-linear-gradient(top, #fcd238, #fcc100);
    background: -o-linear-gradient(top, #fcd238, #fcc100);
-   padding: 5px 10px;
+   padding: 9px 10px;
    -webkit-border-radius: 8px;
    -moz-border-radius: 8px;
    border-radius: 8px;
@@ -161,10 +192,11 @@ body #register p.learnmore {
    vertical-align: middle;
    position: absolute;
    top: 50%;
-   margin-top: -104px;
+   margin-top: -93px;
    left: 0;
    font-size: 32px;
-   font-weight: 500;
+   line-height: 48px;
+   font-weight: 200;
    font-family: Helvetica,arial,sans-serif;
 }
 #register a.cta:hover {
@@ -177,17 +209,46 @@ body #register p.learnmore {
    background: #917517;
    }
 
-#register p.reg {
+#register p.reg, #moreinfo p.reg {
     position: absolute;
-    margin-top: -28px;
+    margin-top: -8px;
     top: 50%;
     width: 400px;
     text-align: left;
     line-height: 1.8em;
 }
 
+#moreinfo p.reg {
+    margin: -193px 0 0 220px;
+    
+}
+
+#register img.comp {
+    top: 50%;
+    position: absolute;
+    margin-top: -255px;
+    left: 50%;
+    margin-left: -20px;
+}
+
+#register .what {
+    bottom: 0;
+    right: 22px;
+    position: absolute;
+}
+
+#register .what a {
+    color: white;
+ 
+    text-decoration: none;
+}
+
 #register p.play a:hover, #register p.learnmore a:hover {
     text-shadow: 0 0 20px white;
+}
+
+#moreinfo {
+    position: relative; display: block; overflow: hidden; margin: auto; width: 915px; height: 100%; color: white; text-align: center; font-weight: 100;
 }
 
 .bg {
@@ -264,8 +325,9 @@ form div.table div.submit {
 }
 
 .fbl {
-    display: inline-block;
-    margin: -13px auto 0;
+    display: block;
+    margin: 7px auto;
+    width: 252px;
 }
 
 h3.error {
@@ -278,7 +340,7 @@ h3.error {
 
 .ve {
     position: absolute;
-    margin-top: -170px;
+    margin-top: -150px;
     top: 50%;
 
     color: white;
@@ -288,13 +350,21 @@ h3.error {
 }
 
 .vfm {
-    padding: 143px 0 0;
+    position: relative;
+    padding: 143px 0 0 30px;
     background: url(../img/m_180.png) no-repeat center top;
     color: white;
     text-transform: uppercase;
-    font-size: 27px;
+    font-size: 24px;
     font-family: Georgia, serif;
     line-height: 1.2em;
+    left: 0;
+    top: 50%;
+    margin-top: -190px;
+    margin-left: -30px;
+    width: 210px;
+    text-align: left;
+    height: 100px;
 }
 
 .vfm span {
@@ -308,7 +378,7 @@ h3.error {
     display: block;
     overflow: hidden;
     margin: auto;
-    width: 960px;
+    width: 915px;
     height: 100%;
     color: white;
     text-align: center;
@@ -327,14 +397,13 @@ h3.error {
     margin: 0px auto 0;
     padding: 10px 0;
     width: 228px;
-    border-top: thin solid white;
     text-align: center;
     font-weight: 100;
     font-size: 12px;
+    color: black;
 }
 
 .or a {
-    color: white;
 }
 
 .custom {
@@ -380,8 +449,9 @@ h3.error {
 
 .table {
     overflow: visible;
-    width: 272px;
+    width: 251px;
     font-size: .84em;
+    margin: 0 auto;
 }
 
 .table div {

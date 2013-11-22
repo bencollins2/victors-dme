@@ -1,3 +1,4 @@
+
 var msnry, numLoads = 0;
 
 function isFunction(functionToCheck) {
@@ -799,7 +800,11 @@ function hideSlices() {
 	$("ul.slides li").remove();
 
 	setTimeout(function(){
+		if(cats){
+			loadExplore(cats);
+		}else{
 			loadExplore();
+		}
 	}, 400);
 	
 	$("body").removeClass().addClass("explore");
@@ -1237,6 +1242,8 @@ $(document).ready(function(e) {
 		});
 
 	});
+	
+	cats = '';
 
 	$("form input").on("click", function(){
 		var checked = {};
@@ -1250,7 +1257,7 @@ $(document).ready(function(e) {
 			var index = $(this).attr("value");
 			checked[index] = "1";
 		});
-		var cats = "";
+		cats = "";
 		$.each(checked, function(k,v){
 			if (v === "1") {
 				cats += k + ",";
@@ -1281,7 +1288,7 @@ $(document).ready(function(e) {
 			checked[index] = "1";
 
 		});
-		var cats = "";
+		cats = "";
 		$.each(checked, function(k,v){
 			if (v === "1") {
 				cats += k + ",";

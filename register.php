@@ -103,13 +103,60 @@ else{
 </div>
 <div id='register'>
   <div class="ve">Victors Experience</div>
-  <a class="cta">Sign Up Now</a>
+  <a class="cta" href="#signup">Sign Up Now</a>
   <p class="reg">
     Customize this website to filter through the amazing work being done by Michigan Engineers, who are stepping up to tackle the world's greatest problems.
   </p>
+  <img class="comp" src="./img/computer.png" />
+  <p class="what"><a href="javascript:document.getElementById('moreinfo').scrollIntoView();">What is a Victor for Michigan?&nbsp;&nbsp;&nbsp;&#8595;</a></p>
 
 
+<div style="display:none">
+  <div id="signup" style="">
+              <h2>Sign up and get started</h2>
+
+      <a class="fbl" href="#">
+        <img src="img/sign_in_with_facebook.png" />
+      </a>
+      <div class="or">
+        <span>..or if you'd prefer, you can <a href="#" class="create">create an account directly</a>.</span>
+      </div>
+      <div class="createacct">
+        <form action="process.php" method="POST">
+
+          <div class="table">
+            <div><span>Email:</span><span><input type="text" name="email" maxlength="50" value="<? echo $form->value("email"); ?>"></span><span><? echo $form->error("email"); ?></span></div>
+            <div><span>Password:</span><span><input type="password" name="pass" maxlength="30" value="<? echo $form->value("pass"); ?>"></span><span><? echo $form->error("pass"); ?></span></div>
+            <div><span>First Name:</span><span><input type="text" name="first" maxlength="30" value="<? echo $form->value("first"); ?>"></span><span><? echo $form->error("first"); ?></span></div>
+            <div><span>Last Name:</span><span><input type="text" name="last" maxlength="30" value="<? echo $form->value("last"); ?>"></span><span><? echo $form->error("last"); ?></span></div>
+            <div class="submit"><span colspan="2" align="right">
+            <input type="hidden" name="subjoin" value="1">
+            <?php if ($_GET["link"] > 0) { 
+              $lnk = mysql_real_escape_string($_GET["link"]);
+            ?> 
+            <input type="hidden" name="link" value="<?= $lnk?>">
+            <? }?>
+            <input type="submit" value="Join!"></span></div>
+          </div>
+        </form>
+      </div>
   </div>
+</div>
+
+</div>
+<div id="moreinfo">
+
+  <div class="vfm">Victors<br/>for Michigan</div>
+  <p class="reg">
+    The world is facing challenges, the likes of which it has never faced before. Problems that only engineers can solve. Because we are Michigan Engineering, <strong>we are stepping up</strong> to tackle these great challenges and make breakthrough solutions.
+  </p>
+  <p class="play"><a href="http://www.youtube.com/embed/g5J9tcRuX9U?rel=0&amp;wmode=transparent" class="youtube cboxElement" alt="Watch the video"><!--img src="./img/play_40.png" /-->&raquo; Watch the video</a></p>
+      <p class="learnmore"><a href="http://victors.engin.umich.edu/article.php?id=115" class="" alt="Why be a victor"><!--img src="./img/qmark_40.png" /-->&raquo; Learn more about the campaign</a></p>
+
+</div>
+
+
+
   <?
   }
   ?>
@@ -169,6 +216,8 @@ $(".fbl").on("click",function(e){
           $(".bg.one").stop().fadeIn(400);
         });
         $(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390, opacity:.85});
+
+        $("a.cta").colorbox({inline:true, width:"75%"});
 
         if (getUrlVars()["err"] == 1) $(".create").trigger("click");
 });
