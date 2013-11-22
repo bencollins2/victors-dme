@@ -52,7 +52,7 @@ body {
 
 p.learnmore {
     display: block;
-    margin: -22px 0;
+    margin: 23px 0;
     width: 375px;
     color: white;
     text-decoration: none;
@@ -81,7 +81,7 @@ p.learnmore {
 p.play {
     display: inline-block;
     position: absolute;
-    margin-top: -22px;
+    margin-top: 23px;
     top: 50%;
     left: 220px;
     padding: inherit;
@@ -219,7 +219,7 @@ p.play {
 }
 
 #moreinfo p.reg {
-    margin: -193px 0 0 220px;
+    margin: -148px 0 0 220px;
     
 }
 
@@ -360,7 +360,7 @@ h3.error {
     line-height: 1.2em;
     left: 0;
     top: 50%;
-    margin-top: -190px;
+    margin-top: -145px;
     margin-left: -30px;
     width: 210px;
     text-align: left;
