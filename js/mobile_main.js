@@ -113,3 +113,47 @@ function walkmydog() {
 	}
 	resizeme();
 }
+
+// function loadSlices() {
+// 	
+// 	/////////////////////////////
+// 	// Load the slices. Duh.  //
+// 	///////////////////////////
+// 	
+// 	// IF there's a preview URL, cats = 
+// 
+// 	var url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
+// 	console.log(url);
+// 	// if (msgslice == '0' || firstmsgfrom == "") url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
+// 	// if (firsttime != 1){
+// 	// 	url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds+"&intro=1";
+// 	// }
+// 	
+// 	// console.log("URL: ", url);
+// 	$.getJSON(url, function(data) {
+// 		 console.log(data);
+// 		// $.each(data, function(key, val) {
+// 		// 	if (data[key] != false) {
+// 		// 		var html = val["html"];
+// 		// 		$newLi = $("<li />", {'class': 'one-item hidestart', 'data-id' : val["id"], 'id': 'item-'+val["id"], 'html':'\
+// 		// 			<div class="info">\
+// 		// 				<h2>'+val["title"]+'</h2>\
+// 		// 				<div class="description">\
+// 		// 					'+val["description"]+'\
+// 		// 				</div>\
+// 		// 			</div>\
+// 		// 			<div class="img-cover">\
+// 		// 				<img class="cover" src="img/'+val["img_large"]+'_cover.jpg" alt="mail cover" />\
+// 		// 			</div>\
+// 		// 			<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
+// 		// 			<div class="item-content"></div>'}).appendTo("ul.slides");
+// 		// 		
+// 		// 	}
+// 		// 
+// 		// 	
+// 		// });
+// 	
+// 	});
+// }
+// 
+// loadSlices();
