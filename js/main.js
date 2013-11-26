@@ -100,26 +100,7 @@ function imageLoaded(id) {
 	$("#"+item_id).scrollTop();
 }
 
-function loadTumblr(){
-	console.log("will load data from tumblrblog.php");
-	$.ajax({
-		type:"GET",
-		url:"tumblrblog.php",
-		success:function(data){
-			data = JSON.parse(data);
-			var blogs = data['posts'];
-			var content = '';
-			for (var i=0; i<blogs.length; i++){
-				console.log(blogs[i]);
-				content = content + '<h3>'+ blogs[i]['caption'] +'<h3/>';
-			}
-			return content			
-		},
-		error:function(jqXHR, textStatus){
-			console.log("Request failed: " + textStatus);
-		}
-	})
-}	
+
 
 function loadInSame(id) {
 	$("ul.slides li .item-content").html("");
@@ -151,7 +132,7 @@ function loadInSame(id) {
 						content = content + blogs[i]['caption'];
 					}
 					if (blogs[i]['text']){
-						content = content + '<p>'+blogs[i]['text']+'</p>' + blogs[i]['source'];
+						content = content + '<p>'+blogs[i]['text']+'</p><span class="byline" style="margin:0">' + blogs[i]['source'] + '</span>';
 					}
 					if (blogs[i]['description']){
 						content = content + blogs[i]['description'] + '<a href="'+blogs[i]['url']+'">'+blogs[i]['url']+'</a>';
@@ -526,7 +507,7 @@ function loadFeature(id) {
 						content = content + blogs[i]['caption'];
 					}
 					if (blogs[i]['text']){
-						content = content + '<p>'+blogs[i]['text']+'</p>' + blogs[i]['source'];
+						content = content + '<p>'+blogs[i]['text']+'</p>' + '</p><span class="byline" style="margin:0">' + blogs[i]['source'] + '</span>';;
 					}
 					if (blogs[i]['description']){
 						content = content + blogs[i]['description'] + '<a href="'+blogs[i]['url']+'">'+blogs[i]['url']+'</a>';

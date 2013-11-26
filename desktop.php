@@ -235,7 +235,7 @@
         <script src="js/plugins.js"></script>
         <script src="js/tinymce/tinymce.min.js"></script>
         <script src="js/imagesloaded.js"></script>
-        <script src="js/main.js?v=131119"></script>
+        <script src="js/main.js?v=131126"></script>
         <script src="js/fb.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
