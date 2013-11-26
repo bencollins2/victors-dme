@@ -844,22 +844,7 @@ function loadSlices() {
 	$.getJSON(url, function(data) {
 		console.log(data);
 		$.each(data, function(key, val) {
-			if (data[key] != false) {
-				var html = val["html"];
-				$newLi = $("<li />", {'class': 'one-item hidestart', 'data-id' : val["id"], 'id': 'item-'+val["id"], 'html':'\
-					<div class="info">\
-						<h2>'+val["title"]+'</h2>\
-						<div class="description">\
-							'+val["description"]+'\
-						</div>\
-					</div>\
-					<div class="img-cover">\
-						<img class="cover" src="img/'+val["img_large"]+'_cover.jpg" alt="mail cover" />\
-					</div>\
-					<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
-					<div class="item-content"></div>'}).appendTo("ul.slides");
-				
-			}
+			
 			if (key == 0) {
 				////////////////////
 				// Message area  //
@@ -887,6 +872,24 @@ function loadSlices() {
 				
 				if(msgslice == '0'){
 				}
+			}
+			
+			
+			if (data[key] != false) {
+				var html = val["html"];
+				$newLi = $("<li />", {'class': 'one-item hidestart', 'data-id' : val["id"], 'id': 'item-'+val["id"], 'html':'\
+					<div class="info">\
+						<h2>'+val["title"]+'</h2>\
+						<div class="description">\
+							'+val["description"]+'\
+						</div>\
+					</div>\
+					<div class="img-cover">\
+						<img class="cover" src="img/'+val["img_large"]+'_cover.jpg" alt="mail cover" />\
+					</div>\
+					<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
+					<div class="item-content"></div>'}).appendTo("ul.slides");
+				
 			}
 			
 			if (key == 2){
