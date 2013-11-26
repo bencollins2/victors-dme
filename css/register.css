@@ -169,7 +169,7 @@ p.play {
     transition: all .5s ease;
 }
 
-#register a.cta {
+a.cta {
    border-top: 1px solid #ffe48a;
    background: #fcc100;
    background: -webkit-gradient(linear, left top, left bottom, from(#fcd238), to(#fcc100));
@@ -199,6 +199,9 @@ p.play {
    font-weight: 200;
    font-family: Helvetica,arial,sans-serif;
 }
+#explore a.cta {
+    position: relative;
+}
 #register a.cta:hover {
    border-top-color: #c9a11c;
    background: #c9a11c;
@@ -220,7 +223,36 @@ p.play {
 
 #moreinfo p.reg {
     margin: -148px 0 0 220px;
-    
+}
+
+p.explore {
+    position: absolute;
+    top: 50%;
+    margin-top: 88px;
+}
+
+p.explore a {}
+
+div#explore {
+    background: #333;
+ 
+    color: white;
+    height: 100%;
+    padding: 20px;
+}
+
+div#explore p {
+    margin: 0 0 20px;
+ 
+    width: 460px;
+}
+
+div#explore h2 {
+    font-family: Georgia, serif;
+ 
+    font-weight: 100;
+    font-size: 40px;
+    margin: 0 0 20px;
 }
 
 #register img.comp {
@@ -237,10 +269,11 @@ p.play {
     position: absolute;
 }
 
-#register .what a {
+#register .what a, p.explore a {
     color: white;
  
     text-decoration: none;
+    font-weight: bold;
 }
 
 #register p.play a:hover, #register p.learnmore a:hover {

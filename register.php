@@ -107,6 +107,7 @@ else{
   <p class="reg">
     Customize this website to filter through the amazing work being done by Michigan Engineers, who are stepping up to tackle the world's greatest problems.
   </p>
+  <p class="explore"><a href="#explore" class="explore">Explore site functions &#8594;</a></p>
   <img class="comp" src="./img/computer.png" />
   <p class="what"><a href="javascript:document.getElementById('moreinfo').scrollIntoView();">What is a Victor for Michigan?&nbsp;&nbsp;&nbsp;&#8595;</a></p>
 
@@ -141,6 +142,19 @@ else{
         </form>
       </div>
   </div>
+</div>
+
+<div style="display:none">
+
+  <div id="explore">
+    <h2>Features</h2>
+    <p>Use the Victors Experience website as a powerful information pipeline to stay informed about work the College is doing to address the world's grand challenges.</p>
+    <p>Customize the content by telling the site what topics you care most about and it will remember to show you related stories and videos.</p>
+    <p>Create a favorites list and share stories you like on Facebook, Twitter, Pinterest and other social media sites.</p>
+    <p>Use Explore to see all the stories and videos about work being done across the College by students, faculty and alumni.</p>
+    <p><a class="cta" href="signup">Sign up to get started</a></p>
+  </div>
+
 </div>
 
 </div>
@@ -218,6 +232,9 @@ $(".fbl").on("click",function(e){
         $(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390, opacity:.85});
 
         $("a.cta").colorbox({inline:true, width:"75%"});
+
+        $("a.explore").colorbox({inline:true, width:"75%", height:"500px"});
+
 
         if (getUrlVars()["err"] == 1) $(".create").trigger("click");
 });
