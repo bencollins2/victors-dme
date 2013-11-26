@@ -148,7 +148,7 @@ function loadInSame(id) {
 					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body">'+content+'</div></div>');
+					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body"><a href="http://umichenginvictors.tumblr.com/" target="_blank"><p>Tumblr Blogs</p></a>'+content+'</div></div>');
 			
 					$(".big"+id).imagesLoaded(imageLoadedSame(id));
 
@@ -523,7 +523,7 @@ function loadFeature(id) {
 					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body">'+content+'</div></div>');
+					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body"><a href="http://umichenginvictors.tumblr.com/" target="_blank"><p>Tumblr Blogs</p></a>'+content+'</div></div>');
 			
 					$(".big"+id).imagesLoaded(imageLoadedSame(id));
 
