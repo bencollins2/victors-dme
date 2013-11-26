@@ -148,7 +148,7 @@ function loadInSame(id) {
 					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body">'+content+'</div></div>');
+					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body"><a href="http://umichenginvictors.tumblr.com/" target="_blank"><p>Tumblr Blogs</p></a>'+content+'</div></div>');
 			
 					$(".big"+id).imagesLoaded(imageLoadedSame(id));
 
@@ -222,7 +222,8 @@ function loadInSame(id) {
 			request.done(function(msg) {
 
 				var json = $.parseJSON(msg);
-				// console.log(json);
+			 console.log(json);
+			 	if (json.date == null) json.date = '';
 				if (json.titletop == 1) {
 					$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><h2 class="fadewithme">'+json['title']+'</h2><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
 						<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
@@ -230,7 +231,7 @@ function loadInSame(id) {
 						<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 						<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 						<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-						</div><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
+						</div><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><span class="date">'+json.date+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
 				}
 				else {
 						$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
@@ -239,7 +240,7 @@ function loadInSame(id) {
 						<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 						<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 						<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-						</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
+						</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><span class="date">'+json.date+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
 				}
 			
 				$(".big"+json.id).imagesLoaded(imageLoadedSame(json.id));
@@ -523,7 +524,7 @@ function loadFeature(id) {
 					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body">'+content+'</div></div>');
+					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body"><a href="http://umichenginvictors.tumblr.com/" target="_blank"><p>Tumblr Blogs</p></a>'+content+'</div></div>');
 			
 					$(".big"+id).imagesLoaded(imageLoadedSame(id));
 
@@ -602,6 +603,7 @@ function loadFeature(id) {
 		request.done(function(msg) {
 			var json = $.parseJSON(msg);
 			// console.log(json);
+			if (json.date == null) json.date = '';
 			if (json.titletop == 1) {
 				$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><h2 class="fadewithme">'+json['title']+'</h2><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
 					<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
@@ -609,7 +611,7 @@ function loadFeature(id) {
 					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-					</div><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
+					</div><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><span class="date">'+json.date+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
 			}
 			else {
 					$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
@@ -618,7 +620,7 @@ function loadFeature(id) {
 					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
 					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
 					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-					</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
+					</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><span class="date">'+json.date+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
 			}
 			
 			$(".big"+json.id).imagesLoaded(imageLoaded(json.id));
@@ -844,22 +846,7 @@ function loadSlices() {
 	$.getJSON(url, function(data) {
 		console.log(data);
 		$.each(data, function(key, val) {
-			if (data[key] != false) {
-				var html = val["html"];
-				$newLi = $("<li />", {'class': 'one-item hidestart', 'data-id' : val["id"], 'id': 'item-'+val["id"], 'html':'\
-					<div class="info">\
-						<h2>'+val["title"]+'</h2>\
-						<div class="description">\
-							'+val["description"]+'\
-						</div>\
-					</div>\
-					<div class="img-cover">\
-						<img class="cover" src="img/'+val["img_large"]+'_cover.jpg" alt="mail cover" />\
-					</div>\
-					<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
-					<div class="item-content"></div>'}).appendTo("ul.slides");
-				
-			}
+			
 			if (key == 0) {
 				////////////////////
 				// Message area  //
@@ -887,6 +874,24 @@ function loadSlices() {
 				
 				if(msgslice == '0'){
 				}
+			}
+			
+			
+			if (data[key] != false) {
+				var html = val["html"];
+				$newLi = $("<li />", {'class': 'one-item hidestart', 'data-id' : val["id"], 'id': 'item-'+val["id"], 'html':'\
+					<div class="info">\
+						<h2>'+val["title"]+'</h2>\
+						<div class="description">\
+							'+val["description"]+'\
+						</div>\
+					</div>\
+					<div class="img-cover">\
+						<img class="cover" src="img/'+val["img_large"]+'_cover.jpg" alt="mail cover" />\
+					</div>\
+					<a href="'+val["img_large"]+'.jpg" class="img-src"></a>\
+					<div class="item-content"></div>'}).appendTo("ul.slides");
+				
 			}
 			
 			if (key == 2){
