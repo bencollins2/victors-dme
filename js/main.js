@@ -102,6 +102,23 @@ function imageLoaded(id) {
 
 function loadTumblr(){
 	console.log("will load data from tumblrblog.php");
+	$.ajax({
+		type:"GET",
+		url:"tumblrblog.php",
+		success:function(data){
+			data = JSON.parse(data);
+			var blogs = data['posts'];
+			var content = '';
+			for (var i=0; i<blogs.length; i++){
+				console.log(blogs[i]);
+				content = content + '<h3>'+ blogs[i]['caption'] +'<h3/>';
+			}
+			return content			
+		},
+		error:function(jqXHR, textStatus){
+			console.log("Request failed: " + textStatus);
+		}
+	})
 }	
 
 function loadInSame(id) {
@@ -109,72 +126,111 @@ function loadInSame(id) {
 	var itemheight, $itemcontent = $(".current").find(".item-content");
 	
 	if(id == "tumblr"){
-		loadTumblr();
-		$itemcontent.html('<style type="text/css"></style><div class="content-image-div"><h2 class="fadewithme">Notes from our Victors Blog</h2><img class="content-image big'+id+'" src="img/big/tumblr.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
-			<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
-			<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
-			<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
-			<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
-			<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
-			</div><h3 class="subtitle">Hottest Blogs</h3><span class="byline">Michigan Victors</span><div class="body"></div></div>');
+		// var content = loadTumblr();
+		
+		$.ajax({
+			type:"GET",
+			url:"tumblrblog.php",
+			success:function(data){
+				data = JSON.parse(data);
+				var blogs = data['posts'];
+				var content = '';
+				for (var i=0; i<blogs.length; i++){
+					console.log(blogs[i]);
+
+					if (blogs[i]['photos']){
+						for (var j=0; j<blogs[i]['photos'].length; j++){
+							var url = blogs[i]['photos'][j]['original_size']['url'];
+							content = content + '<p><img style="max-width:570px" src="'+url+'"/></p>'
+						}
+					}
+					if (blogs[i]['player']){
+						content = content + '<div style="width:'+blogs[i]['player'][2]['width']+'px">' + blogs[i]['player'][2]['embed_code'] + '</div>';
+					}
+					if (blogs[i]['caption']){
+						content = content + blogs[i]['caption'];
+					}
+					if (blogs[i]['text']){
+						content = content + '<p>'+blogs[i]['text']+'</p>' + blogs[i]['source'];
+					}
+					if (blogs[i]['description']){
+						content = content + blogs[i]['description'] + '<a href="'+blogs[i]['url']+'">'+blogs[i]['url']+'</a>';
+					}
+					
+					content = content + '<hr style = "width:570px">';
+					
+				}
+				
+				$itemcontent.html('<style type="text/css"></style><div class="content-image-div"><h2 class="fadewithme">Notes from our Victors Blog</h2><img class="content-image big'+id+'" src="img/big/tumblr.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+					<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+					<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body">'+content+'</div></div>');
 			
-			$(".big"+id).imagesLoaded(imageLoadedSame(id));
+					$(".big"+id).imagesLoaded(imageLoadedSame(id));
 
-			stWidget.addEntry({
-				"service":"facebook",
-				"element":document.getElementById('fb'),
-				"url":"http://victors.engin.umich.edu/article.php?id="+id,
-				"title":"facebook",
-				"type":"large",
-				"text":"Share on facebook",
-				"summary":"Share on facebook"
-			});
+					stWidget.addEntry({
+						"service":"facebook",
+						"element":document.getElementById('fb'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"facebook",
+						"type":"large",
+						"text":"Share on facebook",
+						"summary":"Share on facebook"
+					});
 
-			stWidget.addEntry({
-				"service":"twitter",
-				"element":document.getElementById('tw'),
-				"url":"http://victors.engin.umich.edu/article.php?id="+id,
-				"title":"twitter",
-				"type":"large",
-				"text":"Share on twitter",
-				"summary":"Share on twitter"   
-			});
+					stWidget.addEntry({
+						"service":"twitter",
+						"element":document.getElementById('tw'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"twitter",
+						"type":"large",
+						"text":"Share on twitter",
+						"summary":"Share on twitter"   
+					});
 
-			stWidget.addEntry({
-				"service":"googleplus",
-				"element":document.getElementById('gp'),
-				"url":"http://victors.engin.umich.edu/article.php?id="+id,
-				"title":"googleplus",
-				"type":"large",
-				"text":"Share on googleplus",
-				"summary":"Share on googleplus"   
-			});
+					stWidget.addEntry({
+						"service":"googleplus",
+						"element":document.getElementById('gp'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"googleplus",
+						"type":"large",
+						"text":"Share on googleplus",
+						"summary":"Share on googleplus"   
+					});
 
-			stWidget.addEntry({
-				"service":"pinterest",
-				"element":document.getElementById('pn'),
-				"url":"http://victors.engin.umich.edu/article.php?id="+id,
-				"title":"pinterest",
-				"type":"large",
-				"text":"Share on pinterest",
-				"summary":"Share on pinterest"   
-			});
+					stWidget.addEntry({
+						"service":"pinterest",
+						"element":document.getElementById('pn'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"pinterest",
+						"type":"large",
+						"text":"Share on pinterest",
+						"summary":"Share on pinterest"   
+					});
 
-			stWidget.addEntry({
-				"service":"reddit",
-				"element":document.getElementById('rd'),
-				"url":"http://victors.engin.umich.edu/article.php?id="+id,
-				"title":"reddit",
-				"type":"large",
-				"text":"Share on reddit",
-				"summary":"Share on reddit"   
-			});
-			/////////////////////////////////
-			// Scroll body back to the top //
-			/////////////////////////////////
-			$(".explore, body, html").scrollTop(0);
-			$(".items").scrollLeft(0);
-			$("#loading").fadeOut(500);
+					stWidget.addEntry({
+						"service":"reddit",
+						"element":document.getElementById('rd'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"reddit",
+						"type":"large",
+						"text":"Share on reddit",
+						"summary":"Share on reddit"   
+					});
+					/////////////////////////////////
+					// Scroll body back to the top //
+					/////////////////////////////////
+					$(".explore, body, html").scrollTop(0);
+					$(".items").scrollLeft(0);
+					$("#loading").fadeOut(500);		
+			},
+			error:function(jqXHR, textStatus){
+				console.log("Request failed: " + textStatus);
+			}
+		}) 
 	}
 	else{
 		var request = $.ajax({
@@ -447,6 +503,109 @@ function loadFeature(id) {
 	
 	else if($that.hasClass("tumblr")){
 		console.log("yes,tumblr");
+		$.ajax({
+			type:"GET",
+			url:"tumblrblog.php",
+			success:function(data){
+				data = JSON.parse(data);
+				var blogs = data['posts'];
+				var content = '';
+				for (var i=0; i<blogs.length; i++){
+					console.log(blogs[i]);
+
+					if (blogs[i]['photos']){
+						for (var j=0; j<blogs[i]['photos'].length; j++){
+							var url = blogs[i]['photos'][j]['original_size']['url'];
+							content = content + '<p><img style="max-width:570px" src="'+url+'"/></p>'
+						}
+					}
+					if (blogs[i]['player']){
+						content = content + '<div style="width:'+blogs[i]['player'][2]['width']+'px">' + blogs[i]['player'][2]['embed_code'] + '</div>';
+					}
+					if (blogs[i]['caption']){
+						content = content + blogs[i]['caption'];
+					}
+					if (blogs[i]['text']){
+						content = content + '<p>'+blogs[i]['text']+'</p>' + blogs[i]['source'];
+					}
+					if (blogs[i]['description']){
+						content = content + blogs[i]['description'] + '<a href="'+blogs[i]['url']+'">'+blogs[i]['url']+'</a>';
+					}
+					
+					content = content + '<hr style = "width:570px">';
+					
+				}
+				
+				$itemcontent.html('<style type="text/css"></style><div class="content-image-div"><h2 class="fadewithme">Notes from our Victors Blog</h2><img class="content-image big'+id+'" src="img/big/tumblr.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
+					<span id="fb" class=\'facebook st\' displayText=\'Facebook\'></span>\
+					<span id="tw" class=\'twitter st\' displayText=\'Tweet\'></span>\
+					<span id="gp" class=\'googleplus st\' displayText=\'Google +\'></span>\
+					<span id="pn" class=\'pinterest st\' displayText=\'Pinterest\'></span>\
+					<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
+					</div><h2>UmichEngin Victors</h2><h3 class="subtitle">Because the world needs breakthrough engineering</h3><span class="byline">Michigan Victors</span><div class="body">'+content+'</div></div>');
+			
+					$(".big"+id).imagesLoaded(imageLoadedSame(id));
+
+					stWidget.addEntry({
+						"service":"facebook",
+						"element":document.getElementById('fb'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"facebook",
+						"type":"large",
+						"text":"Share on facebook",
+						"summary":"Share on facebook"
+					});
+
+					stWidget.addEntry({
+						"service":"twitter",
+						"element":document.getElementById('tw'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"twitter",
+						"type":"large",
+						"text":"Share on twitter",
+						"summary":"Share on twitter"   
+					});
+
+					stWidget.addEntry({
+						"service":"googleplus",
+						"element":document.getElementById('gp'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"googleplus",
+						"type":"large",
+						"text":"Share on googleplus",
+						"summary":"Share on googleplus"   
+					});
+
+					stWidget.addEntry({
+						"service":"pinterest",
+						"element":document.getElementById('pn'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"pinterest",
+						"type":"large",
+						"text":"Share on pinterest",
+						"summary":"Share on pinterest"   
+					});
+
+					stWidget.addEntry({
+						"service":"reddit",
+						"element":document.getElementById('rd'),
+						"url":"http://victors.engin.umich.edu/article.php?id="+id,
+						"title":"reddit",
+						"type":"large",
+						"text":"Share on reddit",
+						"summary":"Share on reddit"   
+					});
+					/////////////////////////////////
+					// Scroll body back to the top //
+					/////////////////////////////////
+					$(".explore, body, html").scrollTop(0);
+					$(".items").scrollLeft(0);
+					$("#loading").fadeOut(500);		
+			},
+			error:function(jqXHR, textStatus){
+				console.log("Request failed: " + textStatus);
+			}
+		});
 	}
 
 	////////////////////////////////////////////////////

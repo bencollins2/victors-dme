@@ -15,8 +15,6 @@ $client = new Tumblr\API\Client(
 $blogName = "umichenginvictors";
 $blogs = $client->getBlogPosts($blogName, $options = null);
 
-?>
+echo json_encode($blogs)
 
-<pre>
-	<?php print_r($blogs);?> 
-</pre>
+?>
