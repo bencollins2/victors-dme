@@ -732,7 +732,6 @@ li.current {
 .favorite .explore-item{
 	height:auto;
 	overflow:auto;
-	min-height: 343px;
 }
 
 
