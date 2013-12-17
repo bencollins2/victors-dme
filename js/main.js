@@ -110,11 +110,12 @@ function loadInSame(id) {
 		// var content = loadTumblr();
 		
 		$.ajax({
-			type:"GET",
-			url:"tumblrblog.php",
+			url:"http://api.tumblr.com/v2/blog/umichenginvictors.tumblr.com/posts?api_key=bd8RFLG5vt8pP31SZruALVSE6eFWHOTVPkeUpzh3gfADwcM8I3",
+			dataType:"jsonp",
+			jsonp:"jsonp",
 			success:function(data){
-				data = JSON.parse(data);
-				var blogs = data['posts'];
+				//data = JSON.parse(data);
+				var blogs = data['response']['posts'];
 				var content = '';
 				for (var i=0; i<blogs.length; i++){
 					console.log(blogs[i]);
@@ -485,11 +486,12 @@ function loadFeature(id) {
 	else if($that.hasClass("tumblr")){
 		console.log("yes,tumblr");
 		$.ajax({
-			type:"GET",
-			url:"tumblrblog.php",
+			url:"http://api.tumblr.com/v2/blog/umichenginvictors.tumblr.com/posts?api_key=bd8RFLG5vt8pP31SZruALVSE6eFWHOTVPkeUpzh3gfADwcM8I3",
+			dataType:"jsonp",
+			jsonp:"jsonp",
 			success:function(data){
-				data = JSON.parse(data);
-				var blogs = data['posts'];
+				//data = JSON.parse(data);
+				var blogs = data['response']['posts'];
 				var content = '';
 				for (var i=0; i<blogs.length; i++){
 					console.log(blogs[i]);
