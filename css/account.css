@@ -134,6 +134,24 @@ body {
     font-size: 13px;
 }
 
+.right{
+	margin:51px 0 0 270px;
+}
+.avatar .frame{
+	width:70%;
+	margin:80px auto 30px;
+}
+#avatar{
+	width:100%;
+}
+
+.preview{
+	width:150px;
+	height:150px;
+	overflow:hidden;
+	margin:auto;
+}
+
 h2 {
     font-family: "league-gothic", sans-serif;
     color: white;
@@ -144,12 +162,9 @@ h2 {
 }
 
 .quiz {
-    position: relative;
-    display: block;
-    clear: none;
     width: 578px;
-    margin: 60px auto;
-    overflow: auto;
+    margin: auto;
+	padding:20px 0;
 }
 
 .quiz ul {
