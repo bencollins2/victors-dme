@@ -1,0 +1,329 @@
+body {
+    display: block;
+    height: 100%;
+    background: #212A55;
+}
+
+.sticky {
+    background: black;
+}
+
+.sticky ul {
+	position: absolute;
+	display: block;
+	margin: 0 auto;
+	overflow: visible;
+	height: 50px;
+	/*background: url(../img/dmebadge.jpg) scroll no-repeat right 3px;*/
+}
+
+.navi_item {
+    position: relative;
+    width: 110px;
+    cursor: pointer;
+	color:white;
+	transition: color 1s ease;
+    float: right;
+}
+.navi_item p{
+	transition: background 1s ease;
+}
+.navi_item:hover{
+	color:#FEC33A;
+}
+.navi_item:hover p{
+	background:#FEC33A;
+}
+
+#nav_exp{
+	right: inherit;
+}
+#nav_home{
+	right: inherit;
+}
+#nav_fav{
+	right: inherit;
+}
+
+.navi_item span {
+    display: block;
+    position: absolute;
+    right: 49px;
+    margin: 12px 0 0 0px;
+    font-weight: 100;
+    font-size: 15px;
+}
+
+.navi_item .square {
+    position: relative;
+
+    float: right;
+    width: 36px;
+    height: 38px;
+    overflow: hidden;
+    margin: 4px;
+}
+
+.p_short {
+    display: block;
+    position: relative;
+    float: left;
+    width: 16px;
+    height: 16px;
+    margin: 2px 1px 1px;
+    background: white;
+    transition: width 1s ease;
+}
+
+.p_long {
+    display: block;
+    position: relative;
+    float: left;
+    width: 7px;
+    height: 35px;
+    margin: 2px 1px 1px;
+    background: white;
+    transition: width 1s ease;
+}
+
+
+.left {
+    display: block;
+    position: fixed;
+    z-index: 101;
+    top: 51px;
+    height: 100%;
+    width: 270px;
+    background: #FEC33A;
+    min-height: 503px;
+    box-shadow: 0 0 30px black;
+    overflow: hidden;
+}
+
+.left .lefttext {
+    width: 200px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    color: #032B5B;
+    font-weight: 100;
+    border-bottom: thin solid rgba(3, 43, 91, .3);
+    /*border-top: thin solid rgba(3, 43, 91, .3);*/
+    padding: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.left h2 {
+    font-family: "league-gothic", sans-serif;
+    margin: 35px auto 10px;
+    color: #032B5A;
+    text-transform: uppercase;
+    font-size: 40px;
+    line-height: 1em;
+    font-weight: 100;
+}
+
+.left span {
+    color: #032B5A;
+    margin: 0 0 20px;
+    font-weight: 100;
+    font-style: italic;
+}
+.left p {
+    font-size: 13px;
+}
+
+h2 {
+    font-family: "league-gothic", sans-serif;
+    color: white;
+    margin: 0;
+    font-size: 55px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.quiz {
+    position: relative;
+    display: block;
+    clear: none;
+    width: 578px;
+    margin: 60px auto;
+    overflow: auto;
+}
+
+.quiz ul {
+	overflow:hidden;
+}
+
+.quiz ul li {
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 217px;
+    overflow: hidden;
+    margin: 10px 0;
+    clear: left;
+}
+
+.quiz ul li.active {
+    border: 2px solid #FECE31;
+}
+
+.quiz ul li:hover img {
+    opacity: 1;
+}
+
+.quiz ul li.active img {
+    opacity: 1;
+}
+
+.quiz ul li div.overlay {
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+    width: 320px;
+    background: rgba(0,0,0,.6);
+}
+
+.quiz ul li div.imgdiv {
+    width: 320px;
+    border: 2px solid white;
+    position: relative;
+    display: block;
+    float: left;
+    overflow: hidden;
+	cursor:pointer;
+}
+
+.quiz ul li div.checkboxes {
+    float: left;
+    position: relative;
+    margin: 0 10px;
+    color: white;
+    font-weight: 100;
+    font-size: 15px;
+}
+
+.quiz ul li div.checkboxes .item {
+    position: relative;
+    height: 29px;
+    width: 230px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.quiz ul li div.checkboxes .item:hover {
+    color: #FECE31;
+}
+
+.quiz ul li div.checkboxes .item img {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+.quiz ul li div.checkboxes .item span {
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 31px;
+    margin: 7px 0 0;
+    clear: none;
+}
+
+.quiz ul li div h3 {}
+
+.quiz ul li .imgdiv img {
+    transition: all .5s ease-out;
+    opacity: 1;
+    width: 100%;
+    height: auto;
+}
+
+div.next {
+    display: block;
+	margin:auto;
+    bottom: 0;
+    height: 41px;
+    overflow: auto;
+	text-align:center;
+}
+
+a.next {
+    color: white;
+    display: inline-block;
+    font-family: "league-gothic", sans-serif;
+    font-size: 30px;
+    bottom: 0;
+    left: 0;
+    text-decoration: none;
+    padding: 0;
+}
+
+a.next:hover{
+	color:#FECE31;
+}
+
+img.wheel {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+    div.quiz {
+        width: 534px;
+    }
+
+    .quiz ul li {
+        height: 190px;
+    }
+
+    .quiz ul li div.overlay {
+    width: 280px;
+}
+
+    .quiz ul li div.imgdiv {
+        width: 280px;
+        height: 185px;
+    }
+}
+
+
+@media only screen and (max-width: 770px) {
+    div.quiz {
+        width: 454px;
+    }
+
+    .quiz ul li {
+        height: 157px;
+    }
+
+    .quiz ul li div.overlay {
+        width: 200px;
+    
+        bottom: 12px;
+    }
+
+    .quiz ul li div.imgdiv {
+        width: 200px;
+        height: 133px;
+    
+        margin-top: 10px;
+}
+    .quiz ul li div h3 {
+        font-size: 20px;
+    }
+
+    .quiz ul li div.checkboxes {
+        font-size: 12px;
+    }
+
+    .quiz ul li div.checkboxes .item span {
+    top: 5px;
+}
+}
