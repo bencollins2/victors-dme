@@ -3,11 +3,52 @@
 	
 	$user = $session->userinfo[0];
 	
+	// define('PATH', 'img/avatars/');
+	// define('UPLOADPATH', '/afs/umich.edu/group/e/engcomm/Private/uploads/img/avatars/');
+	
+	define('UPLOADPATH', 'img/avatars/');	
+	
     include("../db_campaign.php");
+	
+	
+	if ($_FILES['file']['size'] > 0) {
+		$tmpname = $_FILES['file']['tmp_name'];
+		$filename = $_FILES['file']['name'];
+		$target = UPLOADPATH . $filename;
+		$moved = move_uploaded_file(($tmpname), $target);
+		if( $moved ) {
+		  echo $target;
+		} else {
+		  echo "Not uploaded";
+		}
+		return;
+	}
 
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['avatarurl']))
+	{
+		$targ_w = $targ_h = 150;
+		$jpeg_quality = 90;
 
-     // If they're logged into facebook, and there's a link ID 
-    
+		$src = $_POST['avatarurl'];
+		$img_r = imagecreatefromjpeg($src);
+		$dst_r = ImageCreateTrueColor( $targ_w, $targ_h );
+
+		imagecopyresampled($dst_r,$img_r,0,0,$_POST['x'],$_POST['y'],
+		$targ_w,$targ_h,$_POST['w'],$_POST['h']);
+
+		$newavatar = uniqid() . '.jpg';
+		$success = imagejpeg($dst_r, UPLOADPATH . $newavatar, $jpeg_quality);
+		
+		if($success){
+			unlink($src);
+			$query = "UPDATE users SET `avatar_sm` = '$newavatar' WHERE `id` LIKE '$user'";
+			$result = mysql_query($query) or die("Sorry: " . $query);
+			echo "added cats";
+			header('Location: account.php');
+		}
+	}
+	
+
 
     $q = "SELECT * FROM `users` WHERE `id` LIKE '$user' LIMIT 0,1;";
     $r = mysql_query($q);
@@ -24,11 +65,15 @@
         $cats = $line["categories"];
         $inds = $line["individuals"];
         $sidebar = $line["sidebar"];
-        $mailimg = $line["mailimg"];
+		if($line["avatar_sm"]){
+			$avatar = UPLOADPATH . $line["avatar_sm"];
+		}else{
+			$avatar = UPLOADPATH . "default.gif";
+		}
+        
 		$favorites = $line["favorites"];
-		$msgslice = $line["show_message_slice"];
-		$firsttime = $line["firsttime"];
     }
+	
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -60,6 +105,7 @@
         <link rel="stylesheet" href="css/dme.css">
         <link rel="stylesheet" href="css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/account.css">
+		<link rel="stylesheet" href="css/jquery.Jcrop.min.css">
 		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
         
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
@@ -112,133 +158,157 @@
             <!-- <img class="leftlogo" src="img/leftlogo.png" alt="logo" /> -->
             <div class="lefttext">
                 <h2>Welcome <?= $first_name?></h2>
-                <span>Victor of engineering</span>
-                <p class="msg"><!-- We've hand picked some stories and videos that we think you'll like. Let us know what you think. We'll be updating the site frequently, so please bookmark it and come back again soon. --></p>
-                <p><a <?= $logout?>>(Log Out)</a></p>
+				<div class="preview">
+					 <img src="<?= $avatar?>" />
+				</div>
+				<br/>
+				<a href="#" id="avatarbtn">Upload Avatar</a>
             </div>
 		</div>
 		
-		
-        <div class="quiz">
-        	<h2>Select some things that you like.</h2>
-        	<ul>
-        		<li class="transportation">
-                    <div class="imgdiv">
-                        <img src="img/cats/transportation.jpg" />
-                    </div>
-                    <div class="overlay">
-                        <h3>Transportation Innovations</h3>
-                    </div>
-                    <div class="checkboxes">
-                        <div data-shortname="vautonomous" class="item"><img src="img/box.png" alt="checkbox" /><span>Autonomous Vehicles</span></div>
-                        <div data-shortname="invehicle" class="item"><img src="img/box.png" alt="checkbox" /><span>In-Vehicle Technology</span></div>
-                        <div data-shortname="vefficiency" class="item"><img src="img/box.png" alt="checkbox" /><span>Vehicle Efficiency</span></div>
-                        <div data-shortname="vsafety" class="item"><img src="img/box.png" alt="checkbox" /><span>Vehicle Safety</span></div>
-                        <div data-shortname="vpowersources" class="item"><img src="img/box.png" alt="checkbox" /><span>Power Sources</span></div>
-                    </div>
-                </li>
-                <li class="economics">
-                    <div class="imgdiv">
-                        <img src="img/cats/economics.jpg" />
-                    </div>
-                    <div class="overlay">
-                        <h3>Economics & Entrepreneurship</h3>
-                    </div>
-                    <div class="checkboxes">
-                        <div data-shortname="startups" class="item"><img src="img/box.png" alt="checkbox" /><span>Startups</span></div>
-                        <div data-shortname="highrisk" class="item"><img src="img/box.png" alt="checkbox" /><span>High-Risk Research</span></div>
-                        <div data-shortname="entreco" class="item"><img src="img/box.png" alt="checkbox" /><span>Entrepreneurial Ecosystem</span></div>
-                        <div data-shortname="ecoimpact" class="item"><img src="img/box.png" alt="checkbox" /><span>Economic Impact</span></div>
-                    </div>
-                </li>
-                <li class="wolverineexperience">
-                    <div class="imgdiv">
-                        <img src="img/cats/wolverineexperience.jpg" />
-                    </div>
-                    <div class="overlay">
-                        <h3>Wolverine Experience</h3>
-                    </div>
-                    <div class="checkboxes">
-                        <div data-shortname="handson" class="item"><img src="img/box.png" alt="checkbox" /><span>Hands-On Engineering</span></div>
-                        <div data-shortname="leadersbest" class="item"><img src="img/box.png" alt="checkbox" /><span>Academic Leaders & Best</span></div>
-                        <div data-shortname="world" class="item"><img src="img/box.png" alt="checkbox" /><span>Wolverines Around the World</span></div>
-                        <div data-shortname="innovations" class="item"><img src="img/box.png" alt="checkbox" /><span>Innovations at Michigan</span></div>
-                        <div data-shortname="stories" class="item"><img src="img/box.png" alt="checkbox" /><span>Victor Stories</span></div>
-                        <div data-shortname="life" class="item"><img src="img/box.png" alt="checkbox" /><span>Life in Ann Arbor</span></div>
-                    </div>
-                </li>
-                <li class="globalresources">
-                    <div class="imgdiv">
-                        <img src="img/cats/globalresources.jpg" />
-                    </div>
-                    <div class="overlay">
-                        <h3>Global Resources</h3>
-                    </div>
-                    <div class="checkboxes">
-                        <div data-shortname="water" class="item"><img src="img/box.png" alt="checkbox" /><span>Water</span></div>
-                        <div data-shortname="sustain" class="item"><img src="img/box.png" alt="checkbox" /><span>Sustainability</span></div>
-                        <div data-shortname="eefficiency" class="item"><img src="img/box.png" alt="checkbox" /><span>Energy Efficiency</span></div>
-                        <div data-shortname="alternativee" class="item"><img src="img/box.png" alt="checkbox" /><span>Alternative Energy</span></div>
-                        <div data-shortname="environment" class="item"><img src="img/box.png" alt="checkbox" /><span>Environment</span></div>
-                    </div>
-                </li>
-                <li class="materials">
-                    <div class="imgdiv">
-                        <img src="img/cats/materials.jpg" />
-                    </div>
-                    <div class="overlay">
-                        <h3>Revolutionary Materials</h3>
-                    </div>
-                    <div class="checkboxes">
-                        <div data-shortname="nanotech" class="item"><img src="img/box.png" alt="checkbox" /><span>Nanotechnology</span></div>
-                        <div data-shortname="structures" class="item"><img src="img/box.png" alt="checkbox" /><span>Structures</span></div>
-                        <div data-shortname="healthsafety" class="item"><img src="img/box.png" alt="checkbox" /><span>Health & Safety</span></div>
-                        <div data-shortname="eenvironment" class="item"><img src="img/box.png" alt="checkbox" /><span>Energy & Environment</span></div>
-                        <div data-shortname="electronics" class="item"><img src="img/box.png" alt="checkbox" /><span>Electronics</span></div>
-                    </div>
-                </li>
-        		<li class="healthcare">
-                    <div class="imgdiv">
-                        <img src="img/cats/healthcare.jpg" />
-                    </div>
-                    <div class="overlay">
-                        <h3>Healthcare</h3>
-                    </div>
-                    <div class="checkboxes">
-                        <div data-shortname="disease" class="item"><img src="img/box.png" alt="checkbox" /><span>Disease Research</span></div>
-                        <div data-shortname="diagnostics" class="item"><img src="img/box.png" alt="checkbox" /><span>Diagnostics</span></div>
-                        <div data-shortname="meddev" class="item"><img src="img/box.png" alt="checkbox" /><span>Medical Devices</span></div>
-                        <div data-shortname="treatments" class="item"><img src="img/box.png" alt="checkbox" /><span>Treatments</span></div>
-                        <div data-shortname="globalhealth" class="item"><img src="img/box.png" alt="checkbox" /><span>Global Health</span></div>
-                    </div>
-                </li>
-                <li class="securing">
-                    <div class="imgdiv">
-                        <img src="img/cats/securing.jpg" />
-                    </div>
-                    <div class="overlay">
-                        <h3>Securing our Future</h3>
-                    </div>
-                    <div class="checkboxes">
-                        <div data-shortname="weapons" class="item"><img src="img/box.png" alt="checkbox" /><span>Weapons Detection</span></div>
-                        <div data-shortname="cybersecurity" class="item"><img src="img/box.png" alt="checkbox" /><span>CyberSecurity</span></div>
-                        <div data-shortname="nuclear" class="item"><img src="img/box.png" alt="checkbox" /><span>Nuclear Non-Proliferation</span></div>
-                        <div data-shortname="natsec" class="item"><img src="img/box.png" alt="checkbox" /><span>National Security</span></div>
-                        <div data-shortname="infrastructure" class="item"><img src="img/box.png" alt="checkbox" /><span>Infrastructure</span></div>
-                        <div data-shortname="natdis" class="item"><img src="img/box.png" alt="checkbox" /><span>Natural Disasters</span></div>
-                    </div>
-                </li>
+		<div class="right">
+	        <div class="quiz" style="display:block">
+	        	<h2>Select some things that you like.</h2>
+	        	<ul>
+	        		<li class="transportation">
+	                    <div class="imgdiv">
+	                        <img src="img/cats/transportation.jpg" />
+	                    </div>
+	                    <div class="overlay">
+	                        <h3>Transportation Innovations</h3>
+	                    </div>
+	                    <div class="checkboxes">
+	                        <div data-shortname="vautonomous" class="item"><img src="img/box.png" alt="checkbox" /><span>Autonomous Vehicles</span></div>
+	                        <div data-shortname="invehicle" class="item"><img src="img/box.png" alt="checkbox" /><span>In-Vehicle Technology</span></div>
+	                        <div data-shortname="vefficiency" class="item"><img src="img/box.png" alt="checkbox" /><span>Vehicle Efficiency</span></div>
+	                        <div data-shortname="vsafety" class="item"><img src="img/box.png" alt="checkbox" /><span>Vehicle Safety</span></div>
+	                        <div data-shortname="vpowersources" class="item"><img src="img/box.png" alt="checkbox" /><span>Power Sources</span></div>
+	                    </div>
+	                </li>
+	                <li class="economics">
+	                    <div class="imgdiv">
+	                        <img src="img/cats/economics.jpg" />
+	                    </div>
+	                    <div class="overlay">
+	                        <h3>Economics & Entrepreneurship</h3>
+	                    </div>
+	                    <div class="checkboxes">
+	                        <div data-shortname="startups" class="item"><img src="img/box.png" alt="checkbox" /><span>Startups</span></div>
+	                        <div data-shortname="highrisk" class="item"><img src="img/box.png" alt="checkbox" /><span>High-Risk Research</span></div>
+	                        <div data-shortname="entreco" class="item"><img src="img/box.png" alt="checkbox" /><span>Entrepreneurial Ecosystem</span></div>
+	                        <div data-shortname="ecoimpact" class="item"><img src="img/box.png" alt="checkbox" /><span>Economic Impact</span></div>
+	                    </div>
+	                </li>
+	                <li class="wolverineexperience">
+	                    <div class="imgdiv">
+	                        <img src="img/cats/wolverineexperience.jpg" />
+	                    </div>
+	                    <div class="overlay">
+	                        <h3>Wolverine Experience</h3>
+	                    </div>
+	                    <div class="checkboxes">
+	                        <div data-shortname="handson" class="item"><img src="img/box.png" alt="checkbox" /><span>Hands-On Engineering</span></div>
+	                        <div data-shortname="leadersbest" class="item"><img src="img/box.png" alt="checkbox" /><span>Academic Leaders & Best</span></div>
+	                        <div data-shortname="world" class="item"><img src="img/box.png" alt="checkbox" /><span>Wolverines Around the World</span></div>
+	                        <div data-shortname="innovations" class="item"><img src="img/box.png" alt="checkbox" /><span>Innovations at Michigan</span></div>
+	                        <div data-shortname="stories" class="item"><img src="img/box.png" alt="checkbox" /><span>Victor Stories</span></div>
+	                        <div data-shortname="life" class="item"><img src="img/box.png" alt="checkbox" /><span>Life in Ann Arbor</span></div>
+	                    </div>
+	                </li>
+	                <li class="globalresources">
+	                    <div class="imgdiv">
+	                        <img src="img/cats/globalresources.jpg" />
+	                    </div>
+	                    <div class="overlay">
+	                        <h3>Global Resources</h3>
+	                    </div>
+	                    <div class="checkboxes">
+	                        <div data-shortname="water" class="item"><img src="img/box.png" alt="checkbox" /><span>Water</span></div>
+	                        <div data-shortname="sustain" class="item"><img src="img/box.png" alt="checkbox" /><span>Sustainability</span></div>
+	                        <div data-shortname="eefficiency" class="item"><img src="img/box.png" alt="checkbox" /><span>Energy Efficiency</span></div>
+	                        <div data-shortname="alternativee" class="item"><img src="img/box.png" alt="checkbox" /><span>Alternative Energy</span></div>
+	                        <div data-shortname="environment" class="item"><img src="img/box.png" alt="checkbox" /><span>Environment</span></div>
+	                    </div>
+	                </li>
+	                <li class="materials">
+	                    <div class="imgdiv">
+	                        <img src="img/cats/materials.jpg" />
+	                    </div>
+	                    <div class="overlay">
+	                        <h3>Revolutionary Materials</h3>
+	                    </div>
+	                    <div class="checkboxes">
+	                        <div data-shortname="nanotech" class="item"><img src="img/box.png" alt="checkbox" /><span>Nanotechnology</span></div>
+	                        <div data-shortname="structures" class="item"><img src="img/box.png" alt="checkbox" /><span>Structures</span></div>
+	                        <div data-shortname="healthsafety" class="item"><img src="img/box.png" alt="checkbox" /><span>Health & Safety</span></div>
+	                        <div data-shortname="eenvironment" class="item"><img src="img/box.png" alt="checkbox" /><span>Energy & Environment</span></div>
+	                        <div data-shortname="electronics" class="item"><img src="img/box.png" alt="checkbox" /><span>Electronics</span></div>
+	                    </div>
+	                </li>
+	        		<li class="healthcare">
+	                    <div class="imgdiv">
+	                        <img src="img/cats/healthcare.jpg" />
+	                    </div>
+	                    <div class="overlay">
+	                        <h3>Healthcare</h3>
+	                    </div>
+	                    <div class="checkboxes">
+	                        <div data-shortname="disease" class="item"><img src="img/box.png" alt="checkbox" /><span>Disease Research</span></div>
+	                        <div data-shortname="diagnostics" class="item"><img src="img/box.png" alt="checkbox" /><span>Diagnostics</span></div>
+	                        <div data-shortname="meddev" class="item"><img src="img/box.png" alt="checkbox" /><span>Medical Devices</span></div>
+	                        <div data-shortname="treatments" class="item"><img src="img/box.png" alt="checkbox" /><span>Treatments</span></div>
+	                        <div data-shortname="globalhealth" class="item"><img src="img/box.png" alt="checkbox" /><span>Global Health</span></div>
+	                    </div>
+	                </li>
+	                <li class="securing">
+	                    <div class="imgdiv">
+	                        <img src="img/cats/securing.jpg" />
+	                    </div>
+	                    <div class="overlay">
+	                        <h3>Securing our Future</h3>
+	                    </div>
+	                    <div class="checkboxes">
+	                        <div data-shortname="weapons" class="item"><img src="img/box.png" alt="checkbox" /><span>Weapons Detection</span></div>
+	                        <div data-shortname="cybersecurity" class="item"><img src="img/box.png" alt="checkbox" /><span>CyberSecurity</span></div>
+	                        <div data-shortname="nuclear" class="item"><img src="img/box.png" alt="checkbox" /><span>Nuclear Non-Proliferation</span></div>
+	                        <div data-shortname="natsec" class="item"><img src="img/box.png" alt="checkbox" /><span>National Security</span></div>
+	                        <div data-shortname="infrastructure" class="item"><img src="img/box.png" alt="checkbox" /><span>Infrastructure</span></div>
+	                        <div data-shortname="natdis" class="item"><img src="img/box.png" alt="checkbox" /><span>Natural Disasters</span></div>
+	                    </div>
+	                </li>
         		
-        	</ul>
-        	<div class="next"><a class="next" href="#">Submit</a><img src="img/whiteblue.gif" class="wheel" />
-            </div>
+	        	</ul>
+	        	<div class="next"><a class="next" href="#">Submit</a><img src="img/whiteblue.gif" class="wheel" /></div>
 
-        </div>
+	        </div>
+			
+			
+			<div class="avatar" style="display:none">
+				<div class="frame">
+					<img id="avatar" src=""/>
+					<form id="cropform" action="account.php" method="post" onsubmit="return checkCoords();">
+						<input type="hidden" id="x" name="x" />
+						<input type="hidden" id="y" name="y" />
+						<input type="hidden" id="w" name="w" />
+						<input type="hidden" id="h" name="h" />
+						<input type="hidden" id="avatarurl" name="avatarurl" value=""/>
+			        	<div class="next"  style="margin-top:20px"><a class="next" href="#" onclick="document.getElementById('cropform').submit()">Submit Avatar</a></div>
+					</form>
+				</div>
+			</div>
+			
+		</div>
 		
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
         <script src="js/masonry.js"></script>
         <script src="js/plugins.js"></script>
+		
+        <script type="text/javascript" src="js/plupload.js"></script>
+        <script type="text/javascript" src="js/plupload.html4.js"></script>
+        <script type="text/javascript" src="js/plupload.html5.js"></script>
+		<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+		
         <!--script src="js/fb.js"></script-->
         <script type="text/javascript">
 			$(document).ready(function(){
@@ -290,6 +360,93 @@
 					});
 					console.log($query);
 				});
+				
+				//upload avatar images
+				
+				var uploader = new plupload.Uploader({
+					runtimes : 'html5,html4',
+					browse_button : 'avatarbtn',
+					max_file_size : '10mb',
+					url : 'account.php',
+					filters : [
+						{title : "Image files", extensions : "jpg,png,gif"},
+					]
+				});
+				
+				uploader.init();
+				
+				uploader.bind('FilesAdded', function(up, files) {
+					console.log('file added');
+					uploader.start();
+				});
+				
+				uploader.bind("FileUploaded", function(uploader, file, response){
+					console.log(response);
+					var url = response.response;
+					$('.quiz').hide();
+					$('#avatar').attr('src',url);
+					$('.preview img').attr('src', url);
+					$('#avatarurl').attr('value', url);
+					
+					$('.preview img').load(function(){
+						$('.avatar').show();
+						cropAvatar();
+					})	
+				});
+				
+				
+				// to crop and preview avatar
+				cropAvatar = function(){
+			        $pcnt = $('.preview'),
+			        $pimg = $('.preview img'),
+
+			        xsize = $pcnt.width(),
+			        ysize = $pcnt.height();
+				
+					var sizeration = $pimg.width()/$('#avatar').width();
+				
+				    $('#avatar').Jcrop({
+				      aspectRatio: 1,
+				      onSelect: update
+				    },function(){
+				      // Use the API to get the real image size
+				      var bounds = this.getBounds();
+				      boundx = bounds[0];
+				      boundy = bounds[1];
+				    });
+
+					function update(c){
+					    $('#x').val(c.x*sizeration);
+					    $('#y').val(c.y*sizeration);
+					    $('#w').val(c.w*sizeration);
+					    $('#h').val(c.h*sizeration);
+					
+						console.log(c.x,c.y,c.w,c.h);
+						console.log(sizeration);
+						console.log($pimg.width(),$pimg.height());
+					
+				        if (parseInt(c.w) > 0)
+				        {
+				          var rx = xsize / c.w;
+				          var ry = ysize / c.h;
+
+				          $pimg.css({
+				            width: Math.round(rx * boundx) + 'px',
+				            height: Math.round(ry * boundy) + 'px',
+				            marginLeft: '-' + Math.round(rx * c.x) + 'px',
+				            marginTop: '-' + Math.round(ry * c.y) + 'px'
+				          });
+					  	}
+					};
+				
+				    function checkCoords()
+				    {
+				      if (parseInt($('#w').val())) return true;
+				      alert('Please select a crop region then press submit.');
+				      return false;
+				    };
+				}
+
 			});
         </script>
 
