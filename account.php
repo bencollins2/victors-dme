@@ -50,29 +50,170 @@
 	
 
 
-    $q = "SELECT * FROM `users` WHERE `id` LIKE '$user' LIMIT 0,1;";
-    $r = mysql_query($q);
-    $u=0;
-    $c=0;
+    /////////////////////
+    // Facebook stuff  //
+    /////////////////////
 
-    while($line = mysql_fetch_array($r)){
-        $u++;
-        if ($line["categories"] != "") {
-            $c++;
-        }
-        $first_name = $line["first"];
-        $name = $line["first"] . " " . $line["last"];
-        $cats = $line["categories"];
-        $inds = $line["individuals"];
-        $sidebar = $line["sidebar"];
-		if($line["avatar_sm"]){
-			$avatar = UPLOADPATH . $line["avatar_sm"];
-		}else{
-			$avatar = UPLOADPATH . "default.gif";
-		}
+    require("facebook.php");
+
+
+    $facebook = new Facebook($config);
+
+    // See if there is a user from a cookie
+    $user = $facebook->getUser();
+
+    if ($_GET["link"] > 0) {
+        $session->logout();
         
-		$favorites = $line["favorites"];
     }
+
+
+    //////////////////////////////////////
+    // If there's no logged in user...  //
+    //////////////////////////////////////
+    if ($user == 0 && !$session->logged_in) {
+        $normalize = "css/normalize.css";
+        $main = "css/main.css";
+        $campstyle = "css/register.css";
+        $body = "register.php";
+    }
+
+    ////////////////////////////////
+    // If there is a user and...  //
+    ////////////////////////////////
+    else {
+
+        ///////////////////////////////////////////////////////////////
+        // ...there is NO facebook user, but there is a custom user..  //
+        ///////////////////////////////////////////////////////////////
+        if ($session->logged_in) {
+            $user = $session->userinfo[0];
+            $type = "custom";
+            $logout = "href=\"process.php\"";
+        
+        }
+
+        ////////////////////////////////////
+        // ..or there IS a facebook user  //
+        ////////////////////////////////////
+        else {
+            try {
+                // Proceed knowing you have a logged in user who's authenticated.
+                $user_profile = $facebook->api('/me');
+                $name = $user_profile["name"];
+                $first_name = $user_profile["first_name"];
+                $last_name = $user_profile["last_name"];
+                $email = $user_profile["email"];
+                // echo "Facebook: ";
+                // print_r($name);
+                $type = "facebook";
+            } catch (FacebookApiException $e) {
+                // echo '<pre>'.htmlspecialchars(print_r($e, true)).'</pre>';
+                // $user = null;
+            }
+            $logout = "onClick=\"logoutFb()\" href=\"#\"";
+        }
+
+        // From this point out, we need $user to definitively reflect our user,
+        // whether or not that user is on facebook. At this point it should not matter.
+
+        // If they were a custom user, it will find them. The whole $u thing is
+        // for automatically generating facebook users in our DB, but our custom
+        // users should have manually signed up (thus creating the ID).
+        include("../db_campaign.php");
+
+
+         // If they're logged into facebook, and there's a link ID 
+        
+
+        $q = "SELECT * FROM `users` WHERE `id` LIKE '$user' LIMIT 0,1;";
+        $r = mysql_query($q);
+        $u=0;
+        $c=0;
+
+        while($line = mysql_fetch_array($r)){
+            $u++;
+            if ($line["categories"] != "") {
+                $c++;
+            }
+            $first_name = $line["first"];
+            $name = $line["first"] . " " . $line["last"];
+            $cats = $line["categories"];
+            $inds = $line["individuals"];
+            $sidebar = $line["sidebar"];
+            $mailimg = $line["mailimg"];
+			$favorites = $line["favorites"];
+			$msgslice = $line["show_message_slice"];
+			$firsttime = $line["firsttime"];
+        }
+
+        // $qq = "SELECT * FROM `adminusers` WHERE "
+
+        $lnk = mysql_real_escape_string($_REQUEST['link']);
+// echo "<!--Info: user $user, u $u, lnk $lnk-->";        
+        if ($lnk > 0 && $user > 0 && $_GET['add'] == 1) {
+            $q = "SELECT * FROM `users` WHERE `id` = '$lnk' AND `todelete` IS NULL LIMIT 0,1;";
+            $r = mysql_query($q);
+            $l = mysql_fetch_array($r);
+ // echo $q."<br /><br/>";
+            if (!mysql_error()){
+                 $q = "INSERT INTO users (id,name,first,last,email,categories,individuals,sidebar,mailimg,fromlink,showasnew,show_message_slice) VALUES ('$user','$name','$first_name','$last_name','$email','".$l['categories']."','".$l['individuals']."','".$l['sidebar']."','".$l['mailimg']."','".$lnk."','1','1');";
+                $r = mysql_query($q);
+                $lastid = mysql_insert_id();
+                if ($lastid > 0) $_GET['register'] = 0;
+                else $regerror = 1;
+
+                $q = "UPDATE `users` SET `todelete` = '1' WHERE `id` = '$lnk'";
+                $r = mysql_query($q) or die("Failure to update temp user.");
+ // echo $q."<br /><br/>";
+                $q = "SELECT * FROM `adminusers` WHERE `uids` LIKE '%$lnk%' LIMIT 0,1;";
+                $r = mysql_query($q) or die("Failure to select current admin user IDs.");
+                $l = mysql_fetch_array($r);
+                $aid = $l["id"];
+                $uids = $l["uids"];
+ // echo $q."<br /><br/>";
+                $newuids = preg_replace("/(,?)".$lnk."/", "", $uids);
+                $newuids = $user.",".$newuids;
+
+                $q = "UPDATE `adminusers` SET `uids` = '$newuids' WHERE `id` = '$aid'";
+                $r = mysql_query($q) or die("Couldn't update admin record.");
+ // echo $q."<br /><br/>";
+                $q = "UPDATE `messages` SET `to` = 'u".$user."' WHERE `to` = 'u".$lnk."'";
+ // echo $q."<br /><br/>";
+                $r = mysql_query($q) or die("Couldn't get messages.");
+                $c++;
+                // die;
+            }
+
+           
+
+        }
+       
+
+        /////////////////////////////////////////////////////////////////
+        // If they're logged into facebook, but we don't have their ID //
+        /////////////////////////////////////////////////////////////////
+        
+        else if ($u == 0 && $user > 0 && $email != "" && $lnk == 0) {
+            $q = "INSERT INTO users (id,name,first,last,email,categories,individuals,premium) VALUES ('$user','$name','$first_name','$last_name','$email','','','0');";
+            $r = mysql_query($q);
+            $lastid = mysql_insert_id();
+            if ($lastid > 0) $_GET['register'] = 0;
+            else $regerror = 1;
+            if (mysql_error()) {
+                // echo "<!--$q-->";
+            }
+            $u++;
+        }
+        // They have a user account but no categories
+        if ($u > 0 && $c == 0 && !$lnk) {
+            $normalize = "css/normalize.css";
+            $main = "css/main.css";
+            $campstyle = "css/quiz.css";
+            $body = "quiz.php";
+        }
+
+    } // End "if there's a user"
 	
 ?>
 
@@ -337,28 +478,27 @@
 					}
 					
 				});
-				$("a.next").on("click", function(e){
+				$("a.next").on("click", function (e){
 					e.preventDefault();
 					// console.log($(".wheel")[0])
 					$(".wheel").toggle();
 					$this = $(this);
-					$query = "";
+					query = "";
 					$("div.active").each(function(){
 						$that = $(this);
 						$cls = $that.data("shortname");
-						$query += $cls + ",";
+						query += $cls + ",";
 					});
-					$query = $query.substring(0, $query.length - 1);
+					query = query.substring(0, query.length - 1);
 					$.ajax({
 						type: "POST",
 						url: "dostuff.php",
-						data: { id: <?= $user?>, type: "newcats", cats: $query }
+						data: { id: <?= $user?>, type: "newcats", cats: query }
 					}).done(function( msg ) {
 						console.log("Message: ", msg);
-						if (msg = "added cats") window.location.assign("index.php");
-
+						if (msg == "added cats") window.location.assign("index.php");
 					});
-					console.log($query);
+					console.log(query);
 				});
 				
 				//upload avatar images
