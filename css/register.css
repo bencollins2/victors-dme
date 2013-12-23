@@ -52,7 +52,7 @@ body {
 
 p.learnmore {
     display: block;
-    margin: 23px 0;
+    margin: 164px 0 0 -110px;
     width: 375px;
     color: white;
     text-decoration: none;
@@ -60,7 +60,37 @@ p.learnmore {
     font-family: Georgia, times,serif;
     position: absolute;
     top: 50%;
-    left: 380px;
+    left: 50%;
+}
+
+#explore p {
+    float: left;
+    margin: 0 0 20px;
+}
+
+img.e1 {
+    float: left;
+    width: 300px;
+    margin: 0 20px 20px 0;
+}
+
+img.e2 {
+    width: 300px;
+    float: left;
+    clear: both;
+    margin: 0 20px 20px 0;
+}
+
+img.e3 {
+    width: 300px;
+    float: left;
+    margin: 0 20px 20px 0;
+}
+
+img.e4 {
+    float: left;
+    width: 300px;
+    margin: 0 20px 20px 0;
 }
 
 #signup {
@@ -70,6 +100,7 @@ p.learnmore {
     margin: 0;
     padding: 20px;
     overflow: hidden;
+    min-height: 400px;
 }
 
 #signup h2 {
@@ -78,12 +109,17 @@ p.learnmore {
     text-align: center;
 }
 
+.what a {
+    border-bottom: thin solid white;
+}
+
 p.play {
     display: inline-block;
     position: absolute;
-    margin-top: 23px;
+    margin-top: 163px;
+    margin-left: -280px;
     top: 50%;
-    left: 220px;
+    left: 50%;
     padding: inherit;
     width: 162px;
     color: white;
@@ -146,11 +182,11 @@ p.play {
     padding: 20px 0 25px 0px;
     width: 298px;
     cursor: pointer;
-    -webkit-transition: all 2s ease;
+    /* -webkit-transition: all 2s ease; */
     -moz-transition: all 2s ease;
     -ms-transition: all 2s ease;
     -o-transition: all 2s ease;
-    transition: all 2s ease;
+    /* transition: all 2s ease; */
 }
 
 #register .play a img, #register .learnmore a img {
@@ -177,28 +213,40 @@ a.cta {
    background: -moz-linear-gradient(top, #fcd238, #fcc100);
    background: -ms-linear-gradient(top, #fcd238, #fcc100);
    background: -o-linear-gradient(top, #fcd238, #fcc100);
-   padding: 9px 10px;
+   padding: 13px 125px;
    -webkit-border-radius: 8px;
    -moz-border-radius: 8px;
    border-radius: 8px;
    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
    box-shadow: rgba(0,0,0,1) 0 1px 0;
-   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-   color: white;
+   color: #333;
    font-size: 14px;
    font-family: Georgia, serif;
    text-decoration: none;
    vertical-align: middle;
    position: absolute;
    top: 50%;
-   margin-top: -93px;
+   margin-top: -43px;
    left: 0;
-   font-size: 32px;
+   font-size: 20px;
    line-height: 48px;
    font-weight: 200;
    font-family: Helvetica,arial,sans-serif;
 }
+
+.createacct {
+    display: none;
+    margin-top: -30px;
+    margin-bottom: 30px;
+}
+
+#moreinfo a.cta {
+    margin-top: 230px;
+    left: 50%;
+    margin-left: -246px;
+}
+
 #explore a.cta {
     position: relative;
 }
@@ -212,26 +260,39 @@ a.cta {
    background: #917517;
    }
 
+body #register p.reg {
+    margin-left: -457px;
+    margin-top: 74px;
+    text-align: left;
+}
+
 #register p.reg, #moreinfo p.reg {
     position: absolute;
-    margin-top: -8px;
+    margin-top: -28px;
     top: 50%;
+    left: 50%;
     width: 400px;
-    text-align: left;
+    text-align: center;
     line-height: 1.8em;
 }
 
+
+
 #moreinfo p.reg {
-    margin: -148px 0 0 220px;
+    margin: 12px 0 0 -220px;
 }
 
 p.explore {
     position: absolute;
     top: 50%;
-    margin-top: 88px;
+    margin-top: 185px;
 }
 
-p.explore a {}
+p.explore a {
+    text-decoration: none;
+    border-bottom: thin solid white;
+    font-size: 20px;
+}
 
 div#explore {
     background: #333;
@@ -239,12 +300,14 @@ div#explore {
     color: white;
     height: 100%;
     padding: 20px;
+    overflow: auto;
 }
 
 div#explore p {
-    margin: 0 0 20px;
+    margin: 0 0 20px 20px;
  
-    width: 460px;
+    width: 660px;
+    line-height: 1.7;
 }
 
 div#explore h2 {
@@ -258,7 +321,7 @@ div#explore h2 {
 #register img.comp {
     top: 50%;
     position: absolute;
-    margin-top: -255px;
+    margin-top: -165px;
     left: 50%;
     margin-left: -20px;
 }
@@ -272,7 +335,6 @@ div#explore h2 {
 #register .what a, p.explore a {
     color: white;
  
-    text-decoration: none;
     font-weight: bold;
 }
 
@@ -307,6 +369,37 @@ div#explore h2 {
     margin: 0;
     padding: 0;
     width: 274px;
+}
+
+a.create {
+    margin: 20px auto;
+    border-top: 1px solid #ffe48a;
+    background: #fcc100;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fcd238), to(#fcc100));
+    background: -webkit-linear-gradient(top, #fcd238, #fcc100);
+    background: -moz-linear-gradient(top, #fcd238, #fcc100);
+    background: -ms-linear-gradient(top, #fcd238, #fcc100);
+    background: -o-linear-gradient(top, #fcd238, #fcc100);
+    padding: 13px 25px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: white;
+    display: block;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    vertical-align: middle;
+    position: relative;
+    font-size: 20px;
+    line-height: 38px;
+    width: 240px;
+    font-weight: 200;
+    font-family: Helvetica,arial,sans-serif;
 }
 
 .left.create .createacct {
@@ -373,30 +466,31 @@ h3.error {
 
 .ve {
     position: absolute;
-    margin-top: -150px;
+    margin-top: -265px;
     top: 50%;
 
     color: white;
     text-align: left;
-    font-size: 28px;
-    font-family: Georgia, serif;
+    font-size: 153px;
+    font-family: "League-gothic", serif;
+    text-transform: uppercase;
 }
 
 .vfm {
     position: relative;
-    padding: 143px 0 0 30px;
+    padding: 140px 25px;
     background: url(../img/m_180.png) no-repeat center top;
     color: white;
     text-transform: uppercase;
     font-size: 24px;
     font-family: Georgia, serif;
     line-height: 1.2em;
-    left: 0;
+    left: 50%;
     top: 50%;
-    margin-top: -145px;
-    margin-left: -30px;
-    width: 210px;
-    text-align: left;
+    margin-top: -205px;
+    margin-left: -132px;
+    width: 190px;
+    text-align: center;
     height: 100px;
 }
 
@@ -419,7 +513,7 @@ h3.error {
 }
 
 #customlogin a, #forgot a, #register a {
-    text-shadow: 0 0 10px black;
+    text-decoration: none;
 }
 
 #forgot input[type="submit"] {
@@ -429,7 +523,7 @@ h3.error {
 .or {
     margin: 0px auto 0;
     padding: 10px 0;
-    width: 228px;
+    width: 318px;
     text-align: center;
     font-weight: 100;
     font-size: 12px;

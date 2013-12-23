@@ -107,7 +107,7 @@ else{
   <p class="reg">
     Customize this website to filter through the amazing work being done by Michigan Engineers, who are stepping up to tackle the world's greatest problems.
   </p>
-  <p class="explore"><a href="#explore" class="explore">Explore site functions &#8594;</a></p>
+  <p class="explore"><a href="#explore" class="explore">Preview the site &#8594;</a></p>
   <img class="comp" src="./img/computer.png" />
   <p class="what"><a href="javascript:document.getElementById('moreinfo').scrollIntoView();">What is a Victor for Michigan?&nbsp;&nbsp;&nbsp;&#8595;</a></p>
 
@@ -120,7 +120,7 @@ else{
         <img src="img/sign_in_with_facebook.png" />
       </a>
       <div class="or">
-        <span>..or if you'd prefer, you can <a href="#" class="create">create an account directly</a>.</span>
+        <span>..or.. <a href="#" class="create">create an account directly</a>.</span>
       </div>
       <div class="createacct">
         <form action="process.php" method="POST">
@@ -148,11 +148,11 @@ else{
 
   <div id="explore">
     <h2>Features</h2>
-    <p>Use the Victors Experience website as a powerful information pipeline to stay informed about work the College is doing to address the world's grand challenges.</p>
-    <p>Customize the content by telling the site what topics you care most about and it will remember to show you related stories and videos.</p>
-    <p>Create a favorites list and share stories you like on Facebook, Twitter, Pinterest and other social media sites.</p>
-    <p>Use Explore to see all the stories and videos about work being done across the College by students, faculty and alumni.</p>
-    <p><a class="cta" href="signup">Sign up to get started</a></p>
+    <p><img class='e1' src="img/home.png">Use the Victors Experience website as a powerful information pipeline to stay informed about work the College is doing to address the world's grand challenges.</p>
+    <p><img class='e2' src="img/quiz.png">Customize the content by telling the site what topics you care most about and it will remember to show you related stories and videos.</p>
+    <p><img class='e3' src="img/favorites.png">Create a favorites list and share stories you like on Facebook, Twitter, Pinterest and other social media sites.</p>
+    <p><img class='e4' src="img/explore.png">Use Explore to see all the stories and videos about work being done across the College by students, faculty and alumni.</p>
+    <p><a class="cta" href="#signup">Sign up to get started</a></p>
   </div>
 
 </div>
@@ -166,7 +166,7 @@ else{
   </p>
   <p class="play"><a href="http://www.youtube.com/embed/g5J9tcRuX9U?rel=0&amp;wmode=transparent" class="youtube cboxElement" alt="Watch the video"><!--img src="./img/play_40.png" /-->&raquo; Watch the video</a></p>
       <p class="learnmore"><a href="http://victors.engin.umich.edu/article.php?id=115" class="" alt="Why be a victor"><!--img src="./img/qmark_40.png" /-->&raquo; Learn more about the campaign</a></p>
-
+  <p><a class="cta" href="#signup">Sign up to get started</a></p>
 </div>
 
 
@@ -193,6 +193,16 @@ function getUrlVars() {
 }
 
 $(document).ready(function(){
+
+
+var position;
+// $(document).on('cbox_open', function() {
+//     $('body').css({ overflow: 'hidden' });
+// });
+// $(document).on('cbox_close', function() {
+//     $('body').css({ overflow: '' });
+// });
+
 $(".fbl").on("click",function(e){
   e.preventDefault();
   FB.login(function(response) {

@@ -262,7 +262,7 @@
     ///////////////////////////////////////////
     // Stuff to pull most recent message...  //
     ///////////////////////////////////////////
-    $q = 'SELECT m.message, CONCAT(a.first, " ", a.last) as name, m.timestamp as ts FROM messages as m LEFT JOIN adminusers as a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(`to`, 2) LIKE '.$user.' ORDER BY ts DESC LIMIT 0,1';
+    $q = 'SELECT m.message, CONCAT(a.first, " ", a.last) as name, m.timestamp as ts, m.published as published FROM messages as m LEFT JOIN adminusers as a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(`to`, 2) LIKE '.$user.' AND published = 1 ORDER BY ts DESC LIMIT 0,1';
     $r = mysql_query($q) OR DIE("Invalid User Id.");
     $l = mysql_fetch_array($r);
     $firstmsgfrom = $l["name"];

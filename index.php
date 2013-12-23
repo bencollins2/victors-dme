@@ -46,14 +46,14 @@
     }
 
     if ($device == "iPhone" || $device == "androidPhone" || $_GET["t"] == "mobile") {
-            $normalize = "css/normalize_mobile.css";
-            $main = "css/main_mobile.css";
-            $campstyle = "css/camp_mobile.css";
-            $body = "mobile.php";
+            // $normalize = "css/normalize_mobile.css";
+            // $main = "css/main_mobile.css";
+            // $campstyle = "css/camp_mobile.css";
+            // $body = "mobile.php";
     }
     else if ($device == "iPad" || $device == "androidTablet" || $_GET["t"] == "tablet") {
             $normalize = "css/normalize.css";
-            $main = "css/main_mobile.css";
+            // $main = "css/main_mobile.css";
             $campstyle = "css/campaign.css";
             $body = "desktop.php";
     }
@@ -288,7 +288,7 @@
     ///////////////////////////////////////////
     // Stuff to pull most recent message...  //
     ///////////////////////////////////////////
-    $q = 'SELECT m.message, CONCAT(a.first, " ", a.last) as name, m.timestamp as ts FROM messages as m LEFT JOIN adminusers as a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(`to`, 2) LIKE '.$user.' ORDER BY ts DESC LIMIT 0,1';
+    $q = 'SELECT m.message, CONCAT(a.first, " ", a.last) as name, m.timestamp as ts, m.published as published FROM messages as m LEFT JOIN adminusers as a ON SUBSTR(m.from, 2) = a.id WHERE SUBSTR(`to`, 2) LIKE '.$user.' AND published = 1 ORDER BY ts DESC LIMIT 0,1';
     $r = mysql_query($q) OR DIE("Sorry, couldn't select recent message.");
     $l = mysql_fetch_array($r);
     $firstmsgfrom = $l["name"];

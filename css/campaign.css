@@ -148,6 +148,75 @@ body.slicesOne, body.exploreOne {
     height: 60px;
     background: url(../img/prev.png);
 }
+.left .createacct {
+    position: relative;
+    top: 0;
+    display:none;
+    margin: 0;
+    padding: 0;
+    width: 274px;
+}
+
+a.create {
+    margin: 20px auto;
+    border-top: 1px solid #ffe48a;
+    background: #fcc100;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fcd238), to(#fcc100));
+    background: -webkit-linear-gradient(top, #fcd238, #fcc100);
+    background: -moz-linear-gradient(top, #fcd238, #fcc100);
+    background: -ms-linear-gradient(top, #fcd238, #fcc100);
+    background: -o-linear-gradient(top, #fcd238, #fcc100);
+    padding: 13px 25px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: white;
+    display: block;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    vertical-align: middle;
+    position: relative;
+    font-size: 20px;
+    line-height: 38px;
+    width: 240px;
+    font-weight: 200;
+    font-family: Helvetica,arial,sans-serif;
+}
+
+.left.create .createacct {
+    display:block;
+    -webkit-transition: all 1s ease;
+}
+
+#register h2 {
+    margin: 0;
+    margin: 50px 0 0;
+    color: #FCD038;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-size: 39px;
+    font-family: "league-gothic";
+        line-height: 37px;
+
+}
+
+.or {
+    margin: 0px auto 0;
+    padding: 10px 0;
+    width: 318px;
+    text-align: center;
+    font-weight: 100;
+    font-size: 12px;
+    color: black;
+}
+
+.or a {
+}
 
 #tutorial .nav .next {
     position: absolute;
@@ -158,6 +227,198 @@ body.slicesOne, body.exploreOne {
     width: 50px;
     height: 60px;
     background: url(../img/next.png);
+}
+
+#signup {
+    background: #eee;
+    height: 100%;
+    position: relative;
+    margin: 0;
+    padding: 20px;
+    overflow: hidden;
+    min-height: 400px;
+}
+
+.prev {
+    position: absolute;
+    top: 56px;
+    left: 50%;
+    color: black;
+    font-size: 13px;
+    margin-left: -50px;
+}
+
+#signup h2 {
+    margin: 0;
+ 
+    text-align: center;
+}
+
+
+#cboxContent:focus, #cboxContent * {
+    outline: none;
+}
+
+.cboxIframe {
+    width: 100%; height:100%%;
+}
+
+#cboxClose {
+    margin: 10px 0;
+    height: auto;
+}
+
+img.e1 {
+    float: left;
+    width: 300px;
+    margin: 0 20px 20px 0;
+}
+
+img.e2 {
+    width: 300px;
+    float: left;
+    clear: both;
+    margin: 0 20px 20px 0;
+}
+
+img.e3 {
+    width: 300px;
+    float: left;
+    margin: 0 20px 20px 0;
+}
+
+img.e4 {
+    float: left;
+    width: 300px;
+    margin: 0 20px 20px 0;
+}
+
+.createacct {
+    display: none;
+    margin-top: -30px;
+    margin-bottom: 30px;
+}
+p.explore {
+    position: absolute;
+    top: 50%;
+    margin-top: 185px;
+}
+
+p.explore a {
+    text-decoration: none;
+    border-bottom: thin solid white;
+    font-size: 20px;
+}
+
+div#explore {
+    background: #333;
+ 
+    color: white;
+    height: 100%;
+    padding: 20px;
+    overflow: auto;
+}
+
+div#explore p {
+    margin: 0 0 20px 20px;
+    float: left;
+    margin: 0 0 20px;
+    width: 660px;
+    line-height: 1.7;
+}
+
+#explore p {
+
+}
+
+
+div#explore h2 {
+    font-family: Georgia, serif;
+ 
+    font-weight: 100;
+    font-size: 40px;
+    margin: 0 0 20px;
+}
+
+#moreinfo a.cta {
+    margin-top: 230px;
+    left: 50%;
+    margin-left: -246px;
+}
+
+
+.fbl {
+    display: block;
+    margin: 33px auto 3px;
+    width: 252px;
+}
+.table {
+    overflow: visible;
+    width: 251px;
+    font-size: .84em;
+    margin: 0 auto;
+}
+
+.table div {
+    margin: 14px 0;
+    text-align: right;
+}
+
+.table div span:nth-child(1) {
+    margin-right: 13px;
+}
+
+.table div span:nth-child(2) {
+    display: inline-block;
+
+    float: right;
+}
+
+.table div span {
+    display: inline-block;
+}
+
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+#cboxWrapper {max-width:none;}
+#cboxOverlay{position:fixed; width:100%; height:100%;background: rgba(0,0,0,.8);}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+.cboxPhoto{ display:block;float:left; margin:auto; max-width:none; border:0; -ms-interpolation-mode:bicubic;}
+.cboxIframe{ display:block;width:100%; height:100%; border:0;}
+#colorbox, #cboxContent, #cboxLoadedContent{ -webkit-box-sizing:content-box; -moz-box-sizing:content-box;box-sizing:content-box; -moz- -webkit-}
+
+.sticky #nav_home.signup {
+    border-top: 1px solid #ffe48a;
+    background: #fcc100;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fcd238), to(#fcc100));
+    background: -webkit-linear-gradient(top, #fcd238, #fcc100);
+    background: -moz-linear-gradient(top, #fcd238, #fcc100);
+    background: -ms-linear-gradient(top, #fcd238, #fcc100);
+    background: -o-linear-gradient(top, #fcd238, #fcc100);
+    padding: 0px 0px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    color: #333;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    vertical-align: middle;
+    position: absolute;
+    font-size: 15px;
+    line-height: 38px;
+    font-weight: 200;
+    font-family: Helvetica,arial,sans-serif;
+    right: 4px;
+    top: 5px;
+    text-align: center;
 }
 
 #tutoicon{

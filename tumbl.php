@@ -1,9 +1,10 @@
 <?php
-
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
 if (!extension_loaded('json')) {
 	dl('json.so');  
 }
-
 require 'vendor/autoload.php';
 
 // Authenticate via OAuth
