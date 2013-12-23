@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Tumblr\API;
 
 class RequestException extends \Exception

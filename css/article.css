@@ -51,6 +51,36 @@ body {
 	right:70px;
 }
 
+.sticky .signup {
+    border-top: 1px solid #ffe48a;
+    background: #fcc100;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fcd238), to(#fcc100));
+    background: -webkit-linear-gradient(top, #fcd238, #fcc100);
+    background: -moz-linear-gradient(top, #fcd238, #fcc100);
+    background: -ms-linear-gradient(top, #fcd238, #fcc100);
+    background: -o-linear-gradient(top, #fcd238, #fcc100);
+    padding: 13px 125px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    color: #333;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+    vertical-align: middle;
+    position: absolute;
+    top: 50%;
+    margin-top: -43px;
+    left: 0;
+    font-size: 20px;
+    line-height: 48px;
+    font-weight: 200;
+    font-family: Helvetica,arial,sans-serif;
+}
+
 .navi_item span {
     display: block;
     position: absolute;
