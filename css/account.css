@@ -1,7 +1,6 @@
 body {
     display: block;
     height: 100%;
-    background: #212A55;
 }
 
 .sticky {
@@ -136,6 +135,7 @@ body {
 
 .right{
 	margin:51px 0 0 270px;
+	background: #222;
 }
 .avatar .frame{
 	width:70%;
