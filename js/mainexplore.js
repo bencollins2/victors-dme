@@ -227,7 +227,9 @@ var current, bodymargin, imagemargin;
 
 $(document).ready(function(e) {
 	
-	loadExplore();
+	if (window.location.hash == ""){
+		loadExplore();
+	}
 
 	var width = $(window).width(), height = $(window).height();
 	var leftwidth = $(".left").width(), itemsWidth = width - leftwidth, itemsHeight = height-51;
