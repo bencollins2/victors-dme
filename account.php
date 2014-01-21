@@ -10,44 +10,7 @@
 	
     include("../db_campaign.php");
 	
-	
-	if ($_FILES['file']['size'] > 0) {
-		$tmpname = $_FILES['file']['tmp_name'];
-		$filename = $_FILES['file']['name'];
-		$target = UPLOADPATH . $filename;
-		$moved = move_uploaded_file(($tmpname), $target);
-		if( $moved ) {
-		  echo $target;
-		} else {
-		  echo "Not uploaded";
-		}
-		return;
-	}
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['avatarurl']))
-	{
-		$targ_w = $targ_h = 150;
-		$jpeg_quality = 90;
-
-		$src = $_POST['avatarurl'];
-		$img_r = imagecreatefromjpeg($src);
-		$dst_r = ImageCreateTrueColor( $targ_w, $targ_h );
-
-		imagecopyresampled($dst_r,$img_r,0,0,$_POST['x'],$_POST['y'],
-		$targ_w,$targ_h,$_POST['w'],$_POST['h']);
-
-		$newavatar = uniqid() . '.jpg';
-		$success = imagejpeg($dst_r, UPLOADPATH . $newavatar, $jpeg_quality);
-		
-		if($success){
-			unlink($src);
-			$query = "UPDATE users SET `avatar_sm` = '$newavatar' WHERE `id` LIKE '$user'";
-			$result = mysql_query($query) or die("Sorry: " . $query);
-			echo "added cats";
-			header('Location: account.php');
-		}
-	}
-	
 
 
     /////////////////////
@@ -145,6 +108,7 @@
 			$favorites = $line["favorites"];
 			$msgslice = $line["show_message_slice"];
 			$firsttime = $line["firsttime"];
+			$avatar = $line["avatar_sm"];
         }
 
         // $qq = "SELECT * FROM `adminusers` WHERE "
@@ -214,6 +178,45 @@
         }
 
     } // End "if there's a user"
+	
+	if ($_FILES['file']['size'] > 0) {
+		$tmpname = $_FILES['file']['tmp_name'];
+		$filename = $_FILES['file']['name'];
+		$target = UPLOADPATH . $filename;
+		$moved = move_uploaded_file(($tmpname), $target);
+		if( $moved ) {
+		  echo $target;
+		} else {
+		  echo "Not uploaded";
+		}
+		return;
+	}
+
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['avatarurl']))
+	{
+		$targ_w = $targ_h = 150;
+		$jpeg_quality = 90;
+
+		$src = $_POST['avatarurl'];
+		$img_r = imagecreatefromjpeg($src);
+		$dst_r = ImageCreateTrueColor( $targ_w, $targ_h );
+
+		imagecopyresampled($dst_r,$img_r,0,0,$_POST['x'],$_POST['y'],
+		$targ_w,$targ_h,$_POST['w'],$_POST['h']);
+
+		$newavatar = uniqid() . '.jpg';
+		$success = imagejpeg($dst_r, UPLOADPATH . $newavatar, $jpeg_quality);
+		
+		if($success){
+			unlink($src);
+			$query = "UPDATE users SET `avatar_sm` = '$newavatar' WHERE `id` LIKE '$user'";
+			$result = mysql_query($query) or die("Sorry: " . $query);
+			echo "added cats";
+			header('Location: account.php');
+		}
+	}
+	
+
 	
 ?>
 
@@ -300,7 +303,7 @@
             <div class="lefttext">
                 <h2>Welcome <?= $first_name?></h2>
 				<div class="preview">
-					 <img src="<?= $avatar?>" />
+					 <img src="img/avatars/<?= $avatar?>" />
 				</div>
 				<br/>
 				<a href="#" id="avatarbtn">Upload Avatar</a>

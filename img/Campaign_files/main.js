@@ -604,11 +604,11 @@ function loadSlices() {
 	/////////////////////////////
 	// Load the slices. Duh.  //
 	///////////////////////////
-	var url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
+	var url = 'exp.php?slices=8&cats='+usercats+"&inds="+userinds;
 	console.log(url);
-	if (msgslice == '0' || firstmsgfrom == "") url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
+	if (msgslice == '0' || firstmsgfrom == "") url = 'exp.php?slices=8&cats='+usercats+"&inds="+userinds;
 	if (firsttime != 1){
-		url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds+"&intro=1";
+		url = 'exp.php?slices=8&cats='+usercats+"&inds="+userinds+"&intro=1";
 	}
 	
 	// console.log("URL: ", url);
@@ -720,7 +720,7 @@ function loadFavorites(){
 	var url;
 	if (fav_array.length > 0){
 		favs = fav_array.join();
-		url = 'explore.php?favs=' + favs;
+		url = 'exp.php?favs=' + favs;
 		// console.log(url);
 		$("body").removeClass().addClass("favorite");
 		$("ul.slides li").remove();
@@ -809,9 +809,9 @@ function loadExplore(cats) {
 	var url;
 	
 	if (cats) {
-		url = 'explore.php?exp=1&cats='+cats;
+		url = 'exp.php?exp=1&cats='+cats;
 	}
-	else url = 'explore.php?exp=1';
+	else url = 'exp.php?exp=1';
 	console.log(url);
 	// console.log("URL: ", url);
 	$("body").addClass("explore").removeClass("slices");	

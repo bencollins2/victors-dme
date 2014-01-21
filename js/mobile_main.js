@@ -122,11 +122,11 @@ function walkmydog() {
 // 	
 // 	// IF there's a preview URL, cats = 
 // 
-// 	var url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
+// 	var url = 'exp.php?slices=8&cats='+usercats+"&inds="+userinds;
 // 	console.log(url);
-// 	// if (msgslice == '0' || firstmsgfrom == "") url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds;
+// 	// if (msgslice == '0' || firstmsgfrom == "") url = 'exp.php?slices=8&cats='+usercats+"&inds="+userinds;
 // 	// if (firsttime != 1){
-// 	// 	url = 'explore.php?slices=8&cats='+usercats+"&inds="+userinds+"&intro=1";
+// 	// 	url = 'exp.php?slices=8&cats='+usercats+"&inds="+userinds+"&intro=1";
 // 	// }
 // 	
 // 	// console.log("URL: ", url);
