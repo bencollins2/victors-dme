@@ -749,7 +749,7 @@ function checkHash() {
 		// console.log("Item id: ", window.location.hash.substring(1));
 		//loadFeature($(window.location.hash + " .img-cover")[0], window.location.hash.substring(1), "500px");
 		// debugger;
-		if (window.location.hash != "#explore" && window.location.hash!= "#favorites") {
+		if (window.location.hash != "#favorites" && window.location.hash.indexOf("#explore")<0) {
 			if ($("body").hasClass("one")) {
 				loadInSame(window.location.hash.split("-")[1]);
 			}
@@ -757,7 +757,7 @@ function checkHash() {
 				loadFeature(window.location.hash.split("-")[1]);
 			}
 		}
-		else if (window.location.hash == "#explore") {
+		else if (window.location.hash.indexOf("#explore") > -1) {
 			// $("#nav_exp").trigger("click");
 			$(".left").show();
 			$(".favtext").hide();
@@ -787,6 +787,38 @@ function checkHash() {
 	}
 }
 
+function checkCategory() {
+	/////////////////////////////////////////////////////////////
+	//  Open the corresponding page if there is a hash in url  //
+	/////////////////////////////////////////////////////////////
+	if (window.location.hash) {
+
+		if (window.location.hash.indexOf("=transportation") > -1) {
+			$(".filter .transportation .seemore").slideDown();
+			$(".filter .transportation .selectall").click();
+		}else if (window.location.hash.indexOf("=economics") >-1) {
+			$(".filter .economics .seemore").slideDown();
+			$(".filter .economics .selectall").click()
+		}else if (window.location.hash.indexOf("=wolverine") >-1) {
+			$(".filter .wolverine .seemore").slideDown();
+			$(".filter .wolverine .selectall").click()
+		}else if (window.location.hash.indexOf("=global") > -1) {
+			$(".filter .global .seemore").slideDown();
+			$(".filter .global .selectall").click()
+		}else if (window.location.hash.indexOf("=materials") > -1) {
+			$(".filter .materials .seemore").slideDown();
+			$(".filter .materials .selectall").click()
+		}else if (window.location.hash.indexOf("=healthcare") > -1) {
+			$(".filter .healthcare .seemore").slideDown();
+			$(".filter .healthcare .selectall").click()
+		}else if (window.location.hash.indexOf("=securingourfuture") > -1) {
+			$(".filter .securingourfuture .seemore").slideDown();
+			$(".filter .securingourfuture .selectall").click()
+		}else{
+			window.location.href = "index.php#explore";
+		}
+	}
+}
 
 // function switcher() {
 // 	///////////////////////////////////////////////////
@@ -1045,7 +1077,9 @@ function hideSlices() {
 	$("ul.slides li").remove();
 
 	setTimeout(function(){
-		if(cats){
+		if(window.location.hash.indexOf("#explore=") > -1){
+			checkCategory();
+		}else if(cats){
 			loadExplore(cats);
 		}else{
 			loadExplore();
@@ -1150,6 +1184,7 @@ function loadExplore(cats) {
 				// console.log("Message: ", msg);
 			});
 		});
+		
 	});
 }
 
@@ -1426,7 +1461,7 @@ $(document).ready(function(e) {
 		$('#tutorial').show();
 	}	
 	
-	loadSlices();
+	if (window.location.hash == "") loadSlices();
 
 	var width = $(window).width(), height = $(window).height();
 	var leftwidth = $(".left").width(), itemsWidth = width - leftwidth, itemsHeight = height-51;

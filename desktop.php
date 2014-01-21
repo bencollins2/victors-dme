@@ -99,7 +99,7 @@
                 <span>Select multiple categories below</span>
                 <form>
 
-                    <div class="dropdown">
+                    <div class="dropdown transportation">
                         <h3>Transportation Innovations</h3>
                         <div class="seemore">
                             <a href="javascript:void(0)" class="selectall" status="true">Select all</a>
@@ -111,7 +111,7 @@
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown economics">
                         <h3>Economics & Entrepreneurship</h3>
                         <div class="seemore">
 							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
@@ -122,7 +122,7 @@
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown wolverine">
                         <h3>Wolverine Experience</h3>
                         <div class="seemore">
 							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
@@ -135,7 +135,7 @@
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown global">
                         <h3>Global Resources</h3>
                         <div class="seemore">
 							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
@@ -147,7 +147,7 @@
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown materials">
                         <h3>Revolutionary Materials</h3>
                         <div class="seemore">
 							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
@@ -159,7 +159,7 @@
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown healthcare">
                         <h3>Healthcare</h3>
                         <div class="seemore">
 							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
@@ -171,7 +171,7 @@
                         </div>
                     </div>
 
-                    <div class="dropdown">
+                    <div class="dropdown securingourfuture">
                         <h3>Securing our Future</h3>
                         <div class="seemore">
 							<a href="javascript:void(0)" class="selectall" status="true">Select all</a>
