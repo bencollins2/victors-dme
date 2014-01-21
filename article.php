@@ -197,23 +197,6 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			$split = array_values($split0);
 			$newHTML="";
 			// Loop each paragraph in the array
-			// foreach($split as $kk => $vv) {
-			// 	$newHTML .= "<p>";
-			// 	// Loop images
-			// 	foreach ($img_arr as $kkk => $vvv) {
-			// 		// If we're currently in the paragraph for this image..
-			// 		if ($vvv->para == $kk) {
-			// 			$style = " style='";
-			// 			foreach ($vvv->style as $kkkk => $vvvv) {
-			// 				$style .= $kkkk . ": ". $vvvv . "; ";
-			// 			}
-			// 			$style .= "'";
-			// 			$newHTML .= "<img".$style." src = '".$vvv->src."' alt='alt' />";
-			// 		}
-			// 	}
-			// 	$newHTML .= $vv . "</p>\n\n";
-			// }
-			// Loop each paragraph in the array
 			foreach($split as $kk => $vv) {
 				$currentpara = $kk + 1;
 				$newHTML .= "<p>";
@@ -275,6 +258,90 @@ if (isset($_GET["id"]) && $_GET["id"]!=""){
 			}
 			$row['html'] = $newHTML;
 		}
+
+        ////////////////////////////////////////////////////////
+        // Add the "related items" box to the first paragraph //
+        ////////////////////////////////////////////////////////
+
+        $tags = $row['tags'];
+        $tags_array = explode(",", $tags);
+        $related_array = array();
+        $rel = array();
+        if (in_array("vautonomous", $tags_array) || in_array("preventingaccidents", $tags_array) || in_array("ivcommunication", $tags_array) || in_array("disdriving", $tags_array) || in_array("invehicletech", $tags_array) || in_array("apps", $tags_array) || in_array("fuelefficiency", $tags_array) || in_array("iwvehicles", $tags_array) || in_array("aerodynamics", $tags_array) || in_array("vehiclesafety", $tags_array) || in_array("batteries", $tags_array) ) {
+            $related = true;
+            $rel[0] = "Transportation";
+            $rel[1] = "transportation";
+            array_push($related_array, $rel);
+        }
+        if (in_array("studentstart", $tags_array) || in_array("techtransfer", $tags_array) || in_array("facultystart", $tags_array) || in_array("mcubed", $tags_array) || in_array("indcollab", $tags_array) || in_array("cfe", $tags_array) || in_array("me", $tags_array) || in_array("innovation", $tags_array) || in_array("economy", $tags_array)) {
+            $related = true;
+            $rel[0] = "Economics & Entrepreneurship";
+            $rel[1] = "economics";
+            array_push($related_array, $rel);
+        }
+        if (in_array("hoexperience", $tags_array) || in_array("studentteams", $tags_array) || in_array("multidisc", $tags_array) || in_array("studentresearch", $tags_array) || in_array("highlevelstudentprojects", $tags_array) || in_array("scholarships", $tags_array) || in_array("classfuture", $tags_array) || in_array("honors", $tags_array) || in_array("onlinelearning", $tags_array) || in_array("gradexperience", $tags_array) || in_array("commoutreach", $tags_array) || in_array("globalexp", $tags_array) || in_array("extracurr", $tags_array) || in_array("studentstories", $tags_array) || in_array("nostalgia", $tags_array) || in_array("lifeinaa", $tags_array) ) {
+            $related = true;
+            $rel[0] = "Wolverine Experience";
+            $rel[1] = "wolverine";
+            array_push($related_array, $rel);
+        }
+        if (in_array("watershortage", $tags_array) || in_array("waterpurification", $tags_array) || in_array("sustainability", $tags_array) || in_array("resourcemanagement", $tags_array) || in_array("cleanair", $tags_array) || in_array("cleanwater", $tags_array) || in_array("globalenergy", $tags_array) || in_array("eefficiency", $tags_array) || in_array("otherresources", $tags_array) || in_array("biofuel", $tags_array) || in_array("globalexp", $tags_array) || in_array("extracurr", $tags_array) || in_array("studentstories", $tags_array) || in_array("batteries", $tags_array) || in_array("solarpower", $tags_array) || in_array("hydropower", $tags_array) || in_array("windpower", $tags_array) || in_array("geothermalpower", $tags_array) || in_array("nuclearpower", $tags_array) || in_array("climatechange", $tags_array)) {
+            $related = true;
+            $rel[0] = "Global Resources";
+            $rel[1] = "global";
+            array_push($related_array, $rel);
+        }
+        if (in_array("nanotech", $tags_array) || in_array("lightweightmat", $tags_array) || in_array("othermaterials", $tags_array) || in_array("memorymetals", $tags_array) || in_array("composites", $tags_array) || in_array("gels", $tags_array) || in_array("peptides", $tags_array) || in_array("drugdelivery", $tags_array) || in_array("safety", $tags_array) || in_array("solarcells", $tags_array) || in_array("electronics", $tags_array) || in_array("environment", $tags_array) || in_array("nuclearmaterials", $tags_array) || in_array("polymers", $tags_array) || in_array("computersfuture", $tags_array)) {
+            $related = true;
+            $rel[0] = "Revolutionary Materials";
+            $rel[1] = "materials";
+            array_push($related_array, $rel);
+        }
+        if (in_array("disresearch", $tags_array) || in_array("distreatment", $tags_array) || in_array("drugs", $tags_array) || in_array("drugdelivery", $tags_array) || in_array("imaging", $tags_array) || in_array("diagnostics", $tags_array) || in_array("affordability", $tags_array) || in_array("3dprinting", $tags_array) || in_array("meddevices", $tags_array) || in_array("tissengineering", $tags_array) || in_array("therapies", $tags_array) || in_array("patientcare", $tags_array) || in_array("apptechnologies", $tags_array)) {
+            $related = true;
+            $rel[0] = "Healthcare";
+            $rel[1] = "healthcare";
+            array_push($related_array, $rel);
+        }
+        if (in_array("weaponsdetection", $tags_array) || in_array("nuclearnon", $tags_array) || in_array("drones", $tags_array) || in_array("autonomous", $tags_array) || in_array("cybersec", $tags_array) || in_array("surveillance", $tags_array) || in_array("nuclear", $tags_array) || in_array("natsec", $tags_array) || in_array("millitary", $tags_array) || in_array("infrastructure", $tags_array) || in_array("disaster", $tags_array) || in_array("weather", $tags_array)) {
+            $related = true;
+            $rel[0] = "Securing our Future";
+            $rel[1] = "securingourfuture";
+            array_push($related_array, $rel);
+        }
+
+        if ($related) {
+            // Remove parent <p> tags, split result by paragraph
+            $row['html'] = str_replace('</p>', '', trim($row['html']));
+            $split0 = explode('<p>', $row['html']);
+
+            foreach($split0 as $kk => $vv) {
+                if($vv == "") unset($split0[$kk]);
+            }
+            $split = array_values($split0);
+            $newHTML = "";
+            // Loop each paragraph in the array
+            foreach($split as $kk => $vv) {
+                if ($kk == 0) {
+                    $newHTML .= "<div class='related'><h3>Read more about...</h3><ul>";
+                    foreach($related_array as $kkk => $vvv) {
+                        $newHTML .= "<li><a href='explore.php#$vvv[1]'>$vvv[0]</a></li>";
+                    }
+                    $newHTML .= "</ul></div><p>$vv</p>";
+                }
+                else {
+                    $newHTML .= "<p>";
+                    $newHTML .= $vv . "</p>\n\n";
+                }
+                
+            }
+            $row['html'] = $newHTML;
+        }
+
+
+        /////////////////////
+        // End related box //
+        /////////////////////
 
 		if ($row["titletop"] == 1) {
 			$feature_content = "

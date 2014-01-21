@@ -148,6 +148,30 @@ body.slicesOne, body.exploreOne {
     height: 60px;
     background: url(../img/prev.png);
 }
+
+.content-info div.body .related {
+    width: 212px;
+    float: right;
+    border: thin solid #7DCDEE;
+    background: #B6E2F3;
+    margin: 0 20px 20px;
+}
+
+.content-info div.body .related h3 {
+    font-size: 20px;
+    margin: 6px 10px;
+}
+
+.content-info div.body .related ul {
+    margin: 0px 10px 20px;
+    font-size: 12px;
+}
+
+.content-info div.body .related ul li {
+    list-style: none;
+    margin: 0;
+}
+
 .left .createacct {
     position: relative;
     top: 0;
@@ -237,6 +261,18 @@ a.create {
     padding: 20px;
     overflow: hidden;
     min-height: 400px;
+}
+
+#signup .exp {
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+#signup .nothanks {
+    text-align: center;
+    font-size: 14px;
+    display: none;
 }
 
 .prev {
@@ -467,6 +503,10 @@ div#explore h2 {
     width: 200px;
     margin: 40px auto;
     display: none;
+}
+
+.explore .left .filter {
+    display: block;
 }
 
 .left form {
@@ -1533,6 +1573,84 @@ body .messages .message p.avatar {
 .sendmessage input[type="submit"] {
     margin-top: 19px;
 }
+
+a.cta {
+   border-top: 1px solid #ffe48a;
+   background: #fcc100;
+   background: -webkit-gradient(linear, left top, left bottom, from(#fcd238), to(#fcc100));
+   background: -webkit-linear-gradient(top, #fcd238, #fcc100);
+   background: -moz-linear-gradient(top, #fcd238, #fcc100);
+   background: -ms-linear-gradient(top, #fcd238, #fcc100);
+   background: -o-linear-gradient(top, #fcd238, #fcc100);
+   padding: 13px 125px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   color: #333;
+   font-size: 14px;
+   font-family: Georgia, serif;
+   text-decoration: none;
+   vertical-align: middle;
+   position: absolute;
+   top: 50%;
+   margin-top: -43px;
+   left: 0;
+   font-size: 20px;
+   line-height: 48px;
+   font-weight: 200;
+   font-family: Helvetica,arial,sans-serif;
+}
+
+.createacct {
+    display: none;
+    margin-top: -30px;
+    margin-bottom: 30px;
+}
+
+#moreinfo a.cta {
+    margin-top: 230px;
+    left: 50%;
+    margin-left: -246px;
+}
+
+#explore a.cta {
+    position: relative;
+}
+#register a.cta:hover {
+   border-top-color: #c9a11c;
+   background: #c9a11c;
+   color: #ccc;
+   }
+#register a.cta:active {
+   border-top-color: #917517;
+   background: #917517;
+   }
+
+body #register p.reg {
+    margin-left: -457px;
+    margin-top: 74px;
+    text-align: left;
+}
+
+#register p.reg, #moreinfo p.reg {
+    position: absolute;
+    margin-top: -28px;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    text-align: center;
+    line-height: 1.8em;
+}
+
+
+
+#moreinfo p.reg {
+    margin: 12px 0 0 -220px;
+}
+
 
 @media only screen and (max-height: 800px) {
     .img-cover {
