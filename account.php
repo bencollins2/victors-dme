@@ -108,7 +108,12 @@
 			$favorites = $line["favorites"];
 			$msgslice = $line["show_message_slice"];
 			$firsttime = $line["firsttime"];
-			$avatar = $line["avatar_sm"];
+			
+			if($line["avatar_sm"]){
+				$avatar = UPLOADPATH . $line["avatar_sm"];
+			}else{
+				$avatar = UPLOADPATH . "default.gif";
+			}
         }
 
         // $qq = "SELECT * FROM `adminusers` WHERE "
@@ -211,7 +216,7 @@
 			unlink($src);
 			$query = "UPDATE users SET `avatar_sm` = '$newavatar' WHERE `id` LIKE '$user'";
 			$result = mysql_query($query) or die("Sorry: " . $query);
-			echo "added cats";
+			echo "added avatar";
 			header('Location: account.php');
 		}
 	}
@@ -266,7 +271,7 @@
             <ul>
                 <li class="home"><a href="http://engin.umich.edu"><img src="img/CoE-horiz-rev.png" alt="Michigan Engineering" /></a></li>
             </ul>
-            <div id="nav_fav" class="navi_item">
+           	<a href="index.php#favorites"><div id="nav_fav" class="navi_item">
                 <span>Favorite</span>
                 <div class="square">
                     <p class="one p_long"></p>
@@ -274,8 +279,8 @@
                     <p class="three p_short"></p>
                     <p class="four p_short"></p>
                 </div>
-            </div>
-            <div id="nav_exp" class="navi_item">
+            </div></a>
+            <a href="index.php#explore"><div id="nav_exp" class="navi_item">
                 <span>Explore</span>
                 <div class="square">
                     <p class="one p_short"></p>
@@ -283,8 +288,8 @@
                     <p class="three p_short"></p>
                     <p class="four p_short"></p>
                 </div>
-            </div>
-            <div id="nav_home" class="navi_item">
+            </div></a>
+            <a href="index.php"><div id="nav_home" class="navi_item">
                 <span>Home</span>
                 <div class="square">
                     <p class="one p_long"></p>
@@ -292,7 +297,7 @@
                     <p class="three p_long"></p>
                     <p class="four p_long"></p>
                 </div>
-            </div>
+            </div></a>
             
             
 
@@ -303,7 +308,7 @@
             <div class="lefttext">
                 <h2>Welcome <?= $first_name?></h2>
 				<div class="preview">
-					 <img src="img/avatars/<?= $avatar?>" />
+					 <img src="<?= $avatar?>" />
 				</div>
 				<br/>
 				<a href="#" id="avatarbtn">Upload Avatar</a>
