@@ -1,3 +1,7 @@
+*{
+	margin:0;
+	padding:0;
+}
 body {
     display: block;
     height: 100%;
@@ -161,17 +165,59 @@ h2 {
     text-transform: uppercase;
 }
 
+.tabs ul{
+	list-style-type:none;
+	padding:15px 20px;
+}
+.tabs ul li{
+	display:inline-block;
+	color:white;
+	text-align:center;
+	padding:0 10px;
+	cursor:pointer;
+/*	border-left:1px solid white;
+	border-right:1px solid white;*/
+}
+.tabs ul li:hover{
+	color:#FECE31;
+}
+.tabs ul li:first-child{
+	border-right:1px solid white;
+}
+.tabs .selected{
+	color:#FECE31;
+}
+
+.accountinfo li{
+	margin-bottom:30px;
+}
+
+.accountinfo label{
+	display:inline-block;
+	width:100px;
+	text-align:right;
+	color:white;
+	margin-right:15px;
+	font-size:1.3em;
+}
+.accountinfo input{
+	width:300px;
+	padding:6px 12px;
+	border-radius:4px;
+}
+
 .quiz {
     width: 578px;
     margin: auto;
 	padding:20px 0;
-}
-
-.quiz ul {
 	overflow:hidden;
 }
 
-.quiz ul li {
+.quiz .category ul {
+	overflow:hidden;
+}
+
+.quiz .category ul li {
     display: block;
     position: relative;
     float: left;
@@ -182,19 +228,19 @@ h2 {
     clear: left;
 }
 
-.quiz ul li.active {
+.quiz .category ul li.active {
     border: 2px solid #FECE31;
 }
 
-.quiz ul li:hover img {
+.quiz .category ul li:hover img {
     opacity: 1;
 }
 
-.quiz ul li.active img {
+.quiz .category ul li.active img {
     opacity: 1;
 }
 
-.quiz ul li div.overlay {
+.quiz .category ul li div.overlay {
     position: absolute;
     left: 2px;
     bottom: 2px;
@@ -202,7 +248,7 @@ h2 {
     background: rgba(0,0,0,.6);
 }
 
-.quiz ul li div.imgdiv {
+.quiz .category ul li div.imgdiv {
     width: 320px;
     border: 2px solid white;
     position: relative;
@@ -212,7 +258,7 @@ h2 {
 	cursor:pointer;
 }
 
-.quiz ul li div.checkboxes {
+.quiz .category ul li div.checkboxes {
     float: left;
     position: relative;
     margin: 0 10px;
