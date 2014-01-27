@@ -1,3 +1,14 @@
+// ensure the indexOf function work in browers < ie9
+if(!Array.indexOf){
+    Array.prototype.indexOf = function(el){
+		for (var i=0,n=this.length; i<n; i++){
+			if (this[i] === el){
+				return i;
+			}
+		}
+		return -1;
+	}  
+}
 
 var msnry, numLoads = 0;
 
@@ -223,7 +234,7 @@ function loadInSame(id) {
 			request.done(function(msg) {
 
 				var json = $.parseJSON(msg);
-			 console.log(json);
+			 	console.log(json);
 			 	if (json.date == null) json.date = '';
 				if (json.titletop == 1) {
 					$itemcontent.html('<style type="text/css">'+json.customStyle+'</style><div class="content-image-div"><h2 class="fadewithme">'+json['title']+'</h2><img class="content-image big'+json.id+'" src="img/big/' + json.img_large + '.jpg" alt="item image" /></div><div class="content-info" style="display:none;"><div class="left-stuff">\
@@ -243,6 +254,13 @@ function loadInSame(id) {
 						<span id="rd" class=\'reddit st\' displayText=\'Reddit\'></span>\
 						</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><span class="date">'+json.date+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
 				}
+				
+				// prepend the relatedBox in the begin of the body html in content-info
+				var relatedBox = getRelatedBox(json.tags);
+				if(relatedBox){
+					$('.content-info .body').prepend(relatedBox);
+				}
+				// end
 			
 				$(".big"+json.id).imagesLoaded(imageLoadedSame(json.id));
 
@@ -625,6 +643,13 @@ function loadFeature(id) {
 					</div><h2>'+json['title']+'</h2><h3 class="subtitle">'+json.description+'</h3><span class="byline">'+json.byline+'</span><span class="date">'+json.date+'</span><div class="body"><a href="#" id="fav"></a>'+json.html+'</div></div>');
 			}
 			
+			// prepend the relatedBox in the begin of the body html in content-info
+			var relatedBox = getRelatedBox(json.tags);
+			if(relatedBox){
+				$('.content-info .body').prepend(relatedBox);
+			}
+			// end
+			
 			$(".big"+json.id).imagesLoaded(imageLoaded(json.id));
 
 			stWidget.addEntry({
@@ -737,6 +762,73 @@ function loadFeature(id) {
 
 	}
 	
+}
+
+function getRelatedBox(tags){
+
+    var related_array = [];
+	
+    if (tags.indexOf("vautonomous")>-1 || tags.indexOf("preventingaccidents")>-1 || tags.indexOf("ivcommunication")>-1 || tags.indexOf("disdriving")>-1 || tags.indexOf("invehicletech")>-1 || tags.indexOf("apps")>-1 || tags.indexOf("fuelefficiency")>-1 || tags.indexOf("iwvehicles")>-1 || tags.indexOf("aerodynamics")>-1 || tags.indexOf("vehiclesafety")>-1 || tags.indexOf("batteries")>-1 ) {
+        var related = true;
+		var rel = [];
+        rel[0] = "Transportation";
+        rel[1] = "transportation";
+        related_array.push(rel);
+    }
+    if (tags.indexOf("studentstart")>-1 || tags.indexOf("techtransfer")>-1 || tags.indexOf("facultystart")>-1 || tags.indexOf("mcubed")>-1 || tags.indexOf("indcollab")>-1 || tags.indexOf("cfe")>-1 || tags.indexOf("me")>-1 || tags.indexOf("innovation")>-1 || tags.indexOf("economy")>-1 ) {
+        var related = true;
+		var rel = [];
+        rel[0] = "Economics & Entrepreneurship";
+        rel[1] = "economics";
+        related_array.push(rel);
+    }
+    if (tags.indexOf("hoexperience")>-1 || tags.indexOf("studentteams")>-1 || tags.indexOf("multidisc")>-1 || tags.indexOf("studentresearch")>-1 || tags.indexOf("highlevelstudentprojects")>-1 || tags.indexOf("scholarships")>-1 || tags.indexOf("classfuture")>-1 || tags.indexOf("honors")>-1 || tags.indexOf("onlinelearning")>-1 || tags.indexOf("gradexperience")>-1 || tags.indexOf("commoutreach")>-1 || tags.indexOf("globalexp")>-1 || tags.indexOf("extracurr")>-1 || tags.indexOf("studentstories")>-1 || tags.indexOf("nostalgia")>-1 || tags.indexOf("lifeinaa")>-1 ) {
+        var related = true;
+		var rel = [];
+        rel[0] = "Wolverine Experience";
+        rel[1] = "wolverine";
+        related_array.push(rel);
+    }
+    if (tags.indexOf("watershortage")>-1 || tags.indexOf("waterpurification")>-1 || tags.indexOf("sustainability")>-1 || tags.indexOf("resourcemanagement")>-1 || tags.indexOf("cleanair")>-1 || tags.indexOf("cleanwater")>-1 || tags.indexOf("globalenergy")>-1 || tags.indexOf("eefficiency")>-1 || tags.indexOf("otherresources")>-1 || tags.indexOf("biofuel")>-1 || tags.indexOf("batteries")>-1 || tags.indexOf("solarpower")>-1 || tags.indexOf("hydropower")>-1 || tags.indexOf("windpower")>-1 || tags.indexOf("geothermalpower")>-1 || tags.indexOf("nuclearpower")>-1 || tags.indexOf("climatechange")>-1 ) {
+        var related = true;
+		var rel = [];
+        rel[0] = "Global Resources";
+        rel[1] = "global";
+        related_array.push(rel);
+    }
+    if (tags.indexOf("nanotech")>-1 || tags.indexOf("lightweightmat")>-1 || tags.indexOf("othermaterials")>-1 || tags.indexOf("memorymetals")>-1 || tags.indexOf("composites")>-1 || tags.indexOf("gels")>-1 || tags.indexOf("peptides")>-1 || tags.indexOf("drugdelivery")>-1 || tags.indexOf("safety")>-1 || tags.indexOf("solarcells")>-1 || tags.indexOf("electronics")>-1 || tags.indexOf("environment")>-1 || tags.indexOf("nuclearmaterials")>-1 || tags.indexOf("polymers")>-1 || tags.indexOf("computersfuture")>-1 ) {
+        var related = true;
+		var rel = [];
+        rel[0] = "Revolutionary Materials";
+        rel[1] = "materials";
+        related_array.push(rel);
+    }
+    if (tags.indexOf("disresearch")>-1 || tags.indexOf("distreatment")>-1 || tags.indexOf("drugs")>-1 || tags.indexOf("drugdelivery")>-1 || tags.indexOf("imaging")>-1 || tags.indexOf("diagnostics")>-1 || tags.indexOf("affordability")>-1 || tags.indexOf("3dprinting")>-1 || tags.indexOf("meddevices")>-1 || tags.indexOf("tissengineering")>-1 || tags.indexOf("therapies")>-1 || tags.indexOf("patientcare")>-1 || tags.indexOf("apptechnologies")>-1 ) {
+        var related = true;
+		var rel = [];
+        rel[0] = "Healthcare";
+        rel[1] = "healthcare";
+        related_array.push(rel);
+    }
+    if (tags.indexOf("weaponsdetection")>-1 || tags.indexOf("nuclearnon")>-1 || tags.indexOf("drones")>-1 || tags.indexOf("autonomous")>-1 || tags.indexOf("cybersec")>-1 || tags.indexOf("surveillance")>-1 || tags.indexOf("nuclear")>-1 || tags.indexOf("natsec")>-1 || tags.indexOf("millitary")>-1 || tags.indexOf("infrastructure")>-1 || tags.indexOf("disaster")>-1 || tags.indexOf("weather")>-1 ) {
+        var related = true;
+		var rel = [];
+        rel[0] = "Securing our Future";
+        rel[1] = "securingourfuture";
+        related_array.push(rel);
+    }
+	
+    if (related) {
+
+        var newHTML = "<div class='related'><h3>Read more about...</h3><ul>";
+        for(i=0; i<related_array.length; i++) {
+            newHTML += "<li><a href='#explore="+related_array[i][1]+"'>"+related_array[i][0]+"</a></li>";
+        }
+        newHTML += "</ul></div>";
+		return newHTML;
+    }
+	
+	return false;
 }
 
 function checkHash() {
