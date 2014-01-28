@@ -501,6 +501,7 @@
 					}
 					
 				});
+				
 				$("a.catnext").on("click", function (e){
 					e.preventDefault();
 					// console.log($(".wheel")[0])
@@ -539,6 +540,26 @@
 					$('.category').fadeOut('slow');
 					$('.accountinfo').fadeIn('slow');
 				})
+				
+				//update account information
+				$("a.accnext").on("click", function (e){
+					e.preventDefault();
+					// console.log($(".wheel")[0])
+					$(".wheel").toggle();
+					var acc_name = $('#acc_name').val();
+					var acc_email = $('#acc_email').val();
+					$.ajax({
+						type: "POST",
+						url: "dostuff.php",
+						data: { id: <?= $user?>, type: "accinfo", acc_name: acc_name, acc_email: acc_email }
+					}).done(function( msg ) {
+						console.log("Message: ", msg);
+						//if (msg == "added cats") window.location.assign("index.php");
+						$(".wheel").toggle();
+						if (msg == "updated account") alert("Update Successes!");
+					});
+					console.log(acc_name, acc_email);
+				});
 				
 				//upload avatar images
 				

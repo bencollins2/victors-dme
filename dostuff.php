@@ -9,12 +9,23 @@
 	$username = mysql_real_escape_string($_REQUEST["name"]);
 	$cats = mysql_real_escape_string($_REQUEST["cats"]);
 	$favs = mysql_real_escape_string($_REQUEST["favs"]);
+	$acc_name = mysql_real_escape_string($_REQUEST["acc_name"]);
+	$acc_email = mysql_real_escape_string($_REQUEST["acc_email"]);
 
 	if ($type == "newcats") {
 		if ($cats != "") {
 			$query = "UPDATE users SET `categories` = '$cats' WHERE `id` LIKE '$userid'";
 			$result = mysql_query($query) or die("Sorry: " . $query);
 			echo "added cats";
+			// echo $query;
+		}
+	}
+	
+	if ($type == "accinfo") {
+		if ($acc_name != "" || $acc_email != "") {
+			$query = "UPDATE users SET `name` = '$acc_name', `contactemail` = '$acc_email' WHERE `id` LIKE '$userid'";
+			$result = mysql_query($query) or die("Sorry: " . $query);
+			echo "updated account";
 			// echo $query;
 		}
 	}
