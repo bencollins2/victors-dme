@@ -201,6 +201,10 @@
                 <!-- <img src="img/gift_box_50.png" /> -->
             </div>
 			
+			<a href="account.php"><div id="accicon">
+				<i class="fa fa-cog"></i>
+			</div></a>
+			
 			<div id="tutoicon">
 				<i class="fa fa-question"></i>
 			</div>

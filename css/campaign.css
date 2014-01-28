@@ -468,6 +468,7 @@ div#explore h2 {
 	color:#032B5A;
 	font-size:32px;
 	display:none;
+	cursor:pointer;
 }
 #tutoicon:hover{
 	transform:rotate(20deg);
@@ -475,6 +476,25 @@ div#explore h2 {
 	-moz-transform:rotate(20deg);
 	-o-transform:rotate(20deg);
 }
+#accicon{
+	width:auto;
+	height:auto;
+	float:left;
+	position:absolute;
+	bottom:7px;
+	left:15px;
+	text-align:center;
+	color:#032B5A;
+	font-size:26px;
+	cursor:pointer;
+}
+#accicon:hover{
+	transform:rotate(30deg);
+	-webkit-transform:rotate(30deg);
+	-moz-transform:rotate(30deg);
+	-o-transform:rotate(30deg);
+}
+
 .slices #tutoicon{
 	display:block;
 }
