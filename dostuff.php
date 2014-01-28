@@ -14,7 +14,7 @@
 
 	if ($type == "newcats") {
 		if ($cats != "") {
-			$query = "UPDATE users SET `categories` = '$cats' WHERE `id` LIKE '$userid'";
+			$query = "UPDATE users SET `categories` = '$cats', `modified` = '1' WHERE `id` LIKE '$userid'";
 			$result = mysql_query($query) or die("Sorry: " . $query);
 			echo "added cats";
 			// echo $query;
@@ -23,7 +23,7 @@
 	
 	if ($type == "accinfo") {
 		if ($acc_name != "" || $acc_email != "") {
-			$query = "UPDATE users SET `name` = '$acc_name', `contactemail` = '$acc_email' WHERE `id` LIKE '$userid'";
+			$query = "UPDATE users SET `name` = '$acc_name', `contactemail` = '$acc_email', `modified` = '1' WHERE `id` LIKE '$userid'";
 			$result = mysql_query($query) or die("Sorry: " . $query);
 			echo "updated account";
 			// echo $query;

@@ -201,9 +201,9 @@
                 <!-- <img src="img/gift_box_50.png" /> -->
             </div>
 			
-			<a href="account.php"><div id="accicon">
+			<div id="accicon" onclick="javascript:window.location.href='account.php'">
 				<i class="fa fa-cog"></i>
-			</div></a>
+			</div>
 			
 			<div id="tutoicon">
 				<i class="fa fa-question"></i>
